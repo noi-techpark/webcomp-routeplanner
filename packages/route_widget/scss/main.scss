@@ -3,6 +3,10 @@
 @import './typography.scss';
 @import './bts-utilities.scss';
 
+@import './components/box_parameters.scss';
+@import './components/box_inputs.scss';
+@import './components/first_screen_footer.scss';
+
 .routeplanner-widget {
   font-family: sans-serif;
   color: $black;

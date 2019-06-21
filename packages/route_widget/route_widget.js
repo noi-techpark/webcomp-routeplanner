@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit-element';
 import { BoxInputs } from './components/boxInputs';
 import { BoxParameters } from './components/boxParameters';
+import { FirstScreenFooter } from './components/firstScreenFooter';
 import { Header } from './components/header';
 import { observed_properties } from './observed_properties';
 import style from './scss/main.scss';
@@ -12,6 +13,7 @@ class RoutePlanner extends LitElement {
     this.Header = Header.bind(this);
     this.BoxParameters = BoxParameters.bind(this);
     this.BoxInputs = BoxInputs.bind(this);
+    this.FirstScreenFooter = FirstScreenFooter.bind(this);
 
     /** Observed values */
     // this.chart_1_value = 0;
@@ -30,7 +32,7 @@ class RoutePlanner extends LitElement {
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
       <div class="routeplanner-widget">
-        ${this.Header()} ${this.BoxParameters()} ${this.BoxParameters()}
+        ${this.Header()} ${this.BoxParameters()} ${this.BoxInputs()} ${this.FirstScreenFooter()}
       </div>
     `;
   }
