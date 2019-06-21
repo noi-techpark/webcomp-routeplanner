@@ -1,13 +1,17 @@
 import { html, LitElement } from 'lit-element';
-// import style__buttons from './scss/buttons.scss';
-import { getStyle } from './utilities';
-import style from './scss/main.scss';
+import { BoxInputs } from './components/boxInputs';
+import { BoxParameters } from './components/boxParameters';
+import { Header } from './components/header';
 import { observed_properties } from './observed_properties';
+import style from './scss/main.scss';
+import { getStyle } from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
     super();
-    // this.Header = Header.bind(this);
+    this.Header = Header.bind(this);
+    this.BoxParameters = BoxParameters.bind(this);
+    this.BoxInputs = BoxInputs.bind(this);
 
     /** Observed values */
     // this.chart_1_value = 0;
@@ -23,14 +27,14 @@ class RoutePlanner extends LitElement {
     return html`
       <style>
         ${getStyle(style)}
+        ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
       <div class="routeplanner-widget">
-        Routeplanner initial scaffolding
+        ${this.Header()} ${this.BoxParameters()} ${this.BoxParameters()}
       </div>
     `;
   }
 }
-// ${this.Header()}
 
 if (!window.customElements.get('routeplanner-widget')) {
   window.customElements.define('routeplanner-widget', RoutePlanner);

@@ -5,6 +5,7 @@ $font-size-list: 52, 42, 30, 24, 20, 18, 16, 14, 12;
 @each $fs in $font-size-list {
   .fs-#{$fs} {
     font-size: #{$fs}px;
+    line-height: #{$fs}px;
   }
 }
 
