@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "bts": "lerna bootstrap",
+    "clean": "lerna clean",
+    "bc": "lerna run --parallel --stream build",
+    "wc": "lerna run --parallel --stream watch",
+    "build-components": "lerna run --parallel --stream build",
+    "watch-components": "lerna run --parallel --stream watch"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "lerna": "^3.13.1"
+  },
+  "name": "routeplanner",
+  "version": "1.0.0"
+}
