@@ -18,6 +18,7 @@ export const BoxParameters = props => {
                   <div class="ml-3">
                     <select name="" id="">
                       <option value="">Orario di partenza</option>
+                      <option value="">Orario d'arrivo</option>
                     </select>
                   </div>
                 </div>

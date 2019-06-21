@@ -1,0 +1,35 @@
+.results__transport {
+  border: 1px solid $black-200;
+}
+
+.results__transport_option {
+  border-right: 1px solid $black-200;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.results__list {
+  border: 1px solid $black-200;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.results__list__item {
+  border-bottom: 1px solid $black-200;
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+.results__list__item__badge_line {
+  width: 100%;
+}
+
+.results__list__item__badge_line__badge {
+  background-color: $green;
+  display: inline-block;
+  color: $white;
+}
+
+.results__list__item__change_line {
+  width: 100%;
+}
