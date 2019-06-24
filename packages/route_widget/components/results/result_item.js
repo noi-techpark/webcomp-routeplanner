@@ -11,7 +11,7 @@ export function resultItem(props) {
         </p>
       </div>
       <div class="d-flex mt-2 flex-wrap">
-        <div>
+        <div class="d-flex align-items-center">
           <div>
             <p>12:54</p>
             <p>Trento</p>
@@ -22,7 +22,7 @@ export function resultItem(props) {
             <p>Terme di Merano</p>
           </div>
         </div>
-        <div class="results__list__item__change_line d-flex">
+        <div class="results__list__item__change_line d-flex mt-2">
           <p>❌ ❌</p>
           <p class="ml-3">100km, 3 Cambi</p>
         </div>
