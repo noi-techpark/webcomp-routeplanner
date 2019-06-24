@@ -1,7 +1,9 @@
 import { html } from 'lit-html';
 import { resultItem } from './result_item';
 
-export const Results = props => {
+export function Results(props) {
+  this.resultItem = resultItem.bind(this);
+
   return html`
     <div class="results mt-3">
       <div class="container">
@@ -30,16 +32,12 @@ export const Results = props => {
 
           <div class="col-12 mt-3">
             <div class="results__list">
-              ${resultItem({ price: 24 })}
-              ${resultItem({ price: 16 })}
-              ${resultItem({ price: 8 })}
-              ${resultItem({ price: 35 })}
-              ${resultItem({ price: 12 })}
-              ${resultItem({ price: 23 })}
+              ${this.resultItem({ price: 24 })} ${this.resultItem({ price: 16 })} ${this.resultItem({ price: 8 })}
+              ${this.resultItem({ price: 35 })} ${this.resultItem({ price: 12 })} ${this.resultItem({ price: 23 })}
             </div>
           </div>
         </div>
       </div>
     </div>
   `;
-};
+}

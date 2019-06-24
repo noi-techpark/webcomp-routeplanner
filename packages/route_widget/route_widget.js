@@ -26,7 +26,7 @@ class RoutePlanner extends LitElement {
     this.DetailsMap = DetailsMap.bind(this);
 
     /** Observed values */
-    this.step = 1; // 0,1
+    this.step = 0; // 0,1
   }
 
   static get properties() {
@@ -44,9 +44,7 @@ class RoutePlanner extends LitElement {
     }).addTo(this.map);
   }
 
-  async firstUpdated() {
-    this.initializeMap();
-  }
+  async firstUpdated() {}
 
   render() {
     return html`

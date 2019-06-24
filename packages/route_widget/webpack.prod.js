@@ -5,7 +5,7 @@ module.exports = {
   entry: './route_widget.js',
   output: {
     path: path.resolve(__dirname, '../../dist'),
-    filename: 'dashboard_widget.min.js'
+    filename: 'routeplanner_widget.min.js'
   },
   module: {
     rules: [

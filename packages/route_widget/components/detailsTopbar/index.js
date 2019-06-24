@@ -1,9 +1,15 @@
 import { html } from 'lit-html';
 
-export const DetailsTopbar = props => {
+export function DetailsTopbar(props) {
   return html`
     <div class="details_topbar">
-      <p>< Indietro</p>
+      <p
+        @click=${() => {
+          this.step = 0;
+        }}
+      >
+        < Indietro
+      </p>
     </div>
   `;
-};
+}
