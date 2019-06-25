@@ -1,12 +1,11 @@
-# E-MOBILITY
+# ROUTEPLANNER
 
 This project contains all the webcomponents of the greenmobility project.
 You can find all the information about it on the official website [https://www.greenmobility.bz.it/it/](https://www.greenmobility.bz.it/it/).
 
 ## Why
 
-[Greenmobility](https://www.greenmobility.bz.it/it/) wants to break up, in reusable and independent components, its website. Using those webcomponents a developer can integrate every website with ready to use and up to date data.
-The data in question are those of [Open Data Hub](https://opendatahub.bz.it/).
+IDM wants to break up, in reusable and independent components, its website. Using those webcomponents a developer can integrate every website with ready to use and up to date data.
 
 ## Choices
 
