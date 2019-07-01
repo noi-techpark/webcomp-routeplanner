@@ -1,8 +1,16 @@
 import { html } from 'lit-html';
 import { resultItem } from './result_item';
 
+const placeholder_results = [
+  // { price: 24 }
+];
+
 export function Results(props) {
   this.resultItem = resultItem.bind(this);
+
+  if (!placeholder_results.length) {
+    return null;
+  }
 
   return html`
     <div class="results mt-3">
@@ -32,8 +40,9 @@ export function Results(props) {
 
           <div class="col-12 mt-3">
             <div class="results__list">
-              ${this.resultItem({ price: 24 })} ${this.resultItem({ price: 16 })} ${this.resultItem({ price: 8 })}
-              ${this.resultItem({ price: 35 })} ${this.resultItem({ price: 12 })} ${this.resultItem({ price: 23 })}
+              ${placeholder_results.map(o => {
+                return this.resultItem(o);
+              })}
             </div>
           </div>
         </div>
@@ -41,3 +50,6 @@ export function Results(props) {
     </div>
   `;
 }
+
+// ${this.resultItem({ price: 24 })} ${this.resultItem({ price: 16 })} ${this.resultItem({ price: 8 })}
+// ${this.resultItem({ price: 35 })} ${this.resultItem({ price: 12 })} ${this.resultItem({ price: 23 })}
