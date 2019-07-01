@@ -27,6 +27,8 @@ class RoutePlanner extends LitElement {
 
     /** Observed values */
     this.step = 0; // 0,1
+    /* Initial form, Results list, Route detail, Map */
+    this.step_mobile = 0; // 0,1,2,4
   }
 
   static get properties() {
