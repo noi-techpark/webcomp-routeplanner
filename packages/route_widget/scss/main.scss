@@ -3,6 +3,7 @@
 @import './typography.scss';
 @import './bts-utilities.scss';
 
+@import './components/header.scss';
 @import './components/box_parameters.scss';
 @import './components/box_inputs.scss';
 @import './components/first_screen_footer.scss';
@@ -26,4 +27,14 @@ textarea {
 }
 textarea:focus {
   outline: none;
+}
+
+.MODE__desktop {
+}
+
+.MODE__mobile {
+  .MODE__desktop__open {
+  }
+  .MODE__desktop__closed {
+  }
 }

@@ -54,18 +54,29 @@ class RoutePlanner extends LitElement {
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
       <div class="routeplanner-widget">
-        ${this.step === 0
-          ? html`
-              ${this.Header()} ${this.BoxParameters()} ${this.Results()} ${this.BoxInputs()} ${this.FirstScreenFooter()}
-            `
-          : ``}
-        ${this.step === 1
-          ? html`
-              <div class="d-flex flex-wrap">
-                ${this.DetailsTopbar()} ${this.DetailsSidebar()} ${this.DetailsMap()}
-              </div>
-            `
-          : ``}
+        <div class="MODE__mobile d-block d-md-none">
+          ${this.step === 0
+            ? html`
+                ${this.Header()} ${this.BoxInputs()} ${this.BoxParameters()} ${this.Results()}
+                ${this.FirstScreenFooter()}
+              `
+            : ``}
+        </div>
+        <div class="MODE__desktop d-none d-md-block">
+          ${this.step === 0
+            ? html`
+                ${this.Header()} ${this.BoxParameters()} ${this.Results()} ${this.BoxInputs()}
+                ${this.FirstScreenFooter()}
+              `
+            : ``}
+          ${this.step === 1
+            ? html`
+                <div class="d-flex flex-wrap">
+                  ${this.DetailsTopbar()} ${this.DetailsSidebar()} ${this.DetailsMap()}
+                </div>
+              `
+            : ``}
+        </div>
       </div>
     `;
   }
