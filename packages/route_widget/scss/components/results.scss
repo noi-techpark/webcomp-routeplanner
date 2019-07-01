@@ -27,6 +27,14 @@
     border-bottom: 0;
   }
 }
+
+.results__list__item__text {
+  font-size: 12px;
+  @media (min-width: 992px) {
+    font-size: 18px;
+  }
+}
+
 .results__list__item__badge_line {
   width: 100%;
 }
@@ -35,10 +43,29 @@
   background-color: $green;
   display: inline-block;
   color: $white;
+  font-size: 12px;
+  @media (min-width: 992px) {
+    font-size: 18px;
+  }
 }
 
 .results__list__item__change_line {
-  width: 100%;
+  @media (min-width: 992px) {
+    width: 100%;
+  }
+}
+
+.results__list__item__section_schedules {
+  width: 96%;
+  @media (min-width: 992px) {
+    width: auto;
+  }
+}
+.results__list__item__section_action {
+  width: 4%;
+  @media (min-width: 992px) {
+    width: auto;
+  }
 }
 
 @media (max-width: 991px) {

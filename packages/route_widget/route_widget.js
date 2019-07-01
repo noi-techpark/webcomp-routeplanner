@@ -31,6 +31,8 @@ class RoutePlanner extends LitElement {
     this.step = 0; // 0,1
     /* Initial form, Results list, Route detail, Map */
     this.step_mobile = 1; // 0,1,2,4
+    // this.mobile_open = false;
+    this.mobile_open = true;
   }
 
   static get properties() {
@@ -59,7 +61,7 @@ class RoutePlanner extends LitElement {
       </style>
       <div class="routeplanner-widget">
         <div class="MODE__mobile MODE__mobile__closed d-block d-md-none">
-          <div class="MODE__mobile__closed__container">
+          <div class="${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}">
             ${this.step_mobile === 0
               ? html`
                   ${this.Header()} ${this.BoxInputs()} ${this.BoxParameters()} ${this.FirstScreenFooter()}
