@@ -2,10 +2,23 @@
 
 /* Fonts widths */
 $font-size-list: 52, 42, 30, 24, 20, 18, 16, 14, 12;
-@each $fs in $font-size-list {
-  .fs-#{$fs} {
-    font-size: #{$fs}px;
-    line-height: #{$fs}px;
+$font-size-list-mobile: 52, 42;
+
+@media (min-width: 320px) {
+  @each $fs in $font-size-list-mobile {
+    .fs-#{$fs} {
+      font-size: #{$fs - 20}px;
+      line-height: #{$fs - 20}px;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  @each $fs in $font-size-list {
+    .fs-#{$fs} {
+      font-size: #{$fs}px;
+      line-height: #{$fs}px;
+    }
   }
 }
 

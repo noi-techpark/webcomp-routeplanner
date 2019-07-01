@@ -2,10 +2,18 @@
 }
 
 .box_inputs__input_label {
-  display: block;
+  display: none;
+
   margin-bottom: 1rem;
+  @media (min-width: 992px) {
+    display: block;
+  }
 }
 
 .box_input__input {
-  width: 50%;
+  width: 100%;
+
+  @media (min-width: 992px) {
+    width: 50%;
+  }
 }
