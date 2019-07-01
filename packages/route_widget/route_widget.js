@@ -8,6 +8,7 @@ import { DetailsSidebar } from './components/detailsSidebar';
 import { DetailsTopbar } from './components/detailsTopbar';
 import { FirstScreenFooter } from './components/firstScreenFooter';
 import { Header } from './components/header';
+import { HeaderScreenResults } from './components/headerScreenResults';
 import { Results } from './components/results';
 import { observed_properties } from './observed_properties';
 import style from './scss/main.scss';
@@ -24,11 +25,12 @@ class RoutePlanner extends LitElement {
     this.DetailsTopbar = DetailsTopbar.bind(this);
     this.DetailsSidebar = DetailsSidebar.bind(this);
     this.DetailsMap = DetailsMap.bind(this);
+    this.HeaderScreenResults = HeaderScreenResults.bind(this);
 
     /** Observed values */
     this.step = 0; // 0,1
     /* Initial form, Results list, Route detail, Map */
-    this.step_mobile = 0; // 0,1,2,4
+    this.step_mobile = 1; // 0,1,2,4
   }
 
   static get properties() {
@@ -56,13 +58,19 @@ class RoutePlanner extends LitElement {
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
       <div class="routeplanner-widget">
-        <div class="MODE__mobile d-block d-md-none">
-          ${this.step === 0
-            ? html`
-                ${this.Header()} ${this.BoxInputs()} ${this.BoxParameters()} ${this.Results()}
-                ${this.FirstScreenFooter()}
-              `
-            : ``}
+        <div class="MODE__mobile MODE__mobile__closed d-block d-md-none">
+          <div class="MODE__mobile__closed__container">
+            ${this.step_mobile === 0
+              ? html`
+                  ${this.Header()} ${this.BoxInputs()} ${this.BoxParameters()} ${this.FirstScreenFooter()}
+                `
+              : ``}
+            ${this.step_mobile === 1
+              ? html`
+                  ${this.HeaderScreenResults()} ${this.Results()}
+                `
+              : ``}
+          </div>
         </div>
         <div class="MODE__desktop d-none d-md-block">
           ${this.step === 0

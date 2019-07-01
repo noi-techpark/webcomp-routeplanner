@@ -6,6 +6,7 @@ export function resultItem(props) {
   return html`
     <div class="results__list__item p-3 d-flex flex-wrap justify-content-between align-items-center">
       <div class="results__list__item__badge_line">
+        🚂
         <p class="results__list__item__badge_line__badge pl-2 pr-2">
           Più economico
         </p>
@@ -28,7 +29,6 @@ export function resultItem(props) {
         </div>
       </div>
       <div class="d-flex">
-        <div class=""><p class="fs-30">${props.price}€</p></div>
         <div class="ml-4">
           <a
             href=""
@@ -39,10 +39,12 @@ export function resultItem(props) {
                 this.initializeMap();
               });
             }}
-            >Dettagli ></a
+            ><span class="d-none d-md-inline">Dettagli</span> ></a
           >
         </div>
       </div>
     </div>
   `;
 }
+
+// <div class=""><p class="fs-30">${props.price}€</p></div>

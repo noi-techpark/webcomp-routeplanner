@@ -10,6 +10,7 @@
 @import './components/results.scss';
 @import './components/details_sidebar.scss';
 @import './components/details__map.scss';
+@import './components/header_screen_results.scss';
 
 .routeplanner-widget {
   font-family: sans-serif;
@@ -33,8 +34,20 @@ textarea:focus {
 }
 
 .MODE__mobile {
-  .MODE__desktop__open {
+  &.MODE__mobile__open {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
   }
-  .MODE__desktop__closed {
+  &.MODE__mobile__closed {
+    width: calc(100vw - 30px);
+    margin: 0 auto;
+    .MODE__mobile__closed__container {
+      height: 70vh;
+      overflow: hidden;
+      border: 1px solid $black-200;
+    }
   }
 }

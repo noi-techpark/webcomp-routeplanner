@@ -3,9 +3,16 @@
 }
 
 .results__transport_option {
-  border-right: 1px solid $black-200;
   text-align: center;
-  padding: 0 1.5rem;
+  border-right: 1px solid $black-200;
+  width: 20%;
+  &:last-child {
+    border-right: 0;
+  }
+  @media (min-width: 992px) {
+    padding: 0 1.5rem;
+    width: auto;
+  }
 }
 
 .results__list {
@@ -32,4 +39,18 @@
 
 .results__list__item__change_line {
   width: 100%;
+}
+
+@media (max-width: 991px) {
+  .MODE__mobile {
+    .results__list__item,
+    .results__transport {
+      .fs-20 {
+        font-size: 14px;
+      }
+    }
+    .results__list {
+      height: 70%;
+    }
+  }
 }
