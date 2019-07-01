@@ -8,11 +8,13 @@ import { DetailsSidebar } from './components/detailsSidebar';
 import { DetailsTopbar } from './components/detailsTopbar';
 import { FirstScreenFooter } from './components/firstScreenFooter';
 import { Header } from './components/header';
-import { HeaderScreenResults } from './components/headerScreenResults';
+import { HeaderScreenDetailsMobile } from './components/headerScreenDetailsMobile';
+import { HeaderScreenResults } from './components/headerScreenResultsMobile';
 import { Results } from './components/results';
 import { observed_properties } from './observed_properties';
 import style from './scss/main.scss';
 import { getStyle } from './utilities';
+import { RouteListItem } from './components/detailsSidebar/route_list_item';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -26,13 +28,14 @@ class RoutePlanner extends LitElement {
     this.DetailsSidebar = DetailsSidebar.bind(this);
     this.DetailsMap = DetailsMap.bind(this);
     this.HeaderScreenResults = HeaderScreenResults.bind(this);
+    this.HeaderScreenDetailsMobile = HeaderScreenDetailsMobile.bind(this);
 
     /** Observed values */
     this.step = 0; // 0,1
     /* Initial form, Results list, Route detail, Map */
-    this.step_mobile = 1; // 0,1,2,4
+    this.step_mobile = 2; // 0,1,2,3
     // this.mobile_open = false;
-    this.mobile_open = true;
+    this.mobile_open = false;
   }
 
   static get properties() {
@@ -60,8 +63,9 @@ class RoutePlanner extends LitElement {
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
       <div class="routeplanner-widget">
-        <div class="MODE__mobile MODE__mobile__closed d-block d-md-none">
-          <div class="${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}">
+        <!-- Mobile -->
+        <div class="MODE__mobile ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`} d-block d-md-none">
+          <div class="MODE__mobile__closed__container">
             ${this.step_mobile === 0
               ? html`
                   ${this.Header()} ${this.BoxInputs()} ${this.BoxParameters()} ${this.FirstScreenFooter()}
@@ -72,8 +76,47 @@ class RoutePlanner extends LitElement {
                   ${this.HeaderScreenResults()} ${this.Results()}
                 `
               : ``}
+            ${this.step_mobile === 2
+              ? html`
+                  ${this.HeaderScreenDetailsMobile()}
+                  <div class="details_sidebar__body p-3">
+                    ${RouteListItem({
+                      time: '12:40',
+                      text: 'Cammina fino alla stazione dei treni di Trento',
+                      duration: '(10min)'
+                    })}
+                    ${RouteListItem({
+                      time: '12:40',
+                      text: 'Cammina fino alla stazione dei treni di Trento',
+                      duration: '(10min)'
+                    })}
+                    ${RouteListItem({
+                      time: '12:40',
+                      text: 'Cammina fino alla stazione dei treni di Trento',
+                      duration: '(10min)'
+                    })}
+                    ${RouteListItem({
+                      time: '12:40',
+                      text: 'Cammina fino alla stazione dei treni di Trento',
+                      duration: '(10min)'
+                    })}
+                  </div>
+                `
+              : ``}
+            <div class="MODE__mobile__expand_button_container">
+              <button
+                @click=${() => {
+                  this.mobile_open = !this.mobile_open;
+                  console.log(this.mobile_open);
+                }}
+              >
+                E
+              </button>
+            </div>
           </div>
         </div>
+
+        <!-- Desktop -->
         <div class="MODE__desktop d-none d-md-block">
           ${this.step === 0
             ? html`

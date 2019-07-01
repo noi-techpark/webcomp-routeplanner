@@ -11,6 +11,7 @@
 @import './components/details_sidebar.scss';
 @import './components/details__map.scss';
 @import './components/header_screen_results.scss';
+@import './components/header_screen_details.scss';
 
 .routeplanner-widget {
   font-family: sans-serif;
@@ -34,6 +35,8 @@ textarea:focus {
 }
 
 .MODE__mobile {
+  position: relative;
+
   &.MODE__mobile__open {
     position: fixed;
     width: 100%;
@@ -49,5 +52,11 @@ textarea:focus {
       overflow: hidden;
       border: 1px solid $black-200;
     }
+  }
+
+  .MODE__mobile__expand_button_container {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
   }
 }

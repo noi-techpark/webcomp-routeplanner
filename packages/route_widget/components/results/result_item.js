@@ -1,4 +1,5 @@
 import { html } from 'lit-html';
+import { colored_tag } from '../components/coloredTag';
 
 export function resultItem(props) {
   console.log(this.step);
@@ -6,7 +7,7 @@ export function resultItem(props) {
   return html`
     <div class="results__list__item p-2 p-md-3 d-flex flex-wrap justify-content-md-between align-items-center">
       <div class="results__list__item__badge_line">
-        🚂 ${colored_tag('Più economico')}
+        ${colored_tag('Più economico')}
       </div>
       <div class="d-flex mt-2 flex-wrap results__list__item__section_schedules">
         <div class="d-flex align-items-center">
@@ -28,6 +29,17 @@ export function resultItem(props) {
       <div class="d-flex results__list__item__section_action">
         <div class="ml-md-4">
           <a
+            class="d-block d-md-none"
+            href=""
+            @click=${e => {
+              e.preventDefault();
+              this.step_mobile = 2;
+            }}
+          >
+            ></a
+          >
+          <a
+            class="d-none d-md-block"
             href=""
             @click=${e => {
               e.preventDefault();
@@ -36,20 +48,12 @@ export function resultItem(props) {
                 this.initializeMap();
               });
             }}
-            ><span class="d-none d-md-inline">Dettagli</span> ></a
+            >Dettagli ></a
           >
         </div>
       </div>
     </div>
   `;
 }
-
-const colored_tag = text => {
-  return html`
-    <p class="results__list__item__badge_line__badge pl-2 pr-2">
-      ${text}
-    </p>
-  `;
-};
 
 // <div class=""><p class="fs-30">${props.price}€</p></div>
