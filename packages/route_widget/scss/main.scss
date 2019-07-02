@@ -12,6 +12,7 @@
 @import './components/details__map.scss';
 @import './components/header_screen_results.scss';
 @import './components/header_screen_details.scss';
+@import '../components/routeList/route_list.scss';
 
 .routeplanner-widget {
   font-family: sans-serif;
@@ -43,6 +44,12 @@ textarea:focus {
     height: 100%;
     top: 0;
     left: 0;
+    overflow: scroll;
+    .MODE__mobile__expand_button_container {
+      position: fixed;
+      right: 15px;
+      bottom: 15px;
+    }
   }
   &.MODE__mobile__closed {
     width: calc(100vw - 30px);
@@ -52,11 +59,10 @@ textarea:focus {
       overflow: hidden;
       border: 1px solid $black-200;
     }
-  }
-
-  .MODE__mobile__expand_button_container {
-    position: absolute;
-    right: 15px;
-    bottom: 15px;
+    .MODE__mobile__expand_button_container {
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
 
-export const BoxInputs = props => {
+export function BoxInputs(props) {
   return html`
     <div class="box_inputs mt-md-5">
       <div class="container">
@@ -8,7 +8,16 @@ export const BoxInputs = props => {
           <div class="col-lg-12">
             <div>
               <label class="box_inputs__input_label fs-20" for="going_adddress_input">Partenza</label>
-              <input placeholder="Partenza" class="box_input__input" id="going_adddress_input" type="text" />
+              <input
+                @keyup=${e => {
+                  console.log(e.target.value);
+                  this.request_get_poi(e.target.value);
+                }}
+                placeholder="Partenza"
+                class="box_input__input"
+                id="going_adddress_input"
+                type="text"
+              />
             </div>
             <div class="mt-md-4">
               <label class="box_inputs__input_label fs-20" for="return_address_input">Arrivo</label>
@@ -19,4 +28,4 @@ export const BoxInputs = props => {
       </div>
     </div>
   `;
-};
+}

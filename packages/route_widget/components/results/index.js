@@ -2,7 +2,9 @@ import { html } from 'lit-html';
 import { resultItem } from './result_item';
 import { results_transport } from './results_transport';
 
-const placeholder_results = [{ price: 24 }, { price: 6 }, { price: 54 }];
+const placeholder_results = [
+  // { price: 24 }, { price: 6 }, { price: 54 }
+];
 
 export function Results(props) {
   this.resultItem = resultItem.bind(this);
