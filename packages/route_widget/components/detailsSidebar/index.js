@@ -1,5 +1,4 @@
 import { html } from 'lit-html';
-import { RouteListItem } from './route_list_item';
 import { RouteList } from '../routeList';
 
 export const DetailsSidebar = () => {

@@ -1,17 +1,17 @@
 # ROUTEPLANNER
 
-This project contains all the webcomponents of the greenmobility project.
+This project contains all the web components of the greenmobility project.
 You can find all the information about it on the official website [https://www.greenmobility.bz.it/it/](https://www.greenmobility.bz.it/it/).
 
 ## Why
 
-IDM wants to break up, in reusable and independent components, its website. Using those webcomponents a developer can integrate every website with ready to use and up to date data.
+IDM wants to break up, in reusable and independent components, its website. Using those web components a developer can integrate every website with ready to use and up to date data.
 
 ## Choices
 
-To create more structured and mantainable webcomponents we have used [Polymer](https://www.polymer-project.org/), more specifically the [lit-element](https://lit-element.polymer-project.org/) implementation.
+To create more structured and maintainable web components we have used [Polymer](https://www.polymer-project.org/), more specifically the [lit-element](https://lit-element.polymer-project.org/) implementation.
 
-Using [lerna](https://github.com/lerna/lerna) we can manage all the components as monolith repository but splitted in packages.
+Using [lerna](https://github.com/lerna/lerna) we can manage all the components as monolith repository but divided in packages.
 
 So the project can benefit of:
 
@@ -22,7 +22,7 @@ So the project can benefit of:
 
 CSS styles are transpiled using [Sass](https://sass-lang.com/).
 
-We are usign [Webpack](https://webpack.js.org/) for the bundle creation.
+We are using [Webpack](https://webpack.js.org/) for the bundle creation.
 
 ## Getting Started
 
@@ -54,7 +54,7 @@ lerna bootstrap
 
 Because they are managed using Lerna.
 
-### Developement
+### Development
 
 Start the lerna pipeline with:
 
@@ -86,10 +86,10 @@ This will serve the "work in progress" website on [http://0.0.0.0:8000/](http://
 
 ## Deployment
 
-To deploy the webcomponents:
+To deploy the web components:
 
 - Use the snippets that you will find in the served `work` folder, this will use an internal CDN.
-- Take the production bundle created with the command `yarn bc` and use it as a normal javascrip script.
+- Take the production bundle created with the command `yarn bc` and use it as a normal javascript script.
 
 In any case I suggest you to check the snippets of the first point.
 
