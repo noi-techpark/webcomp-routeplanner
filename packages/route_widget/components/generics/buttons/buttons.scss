@@ -1,0 +1,14 @@
+@import '../../../scss/colors';
+
+.button {
+  font-size: 16px;
+  padding: 10px 32px;
+  background-color: $green;
+  color: $white;
+  border-radius: 8px;
+
+  &.disabled {
+    background-color: $black-100;
+    color: $black-200;
+  }
+}

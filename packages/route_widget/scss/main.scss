@@ -3,18 +3,21 @@
 @import './typography.scss';
 @import './bts-utilities.scss';
 
-@import './components/header.scss';
-@import './components/box_parameters.scss';
-@import './components/box_inputs.scss';
-@import './components/first_screen_footer.scss';
-@import './components/results.scss';
-@import './components/details_sidebar.scss';
-@import './components/details__map.scss';
-@import './components/header_screen_results.scss';
-@import './components/header_screen_details.scss';
-@import '../components/routeList/route_list.scss';
+@import '../components/search/search.scss';
+@import '../components/generics/buttons/buttons.scss';
+// @import './components/header.scss';
+// @import './components/box_parameters.scss';
+// @import './components/box_inputs.scss';
+// @import './components/first_screen_footer.scss';
+// @import './components/results.scss';
+// @import './components/details_sidebar.scss';
+// @import './components/details__map.scss';
+// @import './components/header_screen_results.scss';
+// @import './components/header_screen_details.scss';
+// @import '../components/routeList/route_list.scss';
 
 .routeplanner-widget {
+  position: relative;
   font-family: sans-serif;
   color: $black;
   width: 100%;
@@ -50,17 +53,21 @@
   }
 }
 
+#map {
+  height: 700px;
+}
+
 .utils--cursor-pointer {
   cursor: pointer;
 }
 
-textarea {
-  border: 1px solid $black-300;
-  padding: 8px;
-}
-textarea:focus {
-  outline: none;
-}
+// textarea {
+//   border: 1px solid $black-300;
+//   padding: 8px;
+// }
+// textarea:focus {
+//   outline: none;
+// }
 
-.MODE__desktop {
-}
+// .MODE__desktop {
+// }

@@ -1,0 +1,11 @@
+@import '../../scss/colors';
+
+.search {
+  position: absolute;
+  background-color: $white;
+  top: 16px;
+  left: 16px;
+  width: 400px;
+  z-index: 400;
+  padding: 1rem;
+}

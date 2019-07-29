@@ -2,44 +2,27 @@ import L from 'leaflet';
 import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
 import { request_get_poi } from './api/efa_sta';
-import { BoxInputs } from './components/old/boxInputs';
-import { BoxParameters } from './components/old/boxParameters';
-import { DetailsMap } from './components/old/detailsMap';
-import { DetailsSidebar } from './components/detailsSidebar';
-import { DetailsTopbar } from './components/old/detailsTopbar';
-import { FirstScreenFooter } from './components/old/firstScreenFooter';
-import { Header } from './components/header';
-import { HeaderScreenDetailsMobile } from './components/headerScreenDetailsMobile';
-import { HeaderScreenResults } from './components/old/headerScreenResultsMobile';
-import { Results } from './components/old/results';
-import { RouteList } from './components/routeList';
 import { observed_properties } from './observed_properties';
 import style from './scss/main.scss';
 import { getStyle } from './utilities';
+import { render_backgroundMap } from './components/backgroundMap';
+import { render__search } from './components/search';
 
 class RoutePlanner extends LitElement {
   constructor() {
     super();
-    this.Header = Header.bind(this);
-    this.BoxParameters = BoxParameters.bind(this);
-    this.BoxInputs = BoxInputs.bind(this);
-    this.FirstScreenFooter = FirstScreenFooter.bind(this);
-    this.Results = Results.bind(this);
-    this.DetailsTopbar = DetailsTopbar.bind(this);
-    this.DetailsSidebar = DetailsSidebar.bind(this);
-    this.DetailsMap = DetailsMap.bind(this);
-    this.HeaderScreenResults = HeaderScreenResults.bind(this);
-    this.HeaderScreenDetailsMobile = HeaderScreenDetailsMobile.bind(this);
-    this.RouteList = RouteList.bind(this);
+    this.render_backgroundMap = render_backgroundMap.bind(this);
+    this.render_search = render__search.bind(this);
+
     /**
      * Api
      */
     this.request_get_poi = request_get_poi.bind(this);
 
     /** Observed values */
-    this.step = 1; // 0,1
+    // this.step = 1; // 0,1
     /* Initial form, Results list, Route detail, Map */
-    this.step_mobile = 2; // 0,1,2,3
+    // this.step_mobile = 2; // 0,1,2,3
     // this.mobile_open = false;
     this.mobile_open = false;
   }
@@ -59,7 +42,9 @@ class RoutePlanner extends LitElement {
     }).addTo(this.map);
   }
 
-  async firstUpdated() {}
+  async firstUpdated() {
+    this.initializeMap();
+  }
 
   render() {
     return html`
@@ -69,7 +54,7 @@ class RoutePlanner extends LitElement {
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
       <div class="routeplanner-widget ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}">
-        ...
+        ${this.render_backgroundMap()} ${this.render_search()}
       </div>
     `;
   }
