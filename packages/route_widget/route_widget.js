@@ -2,16 +2,16 @@ import L from 'leaflet';
 import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
 import { request_get_poi } from './api/efa_sta';
-import { BoxInputs } from './components/boxInputs';
-import { BoxParameters } from './components/boxParameters';
-import { DetailsMap } from './components/detailsMap';
+import { BoxInputs } from './components/old/boxInputs';
+import { BoxParameters } from './components/old/boxParameters';
+import { DetailsMap } from './components/old/detailsMap';
 import { DetailsSidebar } from './components/detailsSidebar';
-import { DetailsTopbar } from './components/detailsTopbar';
-import { FirstScreenFooter } from './components/firstScreenFooter';
+import { DetailsTopbar } from './components/old/detailsTopbar';
+import { FirstScreenFooter } from './components/old/firstScreenFooter';
 import { Header } from './components/header';
 import { HeaderScreenDetailsMobile } from './components/headerScreenDetailsMobile';
-import { HeaderScreenResults } from './components/headerScreenResultsMobile';
-import { Results } from './components/results';
+import { HeaderScreenResults } from './components/old/headerScreenResultsMobile';
+import { Results } from './components/old/results';
 import { RouteList } from './components/routeList';
 import { observed_properties } from './observed_properties';
 import style from './scss/main.scss';
@@ -69,7 +69,7 @@ class RoutePlanner extends LitElement {
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
       <div class="routeplanner-widget ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}">
-        ...    
+        ...
       </div>
     `;
   }

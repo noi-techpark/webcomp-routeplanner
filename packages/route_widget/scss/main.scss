@@ -18,6 +18,36 @@
   font-family: sans-serif;
   color: $black;
   width: 100%;
+
+  @media (max-width: 992px) {
+    .MODE__mobile__open {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: scroll;
+      .MODE__mobile__expand_button_container {
+        position: fixed;
+        right: 15px;
+        bottom: 15px;
+      }
+    }
+    .MODE__mobile__closed {
+      width: calc(100vw - 30px);
+      margin: 0 auto;
+      .MODE__mobile__closed__container {
+        height: 70vh;
+        overflow: hidden;
+        border: 1px solid $black-200;
+      }
+      .MODE__mobile__expand_button_container {
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+      }
+    }
+  }
 }
 
 .utils--cursor-pointer {
@@ -33,32 +63,4 @@ textarea:focus {
 }
 
 .MODE__desktop {
-}
-
-.MODE__mobile__open {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  overflow: scroll;
-  .MODE__mobile__expand_button_container {
-    position: fixed;
-    right: 15px;
-    bottom: 15px;
-  }
-}
-.MODE__mobile__closed {
-  width: calc(100vw - 30px);
-  margin: 0 auto;
-  .MODE__mobile__closed__container {
-    height: 70vh;
-    overflow: hidden;
-    border: 1px solid $black-200;
-  }
-  .MODE__mobile__expand_button_container {
-    position: absolute;
-    right: 15px;
-    bottom: 15px;
-  }
 }
