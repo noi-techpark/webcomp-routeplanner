@@ -1,0 +1,31 @@
+@import '../../../scss/colors';
+
+.fromTo {
+  .fromTo__graphics {
+    // width: 32px;
+    padding: 8px 8px 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .fromTo__inputs {
+    input {
+      border: 1px solid $black-300;
+      width: 100%;
+      height: 40px;
+      padding: 0 8px;
+      &:first-child {
+        border-bottom: 0px;
+      }
+    }
+  }
+  .fromTo__button {
+    width: 40px;
+    border: 1px solid $black-300;
+    border-left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

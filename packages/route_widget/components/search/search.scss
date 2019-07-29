@@ -1,5 +1,7 @@
 @import '../../scss/colors';
 
+@import './components/fromTo.scss';
+
 .search {
   position: absolute;
   background-color: $white;
@@ -8,4 +10,16 @@
   width: 400px;
   z-index: 400;
   padding: 1rem;
+
+  .search__footer {
+    select {
+      border: 0px;
+      background-color: $white;
+      font-size: 14px;
+      color: $black-400;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 }
