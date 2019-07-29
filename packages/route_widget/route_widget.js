@@ -68,54 +68,8 @@ class RoutePlanner extends LitElement {
         ${getStyle(style)}
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
-      <div class="routeplanner-widget">
-        <!-- Mobile -->
-        <div class="MODE__mobile ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`} d-block d-md-none">
-          <div class="MODE__mobile__closed__container">
-            ${this.step_mobile === 0
-              ? html`
-                  ${this.Header()} ${this.BoxInputs()} ${this.BoxParameters()} ${this.FirstScreenFooter()}
-                `
-              : ``}
-            ${this.step_mobile === 1
-              ? html`
-                  ${this.HeaderScreenResults()} ${this.Results()}
-                `
-              : ``}
-            ${this.step_mobile === 2
-              ? html`
-                  ${this.HeaderScreenDetailsMobile()} ${this.RouteList()}
-                `
-              : ``}
-            <div class="MODE__mobile__expand_button_container">
-              <button
-                @click=${() => {
-                  this.mobile_open = !this.mobile_open;
-                  console.log(this.mobile_open);
-                }}
-              >
-                E
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Desktop -->
-        <div class="MODE__desktop d-none d-md-block">
-          ${this.step === 0
-            ? html`
-                ${this.Header()} ${this.BoxParameters()} ${this.Results()} ${this.BoxInputs()}
-                ${this.FirstScreenFooter()}
-              `
-            : ``}
-          ${this.step === 1
-            ? html`
-                <div class="d-flex flex-wrap">
-                  ${this.DetailsTopbar()} ${this.DetailsSidebar()} ${this.DetailsMap()}
-                </div>
-              `
-            : ``}
-        </div>
+      <div class="routeplanner-widget ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}">
+        ...    
       </div>
     `;
   }
