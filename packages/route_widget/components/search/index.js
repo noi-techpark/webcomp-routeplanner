@@ -25,10 +25,3 @@ export function render__search() {
     </div>
   `;
 }
-
-/* <select name="" id="">
-  <option value="">Partenza ora</option>
-  <option value="">Partenza alle</option>
-  <option value="">Arrivo entro le</option>
-  <option value="">Ultimo</option>
-</select> */
