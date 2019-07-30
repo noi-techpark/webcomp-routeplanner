@@ -37,7 +37,7 @@ class RoutePlanner extends LitElement {
     //   [this.current_location.lat, this.current_location.lng],
     //   13
     // );
-    L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: ''
     }).addTo(this.map);
   }
