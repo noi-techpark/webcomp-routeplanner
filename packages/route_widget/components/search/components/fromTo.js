@@ -13,20 +13,35 @@ export function render__fromTo() {
         <img src=${toImage} alt="" />
       </div>
       <div class="fromTo__inputs">
-        <input
-          type="text"
-          .value=${this.from}
-          @input=${e => {
-            this.from = e.target.value;
-          }}
-        />
-        <input
-          type="text"
-          .value=${this.to}
-          @input=${e => {
-            this.to = e.target.value;
-          }}
-        />
+        <div class="fromTo__inputs__input_wrapper">
+          <input
+            type="text"
+            .value=${this.from}
+            @input=${e => {
+              this.from = e.target.value;
+            }}
+            @focus=${() => {
+              this.from_input_select_visible = true;
+            }}
+            @blur=${() => {
+              this.from_input_select_visible = false;
+            }}
+          />
+          <div class=${`fromTo__inputs__input_selection ${this.from_input_select_visible ? '' : 'hidden'}`}></div>
+        </div>
+        <div class="fromTo__inputs__input_wrapper">
+          <input
+            type="text"
+            .value=${this.to}
+            @focus=${() => {
+              this.to_input_select_visible = true;
+            }}
+            @blur=${() => {
+              this.to_input_select_visible = false;
+            }}
+          />
+          <div class=${`fromTo__inputs__input_selection ${this.to_input_select_visible ? '' : 'hidden'}`}></div>
+        </div>
       </div>
       <div class="fromTo__button">
         <img src=${changeImage} alt="" />
