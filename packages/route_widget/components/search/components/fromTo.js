@@ -24,7 +24,9 @@ export function render__fromTo() {
               this.from_input_select_visible = true;
             }}
             @blur=${() => {
-              this.from_input_select_visible = false;
+              setTimeout(() => {
+                this.from_input_select_visible = false;
+              }, 200);
             }}
           />
           <div class=${`fromTo__inputs__input_selection ${this.from_input_select_visible ? '' : 'hidden'}`}></div>
@@ -40,7 +42,9 @@ export function render__fromTo() {
               this.to_input_select_visible = true;
             }}
             @blur=${() => {
-              this.to_input_select_visible = false;
+              setTimeout(() => {
+                this.to_input_select_visible = false;
+              }, 200);
             }}
           />
           <div class=${`fromTo__inputs__input_selection ${this.to_input_select_visible ? '' : 'hidden'}`}></div>
