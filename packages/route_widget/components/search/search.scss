@@ -24,12 +24,9 @@
         cursor: pointer;
         font-size: 14px;
         line-height: 24px;
-        &:focus {
-          color: green;
-        }
       }
       .departure_time_picker__picker_box {
-        width: 166px;
+        white-space: nowrap;
         position: absolute;
         left: 25px;
         top: -6px;
