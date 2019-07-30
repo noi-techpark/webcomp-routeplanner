@@ -1,10 +1,11 @@
 import { html } from 'lit-html';
 import { render__button } from '../generics/buttons/index';
-import { render__fromTo } from './components/fromTo';
-import clockImage from '../../img/clock.svg';
+import { render__departureTimePicker } from './components/departure-time-picker';
+import { render__fromTo } from './components/from-to';
 
 export function render__search() {
   this.render__fromTo = render__fromTo.bind(this);
+  this.render__departureTimePicker = render__departureTimePicker.bind(this);
 
   return html`
     <div class="search">
@@ -14,13 +15,7 @@ export function render__search() {
         </div>
         <div class="col-12 mt-4 d-flex justify-content-between align-items-center">
           <div class="search__footer">
-            <span><img src=${clockImage} alt=""/></span>
-            <select name="" id="">
-              <option value="">Partenza ora</option>
-              <option value="">Partenza alle</option>
-              <option value="">Arrivo entro le</option>
-              <option value="">Ultimo</option>
-            </select>
+            ${this.render__departureTimePicker()}
           </div>
           <div>
             ${render__button('Cambia percorso', () => console.log('default'), this.from && this.to ? '' : 'disabled')}
@@ -30,3 +25,10 @@ export function render__search() {
     </div>
   `;
 }
+
+/* <select name="" id="">
+  <option value="">Partenza ora</option>
+  <option value="">Partenza alle</option>
+  <option value="">Arrivo entro le</option>
+  <option value="">Ultimo</option>
+</select> */

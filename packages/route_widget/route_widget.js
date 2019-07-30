@@ -21,6 +21,7 @@ class RoutePlanner extends LitElement {
 
     /** Observed values */
     this.mobile_open = false;
+    this.departure_time = 1;
     this.from = '';
     this.to = '';
   }

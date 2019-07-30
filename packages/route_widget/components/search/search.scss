@@ -12,13 +12,15 @@
   padding: 1rem;
 
   .search__footer {
-    select {
-      border: 0px;
-      background-color: $white;
-      font-size: 14px;
-      color: $black-400;
-      &:focus {
-        outline: none;
+    .departure_time_picker {
+      display: flex;
+      align-items: center;
+      .clock {
+        vertical-align: text-top;
+      }
+
+      .departure_time_picker__picker {
+        cursor: pointer;
       }
     }
   }
