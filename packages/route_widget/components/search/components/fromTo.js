@@ -33,6 +33,9 @@ export function render__fromTo() {
           <input
             type="text"
             .value=${this.to}
+            @input=${e => {
+              this.to = e.target.value;
+            }}
             @focus=${() => {
               this.to_input_select_visible = true;
             }}
