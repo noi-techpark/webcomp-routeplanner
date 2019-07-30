@@ -3,6 +3,7 @@ import fromImage from '../../../img/from.svg';
 import toImage from '../../../img/to.svg';
 import fromToDotsImage from '../../../img/from-to-dots.svg';
 import changeImage from '../../../img/change.svg';
+import crosshairImage from '../../../img/crosshair-on.svg';
 
 export function render__fromTo() {
   return html`
@@ -26,10 +27,14 @@ export function render__fromTo() {
             @blur=${() => {
               setTimeout(() => {
                 this.from_input_select_visible = false;
-              }, 200);
+              }, 100);
             }}
           />
-          <div class=${`fromTo__inputs__input_selection ${this.from_input_select_visible ? '' : 'hidden'}`}></div>
+          <div class=${`fromTo__inputs__input_selection ${this.from_input_select_visible ? '' : 'hidden'}`}>
+            <div class="fromTo__inputs__input_selection__element">
+              <img src=${crosshairImage} alt="" /> La mia posizione
+            </div>
+          </div>
         </div>
         <div class="fromTo__inputs__input_wrapper">
           <input
@@ -44,7 +49,7 @@ export function render__fromTo() {
             @blur=${() => {
               setTimeout(() => {
                 this.to_input_select_visible = false;
-              }, 200);
+              }, 100);
             }}
           />
           <div class=${`fromTo__inputs__input_selection ${this.to_input_select_visible ? '' : 'hidden'}`}></div>
