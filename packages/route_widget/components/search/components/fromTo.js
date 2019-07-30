@@ -23,15 +23,21 @@ export function render__fromTo() {
             }}
             @focus=${() => {
               this.from_input_select_visible = true;
+              this.to_input_select_visible = false;
             }}
             @blur=${() => {
               setTimeout(() => {
                 this.from_input_select_visible = false;
-              }, 100);
+              }, 200);
             }}
           />
           <div class=${`fromTo__inputs__input_selection ${this.from_input_select_visible ? '' : 'hidden'}`}>
-            <div class="fromTo__inputs__input_selection__element">
+            <div
+              class="fromTo__inputs__input_selection__element"
+              @click=${e => {
+                console.log('LA MIA POSIZIONE');
+              }}
+            >
               <img src=${crosshairImage} alt="" /> La mia posizione
             </div>
           </div>
@@ -44,12 +50,13 @@ export function render__fromTo() {
               this.to = e.target.value;
             }}
             @focus=${() => {
+              this.from_input_select_visible = false;
               this.to_input_select_visible = true;
             }}
             @blur=${() => {
               setTimeout(() => {
                 this.to_input_select_visible = false;
-              }, 100);
+              }, 200);
             }}
           />
           <div class=${`fromTo__inputs__input_selection ${this.to_input_select_visible ? '' : 'hidden'}`}></div>
