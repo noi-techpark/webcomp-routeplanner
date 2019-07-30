@@ -20,11 +20,9 @@ class RoutePlanner extends LitElement {
     this.request_get_poi = request_get_poi.bind(this);
 
     /** Observed values */
-    // this.step = 1; // 0,1
-    /* Initial form, Results list, Route detail, Map */
-    // this.step_mobile = 2; // 0,1,2,3
-    // this.mobile_open = false;
     this.mobile_open = false;
+    this.from = '';
+    this.to = '';
   }
 
   static get properties() {
@@ -47,6 +45,9 @@ class RoutePlanner extends LitElement {
   }
 
   render() {
+    console.log(this.from);
+    console.log(this.to);
+
     return html`
       <style>
         ${getStyle(style__leaflet)}
