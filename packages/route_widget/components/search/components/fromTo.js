@@ -5,8 +5,6 @@ import fromToDotsImage from '../../../img/from-to-dots.svg';
 import changeImage from '../../../img/change.svg';
 
 export function render__fromTo() {
-  console.log(this);
-
   return html`
     <div class="fromTo d-flex">
       <div class="fromTo__graphics">
