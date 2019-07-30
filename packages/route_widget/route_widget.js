@@ -2,7 +2,7 @@ import L from 'leaflet';
 import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
 import { request_get_poi } from './api/efa_sta';
-import { observed_properties } from './observed_properties';
+import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import { getStyle } from './utilities';
 import { render_backgroundMap } from './components/backgroundMap';

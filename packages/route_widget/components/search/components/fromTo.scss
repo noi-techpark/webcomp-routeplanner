@@ -2,12 +2,20 @@
 
 .fromTo {
   .fromTo__graphics {
-    // width: 32px;
+    width: 32px;
     padding: 8px 8px 8px 0;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    flex-wrap: wrap;
+    img {
+      width: 18px;
+      &.fromTo__dots_icon {
+        width: 2px;
+        margin: 4px 0;
+      }
+    }
   }
   .fromTo__inputs {
     input {
