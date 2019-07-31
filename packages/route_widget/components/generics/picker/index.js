@@ -16,8 +16,6 @@ export function render__picker(trigger, values, currentValue, action) {
     </div>
     <div class=${`picker_box ${this[trigger] ? '' : 'hidden'}`}>
       ${Object.keys(values).map(key => {
-        console.log(currentValue === parseInt(key));
-
         return html`
           <div class="picker_box_element" @click=${() => action(parseInt(key))}>
             ${currentValue === parseInt(key)
