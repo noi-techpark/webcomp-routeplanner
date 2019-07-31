@@ -4,7 +4,7 @@ import checkImage from '../../../img/check.svg';
 
 export function render__picker(trigger, values, currentValue, action) {
   return html`
-    <div class="ml-2 picker">
+    <div class="picker">
       <span
         @click=${e => {
           this[trigger] = true;
@@ -14,9 +14,11 @@ export function render__picker(trigger, values, currentValue, action) {
 
       <div class=${`picker_box ${this[trigger] ? '' : 'hidden'}`}>
         ${Object.keys(values).map(key => {
+          console.log(key);
+          
           return html`
             <div class="picker_box_element" @click=${() => action(parseInt(key))}>
-              ${currentValue === parseInt(key)
+              ${`${currentValue}` === `${key}`
                 ? html`
                     <img src=${checkImage} alt="" />
                   `

@@ -14,7 +14,7 @@ export function render__search() {
           ${this.render__fromTo()}
         </div>
         <div class="col-12 mt-4 d-flex justify-content-between align-items-center flex-wrap">
-          <div class="search__footer">
+          <div class="search__footer ${this.departure_time > 1 ? 'full_width' : ''}">
             ${this.render__departureTimePicker()}
           </div>
           <div class=${`${this.departure_time > 1 ? 'ml-auto mt-3' : ''}`}>

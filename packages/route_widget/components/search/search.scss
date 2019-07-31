@@ -12,13 +12,20 @@
   padding: 1rem;
 
   .search__footer {
+    &.full_width {
+      width: 100%;
+    }
+
+    .departure_time_picker__inputs_container {
+      width: 100%;
+    }
+
     input[type='date'] {
       height: 42px;
       border: 1px solid $black-300;
-      margin-left: 0.5rem;
       padding: 0 8px;
-      width: 140px;
       font-size: 12px;
+      width: 196px;
       &:focus {
         outline: none;
       }
