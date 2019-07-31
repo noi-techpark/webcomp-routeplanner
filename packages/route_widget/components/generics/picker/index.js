@@ -13,11 +13,9 @@ export function render__picker(trigger, values, currentValue, action) {
       /></span>
 
       <div class=${`picker_box ${this[trigger] ? '' : 'hidden'}`}>
-        ${Object.keys(values).map(key => {
-          console.log(key);
-          
+        ${Object.keys(values).sort().map(key => {
           return html`
-            <div class="picker_box_element" @click=${() => action(parseInt(key))}>
+            <div class="picker_box_element" @click=${() => action(`${key}`)}>
               ${`${currentValue}` === `${key}`
                 ? html`
                     <img src=${checkImage} alt="" />

@@ -26,12 +26,16 @@ for (let i = 0; i < 24; i++) {
   }
   minutes = 0;
 }
-console.log(time_options);
 
 export function render__departureTimePicker() {
   const setDepartureTime = value => {
     this.departure_time = value;
     this.departure_time_select_visible = false;
+  };
+
+  const setDepartureTimeHour = value => {
+    this.departure_time_hour = value;
+    this.departure_time_select_timings_visible = false;
   };
 
   this.render__picker = render__picker.bind(this);
@@ -42,9 +46,12 @@ export function render__departureTimePicker() {
       <div class="d-flex justify-content-between departure_time_picker__inputs_container">
         ${this.render__picker('departure_time_select_visible', DEPARTURE_TIME, this.departure_time, setDepartureTime)}
         ${this.departure_time > 1
-          ? this.render__picker('departure_time_select_timings_visible', time_options, '0000', () => {
-              this.departure_time_select_timings_visible = false;
-            })
+          ? this.render__picker(
+              'departure_time_select_timings_visible',
+              time_options,
+              this.departure_time_hour,
+              setDepartureTimeHour
+            )
           : ``}
         ${this.departure_time > 1
           ? html`

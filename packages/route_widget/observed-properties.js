@@ -8,6 +8,7 @@ export const observed_properties = {
 
   // Departure time
   departure_time: { type: Number },
+  departure_time_hour: { type: Number },
   departure_time_select_visible: { type: Boolean },
   departure_time_select_timings_visible: { type: Boolean }
 };

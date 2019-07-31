@@ -26,6 +26,7 @@ class RoutePlanner extends LitElement {
     this.to = '';
     this.departure_time_select_visible = false;
     this.departure_time_select_timings_visible = false;
+    this.departure_time_hour = '0000';
   }
 
   static get properties() {
