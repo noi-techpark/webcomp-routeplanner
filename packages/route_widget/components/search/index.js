@@ -2,6 +2,8 @@ import { html } from 'lit-html';
 import { render__button } from '../generics/buttons/index';
 import { render__departureTimePicker } from './components/departure-time-picker';
 import { render__fromTo } from './components/from-to';
+import { render__resultsTab } from './components/results-tab';
+import { render__resultsListElement } from './components/reults-listElement';
 
 export function render__search() {
   this.render__fromTo = render__fromTo.bind(this);
@@ -24,7 +26,9 @@ export function render__search() {
           </div>
         </div>
       </div>
-      <div class=${`search__results ${this.departure_time > 1 ? 'reduced_height' : ''}`}></div>
+      <div class=${`search__results ${this.departure_time > 1 ? 'reduced_height' : ''}`}>
+        ${render__resultsTab()} ${render__resultsListElement()}
+      </div>
     </div>
   `;
 }

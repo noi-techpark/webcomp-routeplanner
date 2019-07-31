@@ -1,0 +1,21 @@
+.badge {
+  font-size: 13px;
+  line-height: 16px;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+
+  &:not(:first-child) {
+    margin-left: 0.5rem;
+  }
+
+  &.yellow {
+    background-color: rgba(255, 255, 184, 0.99);
+    color: #805500;
+  }
+  &.green {
+    background-color: #dbecae;
+    color: #006600;
+  }
+}
