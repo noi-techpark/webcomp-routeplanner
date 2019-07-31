@@ -9,9 +9,9 @@ export function render__picker(trigger, values, currentValue, action) {
         @click=${e => {
           this[trigger] = true;
         }}
-        >${values[currentValue]}</span
-      >
-      <img src=${chevronDownImage} alt="" />
+        >${values[currentValue]} <img src=${chevronDownImage} alt=""
+      /></span>
+
       <div class=${`picker_box ${this[trigger] ? '' : 'hidden'}`}>
         ${Object.keys(values).map(key => {
           return html`

@@ -29,7 +29,11 @@ export function render__departureTimePicker() {
         ? this.render__picker('departure_time_select_visible', DEPARTURE_TIME, this.departure_time, setDepartureTime)
         : ``}
       ${this.departure_time > 1
-        ? this.render__picker('departure_time_select_visible', DEPARTURE_TIME, this.departure_time, setDepartureTime)
+        ? html`
+            <div>
+              <input type="date" />
+            </div>
+          `
         : ``}
     </div>
   `;

@@ -3,7 +3,7 @@
 .fromTo {
   .fromTo__graphics {
     width: 26px;
-    padding: 8px 8px 8px 0;
+    padding: 12px 8px 12px 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,18 +20,27 @@
   .fromTo__inputs {
     flex: 1;
     .fromTo__inputs__input_wrapper {
+      height: 40px;
       width: 100%;
       position: relative;
+      display: flex;
+      align-items: center;
       &:first-child {
         input {
-          border-bottom: 0px;
+          border: 1px solid $black-300;
         }
+      }
+      p {
+        color: $black-300;
+        font-size: 14px;
+        line-height: 24px;
       }
       input {
         width: 100%;
-        border: 1px solid $black-300;
         height: 40px;
         padding: 0 8px;
+        font-size: 14px;
+        line-height: 24px;
         &:focus {
           outline: none;
         }
@@ -62,7 +71,8 @@
   }
   .fromTo__button {
     width: 46px;
-    border: 1px solid $black-300;
+    // border: 1px solid $black-300;
+    border: 0;
     border-left: 0;
     display: flex;
     align-items: center;

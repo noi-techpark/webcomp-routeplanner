@@ -12,5 +12,14 @@
   padding: 1rem;
 
   .search__footer {
+    input[type='date'] {
+      height: 40px;
+      border: 1px solid $black-300;
+      margin-left: 0.5rem;
+      padding: 0 8px;
+      &:focus {
+        outline: none;
+      }
+    }
   }
 }

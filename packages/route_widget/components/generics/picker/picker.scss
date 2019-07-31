@@ -3,12 +3,14 @@
   font-size: 14px;
   line-height: 24px;
   position: relative;
+  border: 1px solid $black-300;
+  padding: 8px;
 }
 
 .picker_box {
   white-space: nowrap;
   position: absolute;
-  left: 0;
+  left: -1px;
   top: -6px;
   z-index: 401;
   background-color: $white;
