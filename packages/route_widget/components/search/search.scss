@@ -4,12 +4,15 @@
 
 .search {
   position: absolute;
-  background-color: $white;
   top: 16px;
   left: 16px;
   width: 460px;
   z-index: 400;
-  padding: 1rem;
+
+  .search__background {
+    background-color: $white;
+    padding: 1rem;
+  }
 
   .search__footer {
     &.full_width {
@@ -30,5 +33,18 @@
         outline: none;
       }
     }
+  }
+}
+
+.search__results {
+  background-color: $white;
+  margin-top: 1rem;
+  height: 472px;
+  width: 100%;
+  padding: 1rem;
+  overflow-y: scroll;
+
+  &.reduced_height {
+    height: 432px;
   }
 }

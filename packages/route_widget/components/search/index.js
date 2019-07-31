@@ -9,19 +9,22 @@ export function render__search() {
 
   return html`
     <div class="search">
-      <div class="row">
-        <div class="col-12">
-          ${this.render__fromTo()}
-        </div>
-        <div class="col-12 mt-4 d-flex justify-content-between align-items-center flex-wrap">
-          <div class="search__footer ${this.departure_time > 1 ? 'full_width' : ''}">
-            ${this.render__departureTimePicker()}
+      <div class="search__background">
+        <div class="row">
+          <div class="col-12">
+            ${this.render__fromTo()}
           </div>
-          <div class=${`${this.departure_time > 1 ? 'ml-auto mt-3' : ''}`}>
-            ${render__button('Cambia percorso', () => console.log('default'), this.from ? '' : 'disabled')}
+          <div class="col-12 mt-4 d-flex justify-content-between align-items-center flex-wrap">
+            <div class="search__footer ${this.departure_time > 1 ? 'full_width' : ''}">
+              ${this.render__departureTimePicker()}
+            </div>
+            <div class=${`${this.departure_time > 1 ? 'ml-auto mt-3' : ''}`}>
+              ${render__button('Cambia percorso', () => console.log('default'), this.from ? '' : 'disabled')}
+            </div>
           </div>
         </div>
       </div>
+      <div class=${`search__results ${this.departure_time > 1 ? 'reduced_height' : ''}`}></div>
     </div>
   `;
 }
