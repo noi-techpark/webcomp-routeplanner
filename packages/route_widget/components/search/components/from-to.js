@@ -23,7 +23,6 @@ export function render__fromTo() {
             }}
             @focus=${() => {
               this.from_input_select_visible = true;
-              this.to_input_select_visible = false;
             }}
             @blur=${() => {
               setTimeout(() => {

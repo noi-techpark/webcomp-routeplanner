@@ -18,7 +18,7 @@ export function render__search() {
             ${this.render__departureTimePicker()}
           </div>
           <div class=${`${this.departure_time > 1 ? 'ml-auto mt-3' : ''}`}>
-            ${render__button('Cambia percorso', () => console.log('default'), this.from && this.to ? '' : 'disabled')}
+            ${render__button('Cambia percorso', () => console.log('default'), this.from ? '' : 'disabled')}
           </div>
         </div>
       </div>

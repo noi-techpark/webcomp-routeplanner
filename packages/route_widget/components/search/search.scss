@@ -7,16 +7,18 @@
   background-color: $white;
   top: 16px;
   left: 16px;
-  width: 400px;
+  width: 460px;
   z-index: 400;
   padding: 1rem;
 
   .search__footer {
     input[type='date'] {
-      height: 40px;
+      height: 42px;
       border: 1px solid $black-300;
       margin-left: 0.5rem;
       padding: 0 8px;
+      width: 140px;
+      font-size: 12px;
       &:focus {
         outline: none;
       }
