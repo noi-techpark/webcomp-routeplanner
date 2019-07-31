@@ -30,6 +30,7 @@ export function render__search() {
         ${render__resultsTab()}
         <div class="search__results__list_container">
           ${render__resultsListElement()}
+          ${render__resultsListElement()}
         </div>
       </div>
     </div>

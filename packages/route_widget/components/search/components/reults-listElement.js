@@ -1,5 +1,6 @@
 import { html } from 'lit-html';
 import chevronRightImage from '../../../img/chevron-right.svg';
+import carImage from '../../../img/car.svg';
 import { render__badge } from '../../generics/badge';
 
 export function render__resultsListElement() {
@@ -12,8 +13,8 @@ export function render__resultsListElement() {
         <div>
           <p class="search__results__listElement__range">10:32 - 11:06</p>
         </div>
-        <div>
-          a / a / a
+        <div class="search__results__listElement__transports">
+          <img src=${carImage} alt="" />
         </div>
       </div>
       <div class="d-flex align-items-center">
