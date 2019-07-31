@@ -13,11 +13,11 @@ export function render__search() {
         <div class="col-12">
           ${this.render__fromTo()}
         </div>
-        <div class="col-12 mt-4 d-flex justify-content-between align-items-center">
+        <div class="col-12 mt-4 d-flex justify-content-between align-items-center flex-wrap">
           <div class="search__footer">
             ${this.render__departureTimePicker()}
           </div>
-          <div>
+          <div class=${`${this.departure_time > 1 ? 'ml-auto mt-3' : ''}`}>
             ${render__button('Cambia percorso', () => console.log('default'), this.from && this.to ? '' : 'disabled')}
           </div>
         </div>

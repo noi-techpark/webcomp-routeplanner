@@ -18,13 +18,19 @@ export function render__departureTimePicker() {
   this.render__picker = render__picker.bind(this);
 
   return html`
-    <div class="departure_time_picker">
+    <div class="departure_time_picker d-flex">
       <img class="clock" src=${clockImage} alt="" /> ${this.render__picker(
         'departure_time_select_visible',
         DEPARTURE_TIME,
         this.departure_time,
         setDepartureTime
       )}
+      ${this.departure_time > 1
+        ? this.render__picker('departure_time_select_visible', DEPARTURE_TIME, this.departure_time, setDepartureTime)
+        : ``}
+      ${this.departure_time > 1
+        ? this.render__picker('departure_time_select_visible', DEPARTURE_TIME, this.departure_time, setDepartureTime)
+        : ``}
     </div>
   `;
 }

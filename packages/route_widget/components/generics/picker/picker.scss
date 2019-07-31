@@ -2,11 +2,13 @@
   cursor: pointer;
   font-size: 14px;
   line-height: 24px;
+  position: relative;
 }
+
 .picker_box {
   white-space: nowrap;
   position: absolute;
-  left: 25px;
+  left: 0;
   top: -6px;
   z-index: 401;
   background-color: $white;
@@ -36,6 +38,7 @@
     }
   }
 }
+
 .picker_box__closing_underlay {
   position: fixed;
   top: 0;
