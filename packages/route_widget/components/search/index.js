@@ -27,7 +27,10 @@ export function render__search() {
         </div>
       </div>
       <div class=${`search__results ${this.departure_time > 1 ? 'reduced_height' : ''}`}>
-        ${render__resultsTab()} ${render__resultsListElement()}
+        ${render__resultsTab()}
+        <div class="search__results__list_container">
+          ${render__resultsListElement()}
+        </div>
       </div>
     </div>
   `;
