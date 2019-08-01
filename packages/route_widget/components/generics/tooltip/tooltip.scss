@@ -1,0 +1,34 @@
+@import '../../../scss/colors';
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+
+  .tooltiptext {
+    display: none;
+    background-color: $white;
+    color: $black;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 402;
+    width: 300px;
+    padding: 1rem;
+    box-shadow: 0px 3px 6px rgba(51, 51, 51, 0.1), 0px 10px 20px rgba(51, 51, 51, 0.15);
+    transform: translateY(-50%);
+    &.left {
+      right: 105%;
+      margin-right: 1rem;
+    }
+    &.right {
+      left: 105%;
+    }
+  }
+
+  &:hover {
+    .tooltiptext {
+      display: block;
+    }
+  }
+}

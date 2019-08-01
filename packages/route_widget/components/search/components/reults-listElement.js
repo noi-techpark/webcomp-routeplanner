@@ -1,7 +1,9 @@
 import { html } from 'lit-html';
 import chevronRightImage from '../../../img/chevron-right.svg';
+import infoCircleImage from '../../../img/info-circle.svg';
 import carImage from '../../../img/car.svg';
 import { render__badge } from '../../generics/badge';
+import { render__tooltip } from '../../generics/tooltip';
 
 export function render__resultsListElement() {
   return html`
@@ -20,9 +22,19 @@ export function render__resultsListElement() {
       <div class="d-flex align-items-center">
         <div>
           <p class="search__results__listElement__time">
-            1h 22min
-            <span>
-              € 6,50
+            <span class="d-block">
+              1h 22min
+            </span>
+            <span class="search__results__listElement__time__price d-inline-block align-items-center">
+              <span>
+                € 6,50
+              </span>
+              ${render__tooltip(
+                '',
+                'La cifra mostrata si riferisce ad un biglietto di sola andata per un adulto.',
+                infoCircleImage,
+                'left'
+              )}
             </span>
           </p>
         </div>
@@ -30,6 +42,7 @@ export function render__resultsListElement() {
           <img src=${chevronRightImage} alt="" />
         </div>
       </div>
+      <div class="search__results__listElement__border_bottom"></div>
     </div>
   `;
 }

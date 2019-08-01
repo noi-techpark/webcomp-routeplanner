@@ -27,7 +27,7 @@
       height: 42px;
       border: 1px solid $black-300;
       padding: 0 8px;
-      font-size: 12px;
+      font-size: 14px;
       width: 196px;
       &:focus {
         outline: none;
@@ -69,15 +69,17 @@
       }
     }
   }
+
   .search__results__list_container {
     overflow-y: scroll;
+    overflow-x: hidden;
     height: calc(100% - 57px);
   }
 
   .search__results__listElement {
     padding: 1rem;
     cursor: pointer;
-    border-bottom: 1px solid $black-100;
+    flex-wrap: wrap;
 
     .search__results__listElement__range {
       font-size: 18px;
@@ -94,14 +96,18 @@
       line-height: 24px;
       text-align: center;
       padding: 0 0.5rem;
-      span {
-        display: block;
+      .search__results__listElement__time__price {
         font-size: 14px;
         color: $black-300;
       }
     }
     .search__results__listElement__chevron_container {
       // padding: 0 0.5rem;
+    }
+    .search__results__listElement__border_bottom {
+      width: 100%;
+      border-bottom: 1px solid $black-100;
+      margin-top: 1rem;
     }
   }
 }
