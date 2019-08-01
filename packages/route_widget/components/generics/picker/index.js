@@ -5,12 +5,14 @@ import checkImage from '../../../img/check.svg';
 export function render__picker(trigger, values, currentValue, action) {
   return html`
     <div class="picker">
-      <span
+      <div
+        class="picker__trigger_box"
         @click=${e => {
           this[trigger] = true;
         }}
-        >${values[currentValue]} <img src=${chevronDownImage} alt=""
-      /></span>
+      >
+        <span>${values[currentValue]} <img src=${chevronDownImage} alt=""/></span>
+      </div>
 
       <div class=${`picker_box ${this[trigger] ? '' : 'hidden'}`}>
         ${Object.keys(values)
