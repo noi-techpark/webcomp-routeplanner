@@ -13,18 +13,23 @@ export function render__picker(trigger, values, currentValue, action) {
       /></span>
 
       <div class=${`picker_box ${this[trigger] ? '' : 'hidden'}`}>
-        ${Object.keys(values).sort().map(key => {
-          return html`
-            <div class="picker_box_element" @click=${() => action(`${key}`)}>
-              ${`${currentValue}` === `${key}`
-                ? html`
-                    <img src=${checkImage} alt="" />
-                  `
-                : ``}
-              ${values[key]}
-            </div>
-          `;
-        })}
+        ${Object.keys(values)
+          .sort()
+          .map(key => {
+            return html`
+              <div
+                class=${`picker_box_element  ${`${currentValue}` === `${key}` ? `active` : ``}`}
+                @click=${() => action(`${key}`)}
+              >
+                ${`${currentValue}` === `${key}`
+                  ? html`
+                      <img src=${checkImage} alt="" />
+                    `
+                  : ``}
+                ${values[key]}
+              </div>
+            `;
+          })}
       </div>
     </div>
     ${this[trigger]
