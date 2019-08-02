@@ -9,8 +9,6 @@ import verticalDotsImage from '../../img/vertical-dots.svg';
 import { render__badge } from '../generics/badge';
 
 export function render__details() {
-  console.log(this.details_data);
-
   return html`
     <div class="details">
       <div class="details__background">
@@ -75,7 +73,6 @@ export function render__details() {
           </div>
         </div>
         <div class="details__body_section">
-          <!-- <div class="col-12"> -->
           <div class="details__body_section__content">
             ${this.details_data.trip.map((o, i) => {
               let tripIcon = tripStandardImage;
@@ -117,7 +114,6 @@ export function render__details() {
                 </div>
               `;
             })}
-            <!-- </div> -->
           </div>
         </div>
         <div class="row details__footer_section">
