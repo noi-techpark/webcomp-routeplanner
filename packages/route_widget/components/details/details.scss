@@ -8,7 +8,106 @@
 
   .details__background {
     background-color: $white;
-    padding: 1rem;
     height: 100%;
+    position: relative;
+  }
+
+  .details__back_section {
+    height: 6%;
+    .details__back_section__content {
+      padding: 0 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      img {
+        transform: rotate(180deg);
+      }
+      p {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+
+  .details__header_section {
+    height: 30%;
+
+    .details__header_section__content {
+      padding: 0 1rem;
+
+      .details__header_section__timings {
+        font-size: 30px;
+        line-height: 40px;
+      }
+
+      .details__header_section__description {
+        font-size: 14px;
+        line-height: 24px;
+        color: $black-300;
+        display: flex;
+        align-items: center;
+      }
+    }
+    .details__header_section__show_others {
+      a {
+        text-decoration: underline;
+        font-size: 18px;
+        line-height: 24px;
+        color: $blue;
+      }
+    }
+  }
+
+  .details__body_section {
+    height: 56%;
+    border-top: 1px solid $black-100;
+    .details__body_section__content {
+      overflow-x: hidden;
+      overflow-y: scroll;
+      height: 100%;
+
+      .details__body_section__content__element {
+        &:first-child {
+          padding-top: 1rem;
+        }
+      }
+
+      .details__body_section__content__time {
+        text-align: center;
+        padding-left: 16px;
+      }
+
+      .details__body_section__content__place {
+        font-size: 14px;
+        line-height: 24px;
+      }
+
+      .details__body_section__content__middle {
+        flex-wrap: wrap;
+      }
+
+      .details__body_section__content__vertical_dots {
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        &.first_element {
+          height: calc(100% - 32px);
+        }
+        img {
+          width: 4px;
+          position: absolute;
+        }
+      }
+      .details__body_section__content__description {
+        margin: 2.5rem 2rem;
+        font-size: 14px;
+        line-height: 16px;
+        color: $black-300;
+      }
+    }
+  }
+
+  .details__footer_section {
+    border-top: 1px solid $black-100;
+    height: 8%;
   }
 }

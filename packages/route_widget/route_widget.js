@@ -5,6 +5,7 @@ import { request_get_poi } from './api/efa_sta';
 import { render_backgroundMap } from './components/backgroundMap';
 import { render__details } from './components/details';
 import { render__search } from './components/search';
+import { FAKE_DETAILS } from './fake_data';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import { getStyle } from './utilities';
@@ -29,7 +30,8 @@ class RoutePlanner extends LitElement {
     this.departure_time_select_visible = false;
     this.departure_time_select_timings_visible = false;
     this.departure_time_hour = '0000';
-    this.details_data = undefined;
+    // this.details_data = undefined;
+    this.details_data = FAKE_DETAILS;
   }
 
   static get properties() {
