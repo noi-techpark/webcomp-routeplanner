@@ -2,8 +2,10 @@
 @import 'mixins';
 @import './typography.scss';
 @import './bts-utilities.scss';
-
+// Components
 @import '../components/search/search.scss';
+@import '../components/details/details.scss';
+// Generics
 @import '../components/generics/buttons/buttons.scss';
 @import '../components/generics/picker/picker.scss';
 @import '../components/generics/badge/badge.scss';

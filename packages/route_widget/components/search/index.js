@@ -8,6 +8,7 @@ import { render__resultsListElement } from './components/reults-listElement';
 export function render__search() {
   this.render__fromTo = render__fromTo.bind(this);
   this.render__departureTimePicker = render__departureTimePicker.bind(this);
+  this.render__resultsListElement = render__resultsListElement.bind(this);
 
   return html`
     <div class="search">
@@ -29,8 +30,7 @@ export function render__search() {
       <div class=${`search__results ${this.departure_time > 1 ? 'reduced_height' : ''}`}>
         ${render__resultsTab()}
         <div class="search__results__list_container">
-          ${render__resultsListElement()}
-          ${render__resultsListElement()}
+          ${this.render__resultsListElement()} ${this.render__resultsListElement()}
         </div>
       </div>
     </div>
