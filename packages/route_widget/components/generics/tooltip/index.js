@@ -5,7 +5,7 @@ export function render__tooltip(label, text, icon, position) {
     <div class="tooltip">
       ${icon
         ? html`
-            <img src=${icon} alt="" />
+            <img class="tooltip__icon" src=${icon} alt="" />
           `
         : null}
       ${label}

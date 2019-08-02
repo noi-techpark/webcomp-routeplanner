@@ -21,28 +21,28 @@ export function render__resultsListElement() {
       </div>
       <div class="d-flex align-items-center">
         <div>
-          <p class="search__results__listElement__time">
-            <span class="d-block">
-              1h 22min
-            </span>
-            <span class="search__results__listElement__time__price d-inline-block align-items-center">
-              <span>
-                € 6,50
-              </span>
+          <div class="search__results__listElement__time">
+            <div>
+              <p>1h 22min</p>
+            </div>
+            <div class="search__results__listElement__time__price d-inline-flex align-items-center">
+              <p>€ 6,50</p>
               ${render__tooltip(
                 '',
-                'La cifra mostrata si riferisce ad un biglietto di sola andata per un adulto.',
+                html`
+                  <h3>Prezzo indicativo per un adulto</h3>
+                  <p>La cifra mostrata si riferisce ad un biglietto di sola andata per un adulto.</p>
+                `,
                 infoCircleImage,
                 'left'
               )}
-            </span>
-          </p>
+            </div>
+          </div>
         </div>
         <div class="search__results__listElement__chevron_container">
           <img src=${chevronRightImage} alt="" />
         </div>
       </div>
-      <div class="search__results__listElement__border_bottom"></div>
     </div>
   `;
 }

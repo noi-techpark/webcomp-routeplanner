@@ -80,6 +80,11 @@
     padding: 1rem;
     cursor: pointer;
     flex-wrap: wrap;
+    border-bottom: 1px solid $black-100;
+
+    &:hover {
+      background-color: $black-100;
+    }
 
     .search__results__listElement__range {
       font-size: 18px;
@@ -103,11 +108,6 @@
     }
     .search__results__listElement__chevron_container {
       // padding: 0 0.5rem;
-    }
-    .search__results__listElement__border_bottom {
-      width: 100%;
-      border-bottom: 1px solid $black-100;
-      margin-top: 1rem;
     }
   }
 }
