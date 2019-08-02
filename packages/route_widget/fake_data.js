@@ -7,7 +7,7 @@ export const FAKE_DETAILS = {
     {
       time: '12:40',
       place: 'via San Severino, 95, Trento',
-      means: 'on-foot',
+      means: 'walking',
       means_desc: 'A piedi (10 minuti)'
     },
     {
@@ -19,7 +19,7 @@ export const FAKE_DETAILS = {
     {
       time: '13:27',
       place: 'Merano, Stazione',
-      means: 'on-foot',
+      means: 'walking',
       means_desc: 'A piedi (8 minuti)'
     },
     {

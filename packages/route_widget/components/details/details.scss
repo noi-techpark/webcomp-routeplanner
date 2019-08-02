@@ -100,10 +100,15 @@
         }
       }
       .details__body_section__content__description {
-        margin: 2.5rem 2rem;
+        margin: 1.5rem 0;
         font-size: 14px;
         line-height: 16px;
         color: $black-300;
+        display: flex;
+        align-items: center;
+        img {
+          margin-right: 0.5rem;
+        }
       }
     }
   }

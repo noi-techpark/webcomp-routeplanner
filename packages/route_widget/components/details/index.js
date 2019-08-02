@@ -1,12 +1,20 @@
 import { html } from 'lit-html';
 import chevronRightImage from '../../img/chevron-right.svg';
 import carImage from '../../img/car.svg';
+import walkingImage from '../../img/walking.svg';
 import tripFirstImage from '../../img/trip-first.svg';
 import tripStandardImage from '../../img/trip-standard.svg';
 import tripLastImage from '../../img/trip-last.svg';
 import verticalDotsImage from '../../img/vertical-dots.svg';
+import trainImage from '../../img/train.svg';
 
 import { render__badge } from '../generics/badge';
+
+const MEANS_ICONS = {
+  walking: walkingImage,
+  train: trainImage,
+  car: carImage
+};
 
 export function render__details() {
   return html`
@@ -81,6 +89,7 @@ export function render__details() {
               } else if (i === this.details_data.trip.length - 1) {
                 tripIcon = tripLastImage;
               }
+
               return html`
                 <div class="row details__body_section__content__element">
                   <div class="col">
@@ -106,9 +115,16 @@ export function render__details() {
                   <div class="col-8">
                     <p class="details__body_section__content__place">${o.place}</p>
                     <div class="details__body_section__content__description">
-                      <p>
-                        ${o.means_desc}
-                      </p>
+                      ${o.means_desc
+                        ? html`
+                            <p>
+                              <img src=${MEANS_ICONS[o.means]} alt="" />
+                            </p>
+                            <p>
+                              ${o.means_desc}
+                            </p>
+                          `
+                        : null}
                     </div>
                   </div>
                 </div>
