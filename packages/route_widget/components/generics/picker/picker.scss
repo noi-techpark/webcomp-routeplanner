@@ -4,6 +4,9 @@
   line-height: 24px;
   position: relative;
   border: 1px solid $black-300;
+  &.borderless {
+    border: 0;
+  }
 }
 
 .picker__trigger_box {

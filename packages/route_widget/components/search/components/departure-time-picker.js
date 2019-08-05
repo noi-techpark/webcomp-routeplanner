@@ -44,7 +44,9 @@ export function render__departureTimePicker() {
     <div class="departure_time_picker d-flex">
       <img class="clock mr-2" src=${clockImage} alt="" />
       <div class="d-flex justify-content-between departure_time_picker__inputs_container">
-        ${this.render__picker('departure_time_select_visible', DEPARTURE_TIME, this.departure_time, setDepartureTime)}
+        ${this.render__picker('departure_time_select_visible', DEPARTURE_TIME, this.departure_time, setDepartureTime, [
+          'borderless'
+        ])}
         ${this.departure_time > 1
           ? this.render__picker(
               'departure_time_select_timings_visible',
