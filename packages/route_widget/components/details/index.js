@@ -143,21 +143,21 @@ export function render__details() {
                   <img src="${downloadImage}" alt="" /> Scarica PDF
                 `,
                 () => console.log('default'),
-                ''
+                'grey'
               )}
               ${render__button(
                 html`
                   <img src="${printImage}" alt="" /> Stampa
                 `,
                 () => console.log('default'),
-                ''
+                'grey'
               )}
               ${render__button(
                 html`
                   <img src="${shareImage}" alt="" /> Condividi
                 `,
                 () => console.log('default'),
-                ''
+                'grey'
               )}
             </div>
           </div>
