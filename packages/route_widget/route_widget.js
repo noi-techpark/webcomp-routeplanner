@@ -64,18 +64,13 @@ class RoutePlanner extends LitElement {
       this.map.setZoom(this.map.getZoom() - 1);
     };
     btnCenterMap.onclick = () => {
-      this.is_loading = true;
       navigator.geolocation.getCurrentPosition(
         pos => {
           const { latitude, longitude } = pos.coords;
           this.current_location = { lat: latitude, lng: longitude };
-          this.current_station = {};
-          this.showFilters = false;
           this.map.flyTo([latitude, longitude], 15);
           this.map.removeLayer(this.layer_columns);
           this.map.removeLayer(this.layer_user);
-          this.drawMap();
-          this.is_loading = false;
         },
         () => {}
       );
