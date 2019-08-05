@@ -7,15 +7,15 @@ import plusImage from '../../img/plus.svg';
 export function render__mapControls() {
   return html`
     <div class="map_controls">
-      <div class="map_controls__button">
+      <div id="centerMap" class="map_controls__button">
         <img src=${findPositionImage} alt="" />
       </div>
       <div class="map_controls__button">
-        <div class="map_controls__button__element">
+        <div id="zoomMapIn" class="map_controls__button__element">
           <img src=${plusImage} alt="" />
         </div>
         <div class="map_controls__button__divider"></div>
-        <div class="map_controls__button__element">
+        <div id="zoomMapOut" class="map_controls__button__element">
           <img src=${minusImage} alt="" />
         </div>
       </div>

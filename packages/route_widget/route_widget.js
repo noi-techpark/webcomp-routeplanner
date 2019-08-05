@@ -53,6 +53,33 @@ class RoutePlanner extends LitElement {
 
   async firstUpdated() {
     this.initializeMap();
+
+    const btnZoomIn = this.shadowRoot.getElementById('zoomMapIn');
+    const btnZoomOut = this.shadowRoot.getElementById('zoomMapOut');
+    const btnCenterMap = this.shadowRoot.getElementById('centerMap');
+    btnZoomIn.onclick = () => {
+      this.map.setZoom(this.map.getZoom() + 1);
+    };
+    btnZoomOut.onclick = () => {
+      this.map.setZoom(this.map.getZoom() - 1);
+    };
+    btnCenterMap.onclick = () => {
+      this.is_loading = true;
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          const { latitude, longitude } = pos.coords;
+          this.current_location = { lat: latitude, lng: longitude };
+          this.current_station = {};
+          this.showFilters = false;
+          this.map.flyTo([latitude, longitude], 15);
+          this.map.removeLayer(this.layer_columns);
+          this.map.removeLayer(this.layer_user);
+          this.drawMap();
+          this.is_loading = false;
+        },
+        () => {}
+      );
+    };
   }
 
   render() {
