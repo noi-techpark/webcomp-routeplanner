@@ -1,14 +1,17 @@
 import { html } from 'lit-html';
-import chevronRightImage from '../../img/chevron-right.svg';
 import carImage from '../../img/car.svg';
-import walkingImage from '../../img/walking.svg';
-import tripFirstImage from '../../img/trip-first.svg';
-import tripStandardImage from '../../img/trip-standard.svg';
-import tripLastImage from '../../img/trip-last.svg';
-import verticalDotsImage from '../../img/vertical-dots.svg';
+import chevronRightImage from '../../img/chevron-right.svg';
+import downloadImage from '../../img/download.svg';
+import printImage from '../../img/print.svg';
+import shareImage from '../../img/share.svg';
 import trainImage from '../../img/train.svg';
-
+import tripFirstImage from '../../img/trip-first.svg';
+import tripLastImage from '../../img/trip-last.svg';
+import tripStandardImage from '../../img/trip-standard.svg';
+import verticalDotsImage from '../../img/vertical-dots.svg';
+import walkingImage from '../../img/walking.svg';
 import { render__badge } from '../generics/badge';
+import { render__button } from '../generics/buttons';
 
 const MEANS_ICONS = {
   walking: walkingImage,
@@ -36,8 +39,8 @@ export function render__details() {
           </div>
         </div>
 
-        <div class="row details__header_section mt-2">
-          <div class="col-12">
+        <div class="row details__header_section">
+          <div class="col-12 mt-2">
             <div class="details__header_section__content">
               <div class="d-flex mt-1">
                 ${this.details_data.tags.map(o => {
@@ -132,10 +135,30 @@ export function render__details() {
             })}
           </div>
         </div>
-        <div class="row details__footer_section">
-          <div class="col-12">
-            <div class="">
-              section
+        <div class="details__footer_section">
+          <div class="d-flex align-items-center justify-content-center">
+            <div class="d-flex justify-content-around align-items-center">
+              ${render__button(
+                html`
+                  <img src="${downloadImage}" alt="" /> Scarica PDF
+                `,
+                () => console.log('default'),
+                ''
+              )}
+              ${render__button(
+                html`
+                  <img src="${printImage}" alt="" /> Stampa
+                `,
+                () => console.log('default'),
+                ''
+              )}
+              ${render__button(
+                html`
+                  <img src="${shareImage}" alt="" /> Condividi
+                `,
+                () => console.log('default'),
+                ''
+              )}
             </div>
           </div>
         </div>

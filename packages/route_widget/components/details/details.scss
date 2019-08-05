@@ -31,7 +31,7 @@
   }
 
   .details__header_section {
-    height: 30%;
+    height: 28%;
 
     .details__header_section__content {
       padding: 0 1rem;
@@ -61,8 +61,8 @@
 
   .details__body_section {
     height: 56%;
-    border-top: 1px solid $black-100;
     .details__body_section__content {
+      border-top: 1px solid $black-100;
       overflow-x: hidden;
       overflow-y: scroll;
       height: 100%;
@@ -76,6 +76,9 @@
       .details__body_section__content__time {
         text-align: center;
         padding-left: 16px;
+        font-size: 14px;
+        line-height: 24px;
+        color: $black-300;
       }
 
       .details__body_section__content__place {
@@ -115,6 +118,14 @@
 
   .details__footer_section {
     border-top: 1px solid $black-100;
-    height: 8%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    .button {
+      font-size: 14px;
+      padding: 10px 28px;
+      margin: 0 5px;
+    }
   }
 }
