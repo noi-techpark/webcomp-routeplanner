@@ -24,6 +24,7 @@ class RoutePlanner extends LitElement {
     this.request_get_poi = request_get_poi.bind(this);
 
     /** Observed values */
+    this.isFullScreen = false;
     this.mobile_open = false;
     this.departure_time = 1;
     this.from = '';
@@ -73,6 +74,71 @@ class RoutePlanner extends LitElement {
         () => {}
       );
     };
+
+    const debounce = func => {
+      var timer;
+      return function(event) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(func, 500, event);
+      };
+    };
+
+    window.addEventListener(
+      'resize',
+      debounce(e => {
+        console.log(window.innerWidth);
+        if (window.innerWidth >= 992) {
+          try {
+            document.body.exitFullscreen();
+          } catch (error) {
+            try {
+              document.webkitExitFullscreen();
+            } catch (error) {
+              try {
+                document.body.cancelFullScreen();
+              } catch (error) {}
+            }
+          }
+          this.isFullScreen = false;
+          this.mobile_open = false;
+        }
+      })
+    );
+  }
+
+  handleFullScreenMap() {
+    const map = this.shadowRoot.getElementById('map');
+    map.classList.toggle('closed');
+
+    if (this.isFullScreen) {
+      try {
+        document.body.exitFullscreen();
+      } catch (error) {
+        try {
+          document.webkitExitFullscreen();
+        } catch (error) {
+          try {
+            document.body.cancelFullScreen();
+          } catch (error) {}
+        }
+      }
+    } else {
+      try {
+        document.body.requestFullscreen();
+      } catch (error) {
+        try {
+          document.body.webkitRequestFullscreen();
+        } catch (error) {
+          try {
+            document.body.mozRequestFullScreen();
+          } catch (error) {}
+        }
+      }
+    }
+
+    this.map.invalidateSize(true);
+    this.isFullScreen = !this.isFullScreen;
+    this.mobile_open = !this.mobile_open;
   }
 
   render() {

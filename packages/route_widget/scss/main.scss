@@ -19,7 +19,7 @@
   width: 100%;
 
   @media (max-width: 992px) {
-    .MODE__mobile__open {
+    &.MODE__mobile__open {
       position: fixed;
       width: 100%;
       height: 100%;
@@ -32,7 +32,7 @@
         bottom: 15px;
       }
     }
-    .MODE__mobile__closed {
+    &.MODE__mobile__closed {
       width: calc(100vw - 30px);
       margin: 0 auto;
       .MODE__mobile__closed__container {
@@ -50,20 +50,21 @@
 }
 
 #map {
-  height: 700px;
+  @media (min-width: 320px) {
+    width: 100%;
+    height: 100vh;
+    &.closed {
+      height: 260px;
+    }
+  }
+  @media (min-width: 992px) {
+    height: 700px;
+    &.closed {
+      height: 700px;
+    }
+  }
 }
 
 .utils--cursor-pointer {
   cursor: pointer;
 }
-
-// textarea {
-//   border: 1px solid $black-300;
-//   padding: 8px;
-// }
-// textarea:focus {
-//   outline: none;
-// }
-
-// .MODE__desktop {
-// }

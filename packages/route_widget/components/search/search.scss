@@ -6,8 +6,12 @@
   position: absolute;
   top: 16px;
   left: 16px;
-  width: 460px;
   z-index: 400;
+
+  width: calc(100% - 32px);
+  @media (min-width: 992px) {
+    width: 460px;
+  }
 
   .search__background {
     background-color: $white;

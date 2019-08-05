@@ -17,7 +17,7 @@ export function render__search() {
           <div class="col-12">
             ${this.render__fromTo()}
           </div>
-          <div class="col-12 mt-4 d-flex justify-content-between align-items-center flex-wrap">
+          <div class="col-12 mt-md-4 d-flex justify-content-between align-items-center flex-wrap">
             <div class="search__footer ${this.departure_time > 1 ? 'full_width' : ''}">
               ${this.render__departureTimePicker()}
             </div>
@@ -27,12 +27,16 @@ export function render__search() {
           </div>
         </div>
       </div>
-      <div class=${`search__results ${this.departure_time > 1 ? 'reduced_height' : ''}`}>
-        ${render__resultsTab()}
-        <div class="search__results__list_container">
-          ${this.render__resultsListElement()} ${this.render__resultsListElement()}
-        </div>
-      </div>
+      ${this.from
+        ? html`
+            <div class=${`search__results ${this.departure_time > 1 ? 'reduced_height' : ''}`}>
+              ${render__resultsTab()}
+              <div class="search__results__list_container">
+                ${this.render__resultsListElement()} ${this.render__resultsListElement()}
+              </div>
+            </div>
+          `
+        : null}
     </div>
   `;
 }
