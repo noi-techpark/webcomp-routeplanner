@@ -86,7 +86,6 @@ class RoutePlanner extends LitElement {
     window.addEventListener(
       'resize',
       debounce(e => {
-        console.log(window.innerWidth);
         if (window.innerWidth >= 992) {
           try {
             document.body.exitFullscreen();

@@ -6,6 +6,29 @@ import changeImage from '../../../img/change.svg';
 import crosshairImage from '../../../img/crosshair-on.svg';
 
 export function render__fromTo() {
+  const handleFocus = () => {
+    if (window.innerWidth < 992 && !this.isFullScreen) {
+      const map = this.shadowRoot.getElementById('map');
+      map.classList.toggle('closed');
+      try {
+        document.body.requestFullscreen();
+      } catch (error) {
+        try {
+          document.body.webkitRequestFullscreen();
+        } catch (error) {
+          try {
+            document.body.mozRequestFullScreen();
+          } catch (error) {}
+        }
+      }
+      this.map.invalidateSize(true);
+      this.isFullScreen = true;
+      this.mobile_open = true;
+    }
+
+    this.from_input_select_visible = true;
+  };
+
   return html`
     <div class="fromTo d-flex">
       <div class="fromTo__graphics">
@@ -21,9 +44,7 @@ export function render__fromTo() {
             @input=${e => {
               this.from = e.target.value;
             }}
-            @focus=${() => {
-              this.from_input_select_visible = true;
-            }}
+            @focus=${handleFocus}
             @blur=${() => {
               setTimeout(() => {
                 this.from_input_select_visible = false;

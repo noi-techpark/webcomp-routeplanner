@@ -33,6 +33,7 @@ export function render__search() {
               ${render__resultsTab()}
               <div class="search__results__list_container">
                 ${this.render__resultsListElement()} ${this.render__resultsListElement()}
+                ${this.render__resultsListElement()} ${this.render__resultsListElement()}
               </div>
             </div>
           `

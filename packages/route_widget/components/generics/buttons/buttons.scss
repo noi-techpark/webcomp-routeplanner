@@ -1,13 +1,17 @@
 @import '../../../scss/colors';
 
 .button {
-  font-size: 16px;
-  padding: 10px 32px;
+  font-size: 12px;
+  padding: 8px 16px;
   background-color: $green;
   color: $white;
   border-radius: 8px;
   text-decoration: none;
   cursor: pointer;
+  @media (min-width: 768px) {
+    font-size: 16px;
+    padding: 10px 32px;
+  }
 
   &:hover {
     text-decoration: none;

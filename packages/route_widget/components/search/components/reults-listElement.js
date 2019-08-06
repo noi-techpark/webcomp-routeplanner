@@ -14,10 +14,10 @@ export function render__resultsListElement() {
         this.details_data = FAKE_DETAILS;
       }}
     >
-      <div>
-        <div class="d-flex">
-          ${render__badge('PIÚ ECONOMICO', 'green')} ${render__badge('PIÚ VELOCE', 'yellow')}
-        </div>
+      <div class="d-flex flex-wrap">
+        ${render__badge('PIÚ ECONOMICO', 'green')} ${render__badge('PIÚ VELOCE', 'yellow')}
+      </div>
+      <div class="search__results__listElement__left">
         <div>
           <p class="search__results__listElement__range">10:32 - 11:06</p>
         </div>
@@ -25,7 +25,7 @@ export function render__resultsListElement() {
           <img src=${carImage} alt="" />
         </div>
       </div>
-      <div class="d-flex align-items-center">
+      <div class="search__results__listElement__right d-flex align-items-center">
         <div>
           <div class="search__results__listElement__time">
             <div>

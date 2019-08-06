@@ -2,9 +2,13 @@
   position: absolute;
   top: 16px;
   left: 16px;
-  width: 460px;
-  z-index: 400;
-  bottom: 16px;
+  bottom: 0;
+  z-index: 402;
+  width: calc(100% - 32px);
+  @media (min-width: 992px) {
+    width: 460px;
+    bottom: 16px;
+  }
 
   .details__background {
     background-color: $white;
@@ -26,6 +30,12 @@
       }
       p {
         margin-left: 0.5rem;
+        font-size: 12px;
+        line-height: 18px;
+        @media (min-width: 992px) {
+          font-size: 16px;
+          line-height: 24px;
+        }
       }
     }
   }
@@ -37,8 +47,12 @@
       padding: 0 1rem;
 
       .details__header_section__timings {
-        font-size: 30px;
-        line-height: 40px;
+        font-size: 18px;
+        line-height: 22px;
+        @media (min-width: 992px) {
+          font-size: 30px;
+          line-height: 40px;
+        }
       }
 
       .details__header_section__description {
@@ -123,9 +137,14 @@
     justify-content: center;
     position: relative;
     .button {
-      font-size: 14px;
-      padding: 10px 28px;
+      font-size: 12px;
+      padding: 8px 16px;
       margin: 0 5px;
+      @media (min-width: 768px) {
+        font-size: 14px;
+        padding: 10px 28px;
+        margin: 0 5px;
+      }
     }
   }
 }

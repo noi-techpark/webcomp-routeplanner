@@ -32,8 +32,11 @@
       }
       p {
         color: $black-300;
-        font-size: 14px;
+        font-size: 12px;
         line-height: 24px;
+        @media (min-width: 992px) {
+          font-size: 14px;
+        }
       }
       input {
         width: 100%;
