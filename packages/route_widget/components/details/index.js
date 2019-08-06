@@ -95,12 +95,12 @@ export function render__details() {
 
               return html`
                 <div class="row details__body_section__content__element">
-                  <div class="col">
+                  <div class="col-2 col-md">
                     <p class="details__body_section__content__time">
                       ${o.time}
                     </p>
                   </div>
-                  <div class="col details__body_section__content__middle">
+                  <div class="col-3 col-md details__body_section__content__middle">
                     <div class="d-flex justify-content-center">
                       <img src=${tripIcon} alt="" />
                     </div>
@@ -115,7 +115,7 @@ export function render__details() {
                         `
                       : null}
                   </div>
-                  <div class="col-8">
+                  <div class="col-6 col-md-8">
                     <p class="details__body_section__content__place">${o.place}</p>
                     <div class="details__body_section__content__description">
                       ${o.means_desc
@@ -136,31 +136,27 @@ export function render__details() {
           </div>
         </div>
         <div class="details__footer_section">
-          <div class="d-flex align-items-center justify-content-center">
-            <div class="d-flex justify-content-around align-items-center">
-              ${render__button(
-                html`
-                  <img src="${downloadImage}" alt="" /> Scarica PDF
-                `,
-                () => console.log('default'),
-                'grey'
-              )}
-              ${render__button(
-                html`
-                  <img src="${printImage}" alt="" /> Stampa
-                `,
-                () => console.log('default'),
-                'grey'
-              )}
-              ${render__button(
-                html`
-                  <img src="${shareImage}" alt="" /> Condividi
-                `,
-                () => console.log('default'),
-                'grey'
-              )}
-            </div>
-          </div>
+          ${render__button(
+            html`
+              <img src="${downloadImage}" alt="" /> Scarica PDF
+            `,
+            () => console.log('default'),
+            'grey'
+          )}
+          ${render__button(
+            html`
+              <img src="${printImage}" alt="" /> Stampa
+            `,
+            () => console.log('default'),
+            'grey'
+          )}
+          ${render__button(
+            html`
+              <img src="${shareImage}" alt="" /> Condividi
+            `,
+            () => console.log('default'),
+            'grey'
+          )}
         </div>
       </div>
     </div>

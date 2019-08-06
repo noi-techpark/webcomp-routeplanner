@@ -98,6 +98,8 @@ class RoutePlanner extends LitElement {
               } catch (error) {}
             }
           }
+          const map = this.shadowRoot.getElementById('map');
+          map.classList.toggle('closed');
           this.isFullScreen = false;
           this.mobile_open = false;
         }

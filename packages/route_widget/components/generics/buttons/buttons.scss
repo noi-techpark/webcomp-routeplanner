@@ -2,13 +2,21 @@
 
 .button {
   font-size: 12px;
-  padding: 8px 16px;
+  padding: 8px 6px;
   background-color: $green;
   color: $white;
   border-radius: 8px;
   text-decoration: none;
   cursor: pointer;
+  text-align: center;
+
+  flex-grow: 1;
+
   @media (min-width: 768px) {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+  @media (min-width: 992px) {
     font-size: 16px;
     padding: 10px 32px;
   }
