@@ -11,5 +11,4 @@ export const debounce = func => {
 export function getSearchContainerHeight() {
   const search__search_container = this.shadowRoot.querySelector('.search__search_container');
   this.search_results_height = search__search_container.offsetHeight;
-  console.log(this.search_results_height);
 }

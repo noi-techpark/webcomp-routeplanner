@@ -79,7 +79,7 @@ class RoutePlanner extends LitElement {
 
     window.addEventListener(
       'resize',
-      debounce(e => {
+      debounce(async e => {
         if (window.innerWidth >= 992) {
           try {
             document.body.exitFullscreen();
@@ -96,6 +96,8 @@ class RoutePlanner extends LitElement {
           map.classList.toggle('closed');
           this.isFullScreen = false;
           this.mobile_open = false;
+          await this.updateComplete;
+          this.getSearchContainerHeight();
         }
       })
     );
