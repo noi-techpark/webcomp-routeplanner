@@ -6,6 +6,15 @@
   border: 1px solid $black-300;
   &.borderless {
     border: 0;
+    .picker__trigger_box {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+  &.text_center {
+    .picker__trigger_box {
+      text-align: center;
+    }
   }
   @media (min-width: 992px) {
     font-size: 14px;

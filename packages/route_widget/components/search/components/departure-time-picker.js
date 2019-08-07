@@ -1,6 +1,7 @@
 import { html } from 'lit-html';
 import clockImage from '../../../img/clock.svg';
 import { render__picker } from '../../generics/picker';
+import moment from 'moment';
 
 const DEPARTURE_TIME = {
   1: 'Partenza ora',
@@ -41,11 +42,13 @@ export function render__departureTimePicker() {
   };
 
   this.render__picker = render__picker.bind(this);
+  console.log(moment().format('YYYY-MM-DD'));
+  
 
   return html`
     <div class="departure_time_picker d-flex">
       <img class="clock mr-2" src=${clockImage} alt="" />
-      <div class="d-flex justify-content-between departure_time_picker__inputs_container">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap departure_time_picker__inputs_container">
         ${this.render__picker('departure_time_select_visible', DEPARTURE_TIME, this.departure_time, setDepartureTime, [
           'borderless'
         ])}
@@ -54,13 +57,14 @@ export function render__departureTimePicker() {
               'departure_time_select_timings_visible',
               time_options,
               this.departure_time_hour,
-              setDepartureTimeHour
+              setDepartureTimeHour,
+              ['text_center']
             )
           : ``}
         ${this.departure_time > 1
           ? html`
-              <div>
-                <input type="date" />
+              <div class="departure_time_picker__input_date">
+                <input type="date" value=${moment().format('YYYY-MM-DD')} />
               </div>
             `
           : ``}

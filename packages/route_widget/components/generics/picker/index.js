@@ -4,7 +4,7 @@ import checkImage from '../../../img/check.svg';
 
 export function render__picker(trigger, values, currentValue, action, css_modifiers) {
   return html`
-    <div class=${`picker ${css_modifiers && css_modifiers.map(o => `${o} `)}`}>
+    <div class=${`picker ${css_modifiers ? css_modifiers.map(o => `${o} `) : ``}`}>
       <div
         class="picker__trigger_box"
         @click=${e => {
