@@ -42,8 +42,6 @@ export function render__departureTimePicker() {
   };
 
   this.render__picker = render__picker.bind(this);
-  console.log(moment().format('YYYY-MM-DD'));
-  
 
   return html`
     <div class="departure_time_picker d-flex">
