@@ -8,7 +8,7 @@ import { render__mapControls } from './components/mapControls';
 import { render__search } from './components/search';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
-import { getStyle } from './utilities';
+import { getStyle, debounce, getSearchContainerHeight } from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -17,6 +17,7 @@ class RoutePlanner extends LitElement {
     this.render_search = render__search.bind(this);
     this.render_details = render__details.bind(this);
     this.render__mapControls = render__mapControls.bind(this);
+    this.getSearchContainerHeight = getSearchContainerHeight.bind(this);
 
     /**
      * Api
@@ -33,6 +34,7 @@ class RoutePlanner extends LitElement {
     this.departure_time_select_timings_visible = false;
     this.departure_time_hour = '0000';
     this.details_data = undefined;
+    this.search_results_height = 0;
   }
 
   static get properties() {
@@ -75,14 +77,6 @@ class RoutePlanner extends LitElement {
       );
     };
 
-    const debounce = func => {
-      var timer;
-      return function(event) {
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(func, 500, event);
-      };
-    };
-
     window.addEventListener(
       'resize',
       debounce(e => {
@@ -105,6 +99,9 @@ class RoutePlanner extends LitElement {
         }
       })
     );
+
+    // Calculate results height
+    this.getSearchContainerHeight();
   }
 
   handleFullScreenMap() {

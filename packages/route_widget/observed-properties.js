@@ -6,6 +6,8 @@ export const observed_properties = {
   from: { type: String },
   from_input_select_visible: { type: Boolean },
 
+  search_results_height: { type: Number },
+
   // Departure time
   departure_time: { type: Number },
   departure_time_hour: { type: Number },

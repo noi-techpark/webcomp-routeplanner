@@ -12,7 +12,7 @@ export function render__search() {
 
   return html`
     <div class="search">
-      <div class="search__background">
+      <div class="search__search_container">
         <div class="row">
           <div class="col-12">
             ${this.render__fromTo()}
@@ -29,7 +29,12 @@ export function render__search() {
       </div>
       ${this.from
         ? html`
-            <div class=${`search__results ${this.departure_time > 1 ? 'reduced_height' : ''}`}>
+            <div
+              class=${`search__results`}
+              style=${this.mobile_open
+                ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 8px);`
+                : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`}
+            >
               ${render__resultsTab()}
               <div class="search__results__list_container">
                 ${this.render__resultsListElement()} ${this.render__resultsListElement()}
@@ -41,3 +46,5 @@ export function render__search() {
     </div>
   `;
 }
+
+// ${this.departure_time > 1 ? 'reduced_height' : ''}`

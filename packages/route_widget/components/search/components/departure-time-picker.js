@@ -28,9 +28,11 @@ for (let i = 0; i < 24; i++) {
 }
 
 export function render__departureTimePicker() {
-  const setDepartureTime = value => {
+  const setDepartureTime = async value => {
     this.departure_time = value;
     this.departure_time_select_visible = false;
+    await this.updateComplete;
+    this.getSearchContainerHeight();
   };
 
   const setDepartureTimeHour = value => {
