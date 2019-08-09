@@ -42,7 +42,6 @@ class RoutePlanner extends LitElement {
     this.mobile_open = false;
     this.departure_time = 1;
     this.from = '';
-    this.to = '';
     this.departure_time_select_visible = false;
     this.departure_time_select_timings_visible = false;
     this.departure_time_hour = '0000';
@@ -98,7 +97,8 @@ class RoutePlanner extends LitElement {
               </div>
             `
           : null}
-        ${this.render_closeFullscreenButton()} ${this.render_backgroundMap()} ${this.render__mapControls()}
+        ${this.isFullScreen ? this.render_closeFullscreenButton() : null} ${this.render_backgroundMap()}
+        ${this.render__mapControls()}
         ${!this.details_data
           ? html`
               ${this.render_search()}
