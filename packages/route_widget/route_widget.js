@@ -3,19 +3,20 @@ import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
 import { request_get_poi } from './api/efa_sta';
 import { render_backgroundMap } from './components/backgroundMap';
+import { render_closeFullscreenButton } from './components/closeFullscreenButton';
 import { render__details } from './components/details';
 import { render__mapControls } from './components/mapControls';
+import {
+  getCurrentPosition,
+  handleFullScreenMap,
+  mapControlsHandlers
+} from './components/route_widget/mapControlsHandlers';
 import { windowSizeListener } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
+import { render_spinner } from './components/spinner';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import { getSearchContainerHeight, getStyle } from './utilities';
-import {
-  mapControlsHandlers,
-  getCurrentPosition,
-  handleFullScreenMap
-} from './components/route_widget/mapControlsHandlers';
-import { render_spinner } from './components/spinner';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -28,6 +29,7 @@ class RoutePlanner extends LitElement {
     this.windowSizeListener = windowSizeListener.bind(this);
     this.mapControlsHandlers = mapControlsHandlers.bind(this);
     this.handleFullScreenMap = handleFullScreenMap.bind(this);
+    this.render_closeFullscreenButton = render_closeFullscreenButton.bind(this);
 
     /**
      * Api
@@ -96,7 +98,7 @@ class RoutePlanner extends LitElement {
               </div>
             `
           : null}
-        ${this.render_backgroundMap()} ${this.render__mapControls()}
+        ${this.render_closeFullscreenButton()} ${this.render_backgroundMap()} ${this.render__mapControls()}
         ${!this.details_data
           ? html`
               ${this.render_search()}
