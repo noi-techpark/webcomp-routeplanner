@@ -54,16 +54,22 @@ class RoutePlanner extends LitElement {
   }
 
   async initializeMap() {
-    const { coords } = await getCurrentPosition();
-    const { latitude, longitude } = coords;
-
-    this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false }).setView([latitude, longitude], 13);
+    try {
+      const position = await getCurrentPosition();
+      const { latitude, longitude } = position.coords;
+      this.current_location.lat = latitude;
+      this.current_location.lng = longitude;
+    } catch (error) {
+      this.current_location.lat = 46.4899575;
+      this.current_location.lng = 11.3305934;
+    }
+    this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false }).setView(
+      [this.current_location.lat, this.current_location.lng],
+      13
+    );
     L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: ''
     }).addTo(this.map);
-
-    this.current_location.lat = latitude;
-    this.current_location.lng = longitude;
     this.loading = false;
   }
 
