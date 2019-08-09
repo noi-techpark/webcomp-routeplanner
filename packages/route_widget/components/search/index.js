@@ -32,7 +32,7 @@ export function render__search() {
             <div
               class=${`search__results`}
               style=${this.mobile_open
-                ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 10px);`
+                ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
                 : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`}
             >
               ${render__resultsTab()}

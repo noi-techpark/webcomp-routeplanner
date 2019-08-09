@@ -11,7 +11,7 @@ import {
   handleFullScreenMap,
   mapControlsHandlers
 } from './components/route_widget/mapControlsHandlers';
-import { windowSizeListener } from './components/route_widget/windowSizeListener';
+import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
 import { observed_properties } from './observed-properties';
@@ -26,7 +26,7 @@ class RoutePlanner extends LitElement {
     this.render_details = render__details.bind(this);
     this.render__mapControls = render__mapControls.bind(this);
     this.getSearchContainerHeight = getSearchContainerHeight.bind(this);
-    this.windowSizeListener = windowSizeListener.bind(this);
+    this.windowSizeListenerClose = windowSizeListenerClose.bind(this);
     this.mapControlsHandlers = mapControlsHandlers.bind(this);
     this.handleFullScreenMap = handleFullScreenMap.bind(this);
     this.render_closeFullscreenButton = render_closeFullscreenButton.bind(this);
@@ -78,7 +78,7 @@ class RoutePlanner extends LitElement {
   async firstUpdated() {
     this.initializeMap();
     this.mapControlsHandlers();
-    this.windowSizeListener();
+    this.windowSizeListenerClose();
     // Calculate results height
     this.getSearchContainerHeight();
   }
