@@ -23,3 +23,38 @@ export function mapControlsHandlers() {
     this.map.removeLayer(this.layer_user);
   };
 }
+
+export function handleFullScreenMap() {
+  const map = this.shadowRoot.getElementById('map');
+  map.classList.toggle('closed');
+
+  if (this.isFullScreen) {
+    try {
+      document.body.exitFullscreen();
+    } catch (error) {
+      try {
+        document.webkitExitFullscreen();
+      } catch (error) {
+        try {
+          document.body.cancelFullScreen();
+        } catch (error) {}
+      }
+    }
+  } else {
+    try {
+      document.body.requestFullscreen();
+    } catch (error) {
+      try {
+        document.body.webkitRequestFullscreen();
+      } catch (error) {
+        try {
+          document.body.mozRequestFullScreen();
+        } catch (error) {}
+      }
+    }
+  }
+
+  this.map.invalidateSize(true);
+  this.isFullScreen = !this.isFullScreen;
+  this.mobile_open = !this.mobile_open;
+}

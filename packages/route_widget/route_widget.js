@@ -10,7 +10,11 @@ import { render__search } from './components/search';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import { getSearchContainerHeight, getStyle } from './utilities';
-import { mapControlsHandlers, getCurrentPosition } from './components/route_widget/mapControlsHandlers';
+import {
+  mapControlsHandlers,
+  getCurrentPosition,
+  handleFullScreenMap
+} from './components/route_widget/mapControlsHandlers';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -22,6 +26,7 @@ class RoutePlanner extends LitElement {
     this.getSearchContainerHeight = getSearchContainerHeight.bind(this);
     this.windowSizeListener = windowSizeListener.bind(this);
     this.mapControlsHandlers = mapControlsHandlers.bind(this);
+    this.handleFullScreenMap = handleFullScreenMap.bind(this);
 
     /**
      * Api
@@ -54,6 +59,9 @@ class RoutePlanner extends LitElement {
     L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: ''
     }).addTo(this.map);
+
+    this.current_location.lat = latitude;
+    this.current_location.lng = longitude;
   }
 
   async firstUpdated() {
@@ -62,43 +70,6 @@ class RoutePlanner extends LitElement {
     this.windowSizeListener();
     // Calculate results height
     this.getSearchContainerHeight();
-  }
-
-  handleFullScreenMap() {
-    const map = this.shadowRoot.getElementById('map');
-    map.classList.toggle('closed');
-
-    if (this.isFullScreen) {
-      try {
-        document.body.exitFullscreen();
-      } catch (error) {
-        try {
-          document.webkitExitFullscreen();
-        } catch (error) {
-          try {
-            document.body.cancelFullScreen();
-          } catch (error) {}
-        }
-      }
-    } else {
-      try {
-        document.body.requestFullscreen();
-      } catch (error) {
-        try {
-          document.body.webkitRequestFullscreen();
-        } catch (error) {
-          try {
-            document.body.mozRequestFullScreen();
-          } catch (error) {}
-        }
-      }
-    }
-
-    this.map.invalidateSize(true);
-    this.isFullScreen = !this.isFullScreen;
-    this.mobile_open = !this.mobile_open;
-    this.current_location.lat = latitude;
-    this.current_location.lng = longitude;
   }
 
   render() {
