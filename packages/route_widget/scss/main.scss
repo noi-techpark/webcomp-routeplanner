@@ -12,6 +12,11 @@
 @import '../components/generics/badge/badge.scss';
 @import '../components/generics/tooltip/tooltip.scss';
 
+@mixin full-width-height {
+  width: 100%;
+  height: 100%;
+}
+
 .routeplanner-widget {
   position: relative;
   font-family: sans-serif;
@@ -20,9 +25,8 @@
 
   @media (max-width: 576px) {
     &.MODE__mobile__open {
+      @include full-width-height();
       position: fixed;
-      width: 100%;
-      height: 100%;
       top: 0;
       left: 0;
       overflow: scroll;
@@ -47,6 +51,16 @@
       }
     }
   }
+}
+
+.loading {
+  @include full-width-height();
+  position: absolute;
+  background-color: rgba(45, 45, 45, 0.7);
+  z-index: 404;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #map {

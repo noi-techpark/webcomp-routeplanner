@@ -15,6 +15,7 @@ import {
   getCurrentPosition,
   handleFullScreenMap
 } from './components/route_widget/mapControlsHandlers';
+import { render_spinner } from './components/spinner';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -34,6 +35,7 @@ class RoutePlanner extends LitElement {
     this.request_get_poi = request_get_poi.bind(this);
 
     /** Observed values */
+    this.loading = true;
     this.isFullScreen = false;
     this.mobile_open = false;
     this.departure_time = 1;
@@ -62,6 +64,7 @@ class RoutePlanner extends LitElement {
 
     this.current_location.lat = latitude;
     this.current_location.lng = longitude;
+    this.loading = false;
   }
 
   async firstUpdated() {
@@ -80,6 +83,13 @@ class RoutePlanner extends LitElement {
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
       <div class="routeplanner-widget ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}">
+        ${this.loading
+          ? html`
+              <div class="loading">
+                ${render_spinner()}
+              </div>
+            `
+          : null}
         ${this.render_backgroundMap()} ${this.render__mapControls()}
         ${!this.details_data
           ? html`
