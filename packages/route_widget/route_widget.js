@@ -5,10 +5,11 @@ import { request_get_poi } from './api/efa_sta';
 import { render_backgroundMap } from './components/backgroundMap';
 import { render__details } from './components/details';
 import { render__mapControls } from './components/mapControls';
+import { windowSizeListener } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
-import { getStyle, debounce, getSearchContainerHeight } from './utilities';
+import { getSearchContainerHeight, getStyle } from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -18,6 +19,7 @@ class RoutePlanner extends LitElement {
     this.render_details = render__details.bind(this);
     this.render__mapControls = render__mapControls.bind(this);
     this.getSearchContainerHeight = getSearchContainerHeight.bind(this);
+    this.windowSizeListener = windowSizeListener.bind(this);
 
     /**
      * Api
@@ -77,30 +79,7 @@ class RoutePlanner extends LitElement {
       );
     };
 
-    window.addEventListener(
-      'resize',
-      debounce(async e => {
-        if (window.innerWidth >= 992) {
-          try {
-            document.body.exitFullscreen();
-          } catch (error) {
-            try {
-              document.webkitExitFullscreen();
-            } catch (error) {
-              try {
-                document.body.cancelFullScreen();
-              } catch (error) {}
-            }
-          }
-          const map = this.shadowRoot.getElementById('map');
-          map.classList.toggle('closed');
-          this.isFullScreen = false;
-          this.mobile_open = false;
-          await this.updateComplete;
-          this.getSearchContainerHeight();
-        }
-      })
-    );
+    this.windowSizeListener();
 
     // Calculate results height
     this.getSearchContainerHeight();
