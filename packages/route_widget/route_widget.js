@@ -10,6 +10,7 @@ import { render__search } from './components/search';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import { getSearchContainerHeight, getStyle } from './utilities';
+import { mapControlsHandlers, getCurrentPosition } from './components/route_widget/mapControlsHandlers';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -20,6 +21,7 @@ class RoutePlanner extends LitElement {
     this.render__mapControls = render__mapControls.bind(this);
     this.getSearchContainerHeight = getSearchContainerHeight.bind(this);
     this.windowSizeListener = windowSizeListener.bind(this);
+    this.mapControlsHandlers = mapControlsHandlers.bind(this);
 
     /**
      * Api
@@ -37,6 +39,7 @@ class RoutePlanner extends LitElement {
     this.departure_time_hour = '0000';
     this.details_data = undefined;
     this.search_results_height = 0;
+    this.current_location = {};
   }
 
   static get properties() {
@@ -44,11 +47,10 @@ class RoutePlanner extends LitElement {
   }
 
   async initializeMap() {
-    this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false }).setView([51.505, -0.09], 13);
-    // .setView(
-    //   [this.current_location.lat, this.current_location.lng],
-    //   13
-    // );
+    const { coords } = await getCurrentPosition();
+    const { latitude, longitude } = coords;
+
+    this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false }).setView([latitude, longitude], 13);
     L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: ''
     }).addTo(this.map);
@@ -56,31 +58,8 @@ class RoutePlanner extends LitElement {
 
   async firstUpdated() {
     this.initializeMap();
-
-    const btnZoomIn = this.shadowRoot.getElementById('zoomMapIn');
-    const btnZoomOut = this.shadowRoot.getElementById('zoomMapOut');
-    const btnCenterMap = this.shadowRoot.getElementById('centerMap');
-    btnZoomIn.onclick = () => {
-      this.map.setZoom(this.map.getZoom() + 1);
-    };
-    btnZoomOut.onclick = () => {
-      this.map.setZoom(this.map.getZoom() - 1);
-    };
-    btnCenterMap.onclick = () => {
-      navigator.geolocation.getCurrentPosition(
-        pos => {
-          const { latitude, longitude } = pos.coords;
-          this.current_location = { lat: latitude, lng: longitude };
-          this.map.flyTo([latitude, longitude], 15);
-          this.map.removeLayer(this.layer_columns);
-          this.map.removeLayer(this.layer_user);
-        },
-        () => {}
-      );
-    };
-
+    this.mapControlsHandlers();
     this.windowSizeListener();
-
     // Calculate results height
     this.getSearchContainerHeight();
   }
@@ -118,6 +97,8 @@ class RoutePlanner extends LitElement {
     this.map.invalidateSize(true);
     this.isFullScreen = !this.isFullScreen;
     this.mobile_open = !this.mobile_open;
+    this.current_location.lat = latitude;
+    this.current_location.lng = longitude;
   }
 
   render() {
