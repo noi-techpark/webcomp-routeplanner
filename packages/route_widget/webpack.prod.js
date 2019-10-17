@@ -14,6 +14,13 @@ module.exports = {
         use: [{ loader: 'css-loader' }, { loader: 'sass-loader' }]
       },
       {
+        test: /\.svg/,
+        use: {
+          loader: 'svg-url-loader',
+          options: {}
+        }
+      },
+      {
         test: /\.(png|jpg|gif|ttf)$/i,
         use: [
           {

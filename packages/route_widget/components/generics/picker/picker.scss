@@ -1,0 +1,77 @@
+.picker {
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 24px;
+  position: relative;
+  border: 1px solid $black-300;
+  &.borderless {
+    border: 0;
+    .picker__trigger_box {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+  &.text_center {
+    .picker__trigger_box {
+      text-align: center;
+    }
+  }
+  @media (min-width: 992px) {
+    font-size: 14px;
+  }
+}
+
+.picker__trigger_box {
+  padding: 8px;
+  white-space: nowrap;
+}
+
+.picker_box {
+  white-space: nowrap;
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  z-index: 401;
+  background-color: $white;
+  border: 1px solid $black-300;
+  box-shadow: 0px 3px 6px rgba(51, 51, 51, 0.1), 0px 10px 20px rgba(51, 51, 51, 0.15);
+  max-height: 200px;
+  overflow-y: scroll;
+
+  &.hidden {
+    display: none;
+  }
+
+  .picker_box_element {
+    padding: 12px;
+    padding-left: 36px;
+    cursor: pointer;
+    position: relative;
+    font-size: 14px;
+    line-height: 24px;
+
+    img {
+      position: absolute;
+      left: 12px;
+      top: 16px;
+    }
+
+    &:hover {
+      background-color: $black-50;
+    }
+
+    &.active {
+      background-color: $black-50;
+    }
+  }
+}
+
+.picker_box__closing_underlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  width: 100vw;
+  height: 100vh;
+  z-index: 400;
+}

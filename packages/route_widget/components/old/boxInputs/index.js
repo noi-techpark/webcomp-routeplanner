@@ -10,7 +10,6 @@ export function BoxInputs(props) {
               <label class="box_inputs__input_label fs-20" for="going_adddress_input">Partenza</label>
               <input
                 @keyup=${e => {
-                  console.log(e.target.value);
                   this.request_get_poi(e.target.value);
                 }}
                 placeholder="Partenza"

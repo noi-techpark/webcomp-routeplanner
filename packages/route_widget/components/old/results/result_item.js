@@ -2,8 +2,6 @@ import { html } from 'lit-html';
 import { colored_tag } from '../components/coloredTag';
 
 export function resultItem(props) {
-  console.log(this.step);
-
   return html`
     <div class="results__list__item p-2 p-md-3 d-flex flex-wrap justify-content-md-between align-items-center">
       <div class="results__list__item__badge_line">

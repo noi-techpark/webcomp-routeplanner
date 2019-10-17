@@ -2,46 +2,52 @@ import L from 'leaflet';
 import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
 import { request_get_poi } from './api/efa_sta';
-import { BoxInputs } from './components/boxInputs';
-import { BoxParameters } from './components/boxParameters';
-import { DetailsMap } from './components/detailsMap';
-import { DetailsSidebar } from './components/detailsSidebar';
-import { DetailsTopbar } from './components/detailsTopbar';
-import { FirstScreenFooter } from './components/firstScreenFooter';
-import { Header } from './components/header';
-import { HeaderScreenDetailsMobile } from './components/headerScreenDetailsMobile';
-import { HeaderScreenResults } from './components/headerScreenResultsMobile';
-import { Results } from './components/results';
-import { RouteList } from './components/routeList';
-import { observed_properties } from './observed_properties';
+import { render_backgroundMap } from './components/backgroundMap';
+import { render_closeFullscreenButton } from './components/closeFullscreenButton';
+import { render__details } from './components/details';
+import { render__mapControls } from './components/mapControls';
+import {
+  getCurrentPosition,
+  handleFullScreenMap,
+  mapControlsHandlers
+} from './components/route_widget/mapControlsHandlers';
+import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
+import { render__search } from './components/search';
+import { render_spinner } from './components/spinner';
+import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
-import { getStyle } from './utilities';
+import { getSearchContainerHeight, getStyle } from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
     super();
-    this.Header = Header.bind(this);
-    this.BoxParameters = BoxParameters.bind(this);
-    this.BoxInputs = BoxInputs.bind(this);
-    this.FirstScreenFooter = FirstScreenFooter.bind(this);
-    this.Results = Results.bind(this);
-    this.DetailsTopbar = DetailsTopbar.bind(this);
-    this.DetailsSidebar = DetailsSidebar.bind(this);
-    this.DetailsMap = DetailsMap.bind(this);
-    this.HeaderScreenResults = HeaderScreenResults.bind(this);
-    this.HeaderScreenDetailsMobile = HeaderScreenDetailsMobile.bind(this);
-    this.RouteList = RouteList.bind(this);
+    this.render_backgroundMap = render_backgroundMap.bind(this);
+    this.render_search = render__search.bind(this);
+    this.render_details = render__details.bind(this);
+    this.render__mapControls = render__mapControls.bind(this);
+    this.getSearchContainerHeight = getSearchContainerHeight.bind(this);
+    this.windowSizeListenerClose = windowSizeListenerClose.bind(this);
+    this.mapControlsHandlers = mapControlsHandlers.bind(this);
+    this.handleFullScreenMap = handleFullScreenMap.bind(this);
+    this.render_closeFullscreenButton = render_closeFullscreenButton.bind(this);
+
     /**
      * Api
      */
     this.request_get_poi = request_get_poi.bind(this);
 
     /** Observed values */
-    this.step = 1; // 0,1
-    /* Initial form, Results list, Route detail, Map */
-    this.step_mobile = 2; // 0,1,2,3
-    // this.mobile_open = false;
+    this.loading = true;
+    this.isFullScreen = false;
     this.mobile_open = false;
+    this.departure_time = 1;
+    this.from = '';
+    this.departure_time_select_visible = false;
+    this.departure_time_select_timings_visible = false;
+    this.departure_time_hour = '0000';
+    this.details_data = undefined;
+    this.search_results_height = 0;
+    this.current_location = {};
   }
 
   static get properties() {
@@ -49,17 +55,32 @@ class RoutePlanner extends LitElement {
   }
 
   async initializeMap() {
-    this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false }).setView([51.505, -0.09], 13);
-    // .setView(
-    //   [this.current_location.lat, this.current_location.lng],
-    //   13
-    // );
-    L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    try {
+      const position = await getCurrentPosition();
+      const { latitude, longitude } = position.coords;
+      this.current_location.lat = latitude;
+      this.current_location.lng = longitude;
+    } catch (error) {
+      this.current_location.lat = 46.4899575;
+      this.current_location.lng = 11.3305934;
+    }
+    this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false }).setView(
+      [this.current_location.lat, this.current_location.lng],
+      13
+    );
+    L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: ''
     }).addTo(this.map);
+    this.loading = false;
   }
 
-  async firstUpdated() {}
+  async firstUpdated() {
+    this.initializeMap();
+    this.mapControlsHandlers();
+    this.windowSizeListenerClose();
+    // Calculate results height
+    this.getSearchContainerHeight();
+  }
 
   render() {
     return html`
@@ -68,54 +89,23 @@ class RoutePlanner extends LitElement {
         ${getStyle(style)}
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
-      <div class="routeplanner-widget">
-        <!-- Mobile -->
-        <div class="MODE__mobile ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`} d-block d-md-none">
-          <div class="MODE__mobile__closed__container">
-            ${this.step_mobile === 0
-              ? html`
-                  ${this.Header()} ${this.BoxInputs()} ${this.BoxParameters()} ${this.FirstScreenFooter()}
-                `
-              : ``}
-            ${this.step_mobile === 1
-              ? html`
-                  ${this.HeaderScreenResults()} ${this.Results()}
-                `
-              : ``}
-            ${this.step_mobile === 2
-              ? html`
-                  ${this.HeaderScreenDetailsMobile()} ${this.RouteList()}
-                `
-              : ``}
-            <div class="MODE__mobile__expand_button_container">
-              <button
-                @click=${() => {
-                  this.mobile_open = !this.mobile_open;
-                  console.log(this.mobile_open);
-                }}
-              >
-                E
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Desktop -->
-        <div class="MODE__desktop d-none d-md-block">
-          ${this.step === 0
-            ? html`
-                ${this.Header()} ${this.BoxParameters()} ${this.Results()} ${this.BoxInputs()}
-                ${this.FirstScreenFooter()}
-              `
-            : ``}
-          ${this.step === 1
-            ? html`
-                <div class="d-flex flex-wrap">
-                  ${this.DetailsTopbar()} ${this.DetailsSidebar()} ${this.DetailsMap()}
-                </div>
-              `
-            : ``}
-        </div>
+      <div class="routeplanner-widget ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}">
+        ${this.loading
+          ? html`
+              <div class="loading">
+                ${render_spinner()}
+              </div>
+            `
+          : null}
+        ${this.isFullScreen ? this.render_closeFullscreenButton() : null} ${this.render_backgroundMap()}
+        ${this.render__mapControls()}
+        ${!this.details_data
+          ? html`
+              ${this.render_search()}
+            `
+          : html`
+              ${this.render_details()}
+            `}
       </div>
     `;
   }
