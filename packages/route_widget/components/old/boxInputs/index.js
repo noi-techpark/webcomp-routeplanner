@@ -17,6 +17,7 @@ export function BoxInputs(props) {
                 id="going_adddress_input"
                 type="text"
               />
+              asdfsdf
             </div>
             <div class="mt-md-4">
               <label class="box_inputs__input_label fs-20" for="return_address_input">Arrivo</label>

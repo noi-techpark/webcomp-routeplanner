@@ -41,8 +41,8 @@ export function render__fromTo() {
           <input
             type="text"
             .value=${this.from}
-            @input=${e => {
-              this.from = e.target.value;
+            @keyup=${e => {
+              this.request_get_poi(e.target.value);
             }}
             @focus=${handleFocus}
             @blur=${() => {
@@ -69,3 +69,6 @@ export function render__fromTo() {
     </div>
   `;
 }
+// @input=${e => {
+//   this.from = e.target.value;
+// }}
