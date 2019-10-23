@@ -26,7 +26,7 @@ export function windowSizeListenerClose() {
     'resize',
     debounce(async e => {
       if (window.innerWidth >= 992) {
-        closeFullscreen();
+        this.closeFullscreen();
       }
     })
   );
