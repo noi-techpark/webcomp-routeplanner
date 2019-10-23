@@ -1,18 +1,11 @@
 export function getCurrentPosition(options = {}) {
-  // return new Promise((resolve, reject) => {
-  //   navigator.geolocation.getCurrentPosition(resolve, reject, options);
-  // });
-  var geolocation;
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      geolocation['latitude'] = position.coords.latitude;
-      geolocation['longitude'] = position.coords.longitude;
-      printLocation(); // Second time, will be return the location correctly
-    });
-    return geolocation;
-  } else {
-    // We cannot access to the geolocation
-  }
+  return new Promise((resolve, reject) => {
+    if (navigator.geolocation && navigator.geolocation.getCurrentPosition) {
+      navigator.geolocation.getCurrentPosition(resolve, reject, options);
+    } else {
+      reject(); // geolocalization probably not supported
+    }
+  });
 }
 
 export function mapControlsHandlers() {
