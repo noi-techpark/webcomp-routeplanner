@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'lit-element';
 import carImage from '../../img/car.svg';
 import chevronRightImage from '../../img/chevron-right.svg';
 import downloadImage from '../../img/download.svg';
@@ -48,11 +48,13 @@ export function render__details() {
                     return html`
                       ${render__badge('PIÚ ECONOMICO', 'green')}
                     `;
-                  } else if (o === 'faster') {
+                  }
+                  if (o === 'faster') {
                     return html`
                       ${render__badge('PIÙ VELOCE', 'yellow')}
                     `;
                   }
+                  return html``;
                 })}
               </div>
 

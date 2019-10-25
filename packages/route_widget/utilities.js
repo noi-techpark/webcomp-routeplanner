@@ -1,7 +1,7 @@
 export const getStyle = array => array[0][1];
 
 export const debounce = func => {
-  var timer;
+  let timer;
   return function(event) {
     if (timer) clearTimeout(timer);
     timer = setTimeout(func, 500, event);

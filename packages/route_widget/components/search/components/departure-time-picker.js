@@ -1,7 +1,7 @@
 import { html } from 'lit-html';
+import moment from 'moment';
 import clockImage from '../../../img/clock.svg';
 import { render__picker } from '../../generics/picker';
-import moment from 'moment';
 
 const DEPARTURE_TIME = {
   1: 'Partenza ora',
@@ -10,12 +10,12 @@ const DEPARTURE_TIME = {
   4: 'Ultimo'
 };
 
-let time_options = {};
+const time_options = {};
 let hour = 0;
 let minutes = 0;
 for (let i = 0; i < 24; i++) {
   if (i !== 0) {
-    hour = hour + 1;
+    hour += 1;
   }
   for (let j = 0; j < 4; j++) {
     if (j !== 0) {
