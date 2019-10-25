@@ -8,6 +8,7 @@ export const observed_properties = {
   from_input_select_visible: { type: Boolean },
 
   search_results_height: { type: Number },
+  search_results: { type: Array },
 
   // Departure time
   departure_time: { type: Number },

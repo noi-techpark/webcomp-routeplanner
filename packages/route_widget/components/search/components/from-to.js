@@ -41,8 +41,9 @@ export function render__fromTo() {
           <input
             type="text"
             .value=${this.from}
-            @keyup=${e => {
-              this.request_get_poi(e.target.value);
+            @input=${async e => {
+              const results = await this.request_get_poi(e.target.value);
+              this.search_results = results;
             }}
             @focus=${handleFocus}
             @blur=${() => {
@@ -55,6 +56,14 @@ export function render__fromTo() {
             <div class="fromTo__inputs__input_selection__element" @click=${() => {}}>
               <img src=${crosshairImage} alt="" /> La mia posizione
             </div>
+            ${this.search_results.map(
+              place =>
+                html`
+                  <div class="fromTo__inputs__input_selection__element" @click=${() => {}}>
+                    ${place.name}
+                  </div>
+                `
+            )}
           </div>
         </div>
         <div class="fromTo__inputs__input_wrapper">

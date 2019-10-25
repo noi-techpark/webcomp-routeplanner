@@ -48,6 +48,7 @@ class RoutePlanner extends LitElement {
     this.details_data = undefined;
     this.search_results_height = 0;
     this.current_location = {};
+    this.search_results = [];
   }
 
   static get properties() {
