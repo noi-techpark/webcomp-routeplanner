@@ -42,6 +42,7 @@ export function render__fromTo() {
             type="text"
             .value=${this.from}
             @input=${async e => {
+              this.from = e.target.value;
               const results = await this.request_get_poi(e.target.value);
               this.search_results = results;
             }}
@@ -59,7 +60,12 @@ export function render__fromTo() {
             ${this.search_results.map(
               place =>
                 html`
-                  <div class="fromTo__inputs__input_selection__element" @click=${() => {}}>
+                  <div
+                    class="fromTo__inputs__input_selection__element"
+                    @click=${() => {
+                      this.from = place.name;
+                    }}
+                  >
                     ${place.name}
                   </div>
                 `
