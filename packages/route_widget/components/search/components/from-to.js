@@ -1,9 +1,21 @@
 import { html } from 'lit-html';
-import fromImage from '../../../img/from.svg';
-import toImage from '../../../img/to.svg';
-import fromToDotsImage from '../../../img/from-to-dots.svg';
+import throttle from 'lodash/throttle';
 import changeImage from '../../../img/change.svg';
 import crosshairImage from '../../../img/crosshair-on.svg';
+import fromToDotsImage from '../../../img/from-to-dots.svg';
+import fromImage from '../../../img/from.svg';
+import toImage from '../../../img/to.svg';
+
+async function fromInputHandler(inputString) {
+  try {
+    const results = await this.request_get_poi(inputString);
+    this.search_results = results;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+const throttledFromInputHandler = throttle(fromInputHandler, 500, { leading: true });
 
 export function render__fromTo() {
   const handleFocus = () => {
@@ -41,11 +53,7 @@ export function render__fromTo() {
           <input
             type="text"
             .value=${this.from}
-            @input=${async e => {
-              this.from = e.target.value;
-              const results = await this.request_get_poi(e.target.value);
-              this.search_results = results;
-            }}
+            @input=${event => throttledFromInputHandler.bind(this)(event.target.value)}
             @focus=${handleFocus}
             @blur=${() => {
               setTimeout(() => {
