@@ -15,10 +15,10 @@ export function render__fromTo() {
       } catch (error) {
         try {
           document.body.webkitRequestFullscreen();
-        } catch (error) {
+        } catch (webkitError) {
           try {
             document.body.mozRequestFullScreen();
-          } catch (error) {}
+          } catch (mozError) {}
         }
       }
       this.map.invalidateSize(true);
@@ -52,7 +52,7 @@ export function render__fromTo() {
             }}
           />
           <div class=${`fromTo__inputs__input_selection ${this.from_input_select_visible ? '' : 'hidden'}`}>
-            <div class="fromTo__inputs__input_selection__element" @click=${e => {}}>
+            <div class="fromTo__inputs__input_selection__element">
               <img src=${crosshairImage} alt="" /> La mia posizione
             </div>
           </div>
