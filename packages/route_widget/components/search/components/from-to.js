@@ -18,6 +18,8 @@ async function fromInputHandler(inputString) {
 const throttledFromInputHandler = throttle(fromInputHandler, 500, { leading: true });
 
 export function render__fromTo() {
+  this.throttledFromInputHandler = throttledFromInputHandler.bind(this);
+
   const handleFocus = () => {
     if (window.innerWidth < 992 && !this.isFullScreen) {
       const map = this.shadowRoot.getElementById('map');
@@ -53,7 +55,7 @@ export function render__fromTo() {
           <input
             type="text"
             .value=${this.from}
-            @input=${event => throttledFromInputHandler.bind(this)(event.target.value)}
+            @input=${event => this.throttledFromInputHandler(event.target.value)}
             @focus=${handleFocus}
             @blur=${() => {
               setTimeout(() => {
