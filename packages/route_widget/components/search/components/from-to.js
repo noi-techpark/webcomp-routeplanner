@@ -1,11 +1,25 @@
 import { html } from 'lit-html';
-import fromImage from '../../../img/from.svg';
-import toImage from '../../../img/to.svg';
-import fromToDotsImage from '../../../img/from-to-dots.svg';
+import throttle from 'lodash/throttle';
 import changeImage from '../../../img/change.svg';
 import crosshairImage from '../../../img/crosshair-on.svg';
+import fromToDotsImage from '../../../img/from-to-dots.svg';
+import fromImage from '../../../img/from.svg';
+import toImage from '../../../img/to.svg';
+
+async function fromInputHandler(inputString) {
+  try {
+    const results = await this.request_get_poi(inputString);
+    this.search_results = results;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+const throttledFromInputHandler = throttle(fromInputHandler, 500, { leading: true });
 
 export function render__fromTo() {
+  this.throttledFromInputHandler = throttledFromInputHandler.bind(this);
+
   const handleFocus = () => {
     if (window.innerWidth < 992 && !this.isFullScreen) {
       const map = this.shadowRoot.getElementById('map');
@@ -41,9 +55,7 @@ export function render__fromTo() {
           <input
             type="text"
             .value=${this.from}
-            @keyup=${e => {
-              this.request_get_poi(e.target.value);
-            }}
+            @input=${event => this.throttledFromInputHandler(event.target.value)}
             @focus=${handleFocus}
             @blur=${() => {
               setTimeout(() => {
@@ -55,6 +67,19 @@ export function render__fromTo() {
             <div class="fromTo__inputs__input_selection__element">
               <img src=${crosshairImage} alt="" /> La mia posizione
             </div>
+            ${this.search_results.map(
+              place =>
+                html`
+                  <div
+                    class="fromTo__inputs__input_selection__element"
+                    @click=${() => {
+                      this.from = place.name;
+                    }}
+                  >
+                    ${place.name}
+                  </div>
+                `
+            )}
           </div>
         </div>
         <div class="fromTo__inputs__input_wrapper">
