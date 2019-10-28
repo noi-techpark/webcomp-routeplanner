@@ -11,6 +11,7 @@ export async function request_get_poi(query) {
     const data = await response.json();
 
     const list = data.stopFinder.points;
+    if (list.point) return [list.point];
     return list || [];
   } catch (e) {
     if (e.name !== 'AbortError') {
