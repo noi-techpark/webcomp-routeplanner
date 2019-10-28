@@ -15,10 +15,10 @@ export function render__fromTo() {
       } catch (error) {
         try {
           document.body.webkitRequestFullscreen();
-        } catch (error2) {
+        } catch (webkitError) {
           try {
             document.body.mozRequestFullScreen();
-          } catch (error3) {}
+          } catch (mozError) {}
         }
       }
       this.map.invalidateSize(true);
