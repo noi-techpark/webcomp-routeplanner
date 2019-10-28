@@ -10,11 +10,13 @@ module.exports = {
   },
   // webpack-dev-server configuration
   devServer: {
-    contentBase: path.resolve(__dirname, './wds'),
+    contentBase: path.resolve(__dirname, '../../work'),
+    publicPath: '/scripts/',
     watchContentBase: true,
     compress: true,
     port: 8080,
     open: true,
+    openPage: 'routeplanner.html',
     overlay: true
   },
   devtool: 'inline-source-map',
