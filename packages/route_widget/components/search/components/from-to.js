@@ -84,7 +84,7 @@ export function render__fromTo() {
         </div>
         <div class="fromTo__inputs__input_wrapper">
           <p>
-            Terme di Merano, Merano
+            ${this.destination_place.display_name}
           </p>
         </div>
       </div>

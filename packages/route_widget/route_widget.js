@@ -49,6 +49,7 @@ class RoutePlanner extends LitElement {
     this.search_results_height = 0;
     this.current_location = {};
     this.search_results = [];
+    this.destination_place = { display_name: '', name: '', type: '' };
   }
 
   static get properties() {
@@ -81,6 +82,21 @@ class RoutePlanner extends LitElement {
     this.windowSizeListenerClose();
     // Calculate results height
     this.getSearchContainerHeight();
+    this.setDestination();
+  }
+
+  setDestination() {
+    if (this.destination) {
+      const [longitude, latitude] = this.destination.split(':');
+
+      this.destination_place = {
+        display_name: this.destination_name,
+        type: 'coord',
+        name: `${this.destination}:WGS84[DD.DDDDD]`,
+        latitude,
+        longitude
+      };
+    }
   }
 
   render() {
