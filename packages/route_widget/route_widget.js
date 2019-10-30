@@ -16,7 +16,7 @@ import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
-import { getSearchContainerHeight, getStyle } from './utilities';
+import { getSearchContainerHeight, getStyle, toLeaflet } from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -57,23 +57,11 @@ class RoutePlanner extends LitElement {
   }
 
   async initializeMap() {
-    try {
-      const position = await getCurrentPosition();
-      const { latitude, longitude } = position.coords;
-      this.current_location.lat = latitude;
-      this.current_location.lng = longitude;
-    } catch (error) {
-      this.current_location.lat = 46.4899575;
-      this.current_location.lng = 11.3305934;
-    }
-    this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false }).setView(
-      [this.current_location.lat, this.current_location.lng],
-      13
-    );
+    this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false });
+
     L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: ''
     }).addTo(this.map);
-    this.loading = false;
   }
 
   async firstUpdated() {
@@ -83,6 +71,42 @@ class RoutePlanner extends LitElement {
     // Calculate results height
     this.getSearchContainerHeight();
     this.setDestination();
+
+    if (this.destination) {
+      this.zoomOn(this.destination_place);
+    }
+
+    try {
+      const positionResult = await getCurrentPosition();
+      const { latitude, longitude } = positionResult.coords;
+      this.current_location = { latitude, longitude };
+
+      if (this.destination) {
+        const markers = [this.current_location, this.destination_place].map(p => L.marker(toLeaflet(p)));
+        this.zoomOn(markers);
+      } else if (this.current_location) {
+        this.zoomOn(this.current_location);
+      }
+
+      this.loading = false;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  /**
+   * zooms the map to the point passed or to fit all the points on the map
+   * @param {Coordinate|Array<Coordinate>} positions
+   */
+  zoomOn(positions) {
+    if (Array.isArray(positions)) {
+      const markers = [this.current_location, this.destination_place].map(p => L.marker(toLeaflet(p)));
+      const group = L.featureGroup(markers);
+
+      this.map.fitBounds(group.getBounds().pad(0.5));
+    } else {
+      this.map.setView(toLeaflet(positions), 15);
+    }
   }
 
   setDestination() {

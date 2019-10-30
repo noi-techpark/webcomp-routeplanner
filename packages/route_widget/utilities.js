@@ -36,3 +36,5 @@ export const fetch_no_parallel = () => {
     // }
   };
 };
+
+export const toLeaflet = ({ latitude, longitude }) => ({ lat: latitude, lon: longitude });
