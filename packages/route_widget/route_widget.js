@@ -1,4 +1,6 @@
 import L from 'leaflet';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
 import { request_get_poi } from './api/efa_sta';
@@ -14,6 +16,7 @@ import {
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
+import currentLocationImage from './img/find-position.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import { getSearchContainerHeight, getStyle, toLeaflet } from './utilities';
@@ -57,6 +60,12 @@ class RoutePlanner extends LitElement {
   }
 
   async initializeMap() {
+    const DefaultIcon = L.icon({
+      iconUrl: icon,
+      shadowUrl: iconShadow
+    });
+    L.Marker.prototype.options.icon = DefaultIcon;
+
     this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false });
 
     L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -74,15 +83,24 @@ class RoutePlanner extends LitElement {
 
     if (this.destination) {
       this.zoomOn(this.destination_place);
+      L.marker(toLeaflet(this.destination_place)).addTo(this.map);
     }
 
     try {
+      // sets current location
       const positionResult = await getCurrentPosition();
       const { latitude, longitude } = positionResult.coords;
       this.current_location = { latitude, longitude };
 
+      // create marker for current location
+      const currentLocationIcon = L.icon({
+        iconUrl: currentLocationImage
+      });
+      const curr_loc_marker = L.marker(toLeaflet(this.current_location), { icon: currentLocationIcon }).addTo(this.map);
+
+      // zoom on what's available between current location and destination or both
       if (this.destination) {
-        const markers = [this.current_location, this.destination_place].map(p => L.marker(toLeaflet(p)));
+        const markers = [curr_loc_marker, toLeaflet(this.destination_place)];
         this.zoomOn(markers);
       } else if (this.current_location) {
         this.zoomOn(this.current_location);
