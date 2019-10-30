@@ -69,8 +69,8 @@ class RoutePlanner extends LitElement {
 
     this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false });
 
-    L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: ''
+    L.tileLayer('//maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
+      attribution: '<a href=“https://wikimediafoundation.org/wiki/Maps_Terms_of_Use“>Wikimedia</a>'
     }).addTo(this.map);
   }
 
