@@ -79,7 +79,36 @@ class RoutePlanner extends LitElement {
     this.windowSizeListenerClose();
     // Calculate results height
     this.getSearchContainerHeight();
-    this.setDestination();
+    await this.handleDestination();
+  }
+
+  /**
+   * zooms the map to the point passed or to fit all the points on the map
+   * @param {Coordinate|Array<Coordinate>} positions
+   */
+  zoomOn(positions) {
+    if (Array.isArray(positions)) {
+      const markers = [this.current_location, this.destination_place].map(p => L.marker(toLeaflet(p)));
+      const group = L.featureGroup(markers);
+
+      this.map.fitBounds(group.getBounds().pad(0.5));
+    } else {
+      this.map.setView(toLeaflet(positions), 15);
+    }
+  }
+
+  async handleDestination() {
+    if (this.destination) {
+      const [longitude, latitude] = this.destination.split(':');
+
+      this.destination_place = {
+        display_name: this.destination_name,
+        type: 'coord',
+        name: `${this.destination}:WGS84[DD.DDDDD]`,
+        latitude,
+        longitude
+      };
+    }
 
     if (this.destination) {
       this.zoomOn(this.destination_place);
@@ -109,35 +138,6 @@ class RoutePlanner extends LitElement {
       this.loading = false;
     } catch (err) {
       console.log(err);
-    }
-  }
-
-  /**
-   * zooms the map to the point passed or to fit all the points on the map
-   * @param {Coordinate|Array<Coordinate>} positions
-   */
-  zoomOn(positions) {
-    if (Array.isArray(positions)) {
-      const markers = [this.current_location, this.destination_place].map(p => L.marker(toLeaflet(p)));
-      const group = L.featureGroup(markers);
-
-      this.map.fitBounds(group.getBounds().pad(0.5));
-    } else {
-      this.map.setView(toLeaflet(positions), 15);
-    }
-  }
-
-  setDestination() {
-    if (this.destination) {
-      const [longitude, latitude] = this.destination.split(':');
-
-      this.destination_place = {
-        display_name: this.destination_name,
-        type: 'coord',
-        name: `${this.destination}:WGS84[DD.DDDDD]`,
-        latitude,
-        longitude
-      };
     }
   }
 
