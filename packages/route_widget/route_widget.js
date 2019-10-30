@@ -62,6 +62,7 @@ class RoutePlanner extends LitElement {
   async initializeMap() {
     const DefaultIcon = L.icon({
       iconUrl: icon,
+      iconAnchor: [12.5, 41],
       shadowUrl: iconShadow
     });
     L.Marker.prototype.options.icon = DefaultIcon;
@@ -123,7 +124,8 @@ class RoutePlanner extends LitElement {
 
       // create marker for current location
       const currentLocationIcon = L.icon({
-        iconUrl: currentLocationImage
+        iconUrl: currentLocationImage,
+        iconAnchor: [12, 12]
       });
       const curr_loc_marker = L.marker(toLeaflet(this.current_location), { icon: currentLocationIcon }).addTo(this.map);
 
