@@ -54,7 +54,7 @@ export function render__fromTo() {
         <div class="fromTo__inputs__input_wrapper">
           <input
             type="text"
-            .value=${this.from}
+            .value=${this.from_input_select_visible && this.from.is_current_position ? '' : this.from.display_name}
             @input=${event => this.throttledFromInputHandler(event.target.value)}
             @focus=${handleFocus}
             @blur=${() => {
@@ -64,7 +64,22 @@ export function render__fromTo() {
             }}
           />
           <div class=${`fromTo__inputs__input_selection ${this.from_input_select_visible ? '' : 'hidden'}`}>
-            <div class="fromTo__inputs__input_selection__element">
+            <div
+              class="fromTo__inputs__input_selection__element"
+              @click=${() => {
+                if (this.current_location) {
+                  this.from = {
+                    is_current_position: true,
+                    display_name: 'Posizione corrente',
+                    type: 'coord',
+                    name: `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`
+                  };
+                } else {
+                  // TODO: ask again?
+                  alert('Impossibile accedere alla posizione');
+                }
+              }}
+            >
               <img src=${crosshairImage} alt="" /> La mia posizione
             </div>
             ${this.search_results.map(
@@ -73,7 +88,7 @@ export function render__fromTo() {
                   <div
                     class="fromTo__inputs__input_selection__element"
                     @click=${() => {
-                      this.from = place.name;
+                      this.from = { display_name: place.name, type: 'stopID', name: place.ref.id };
                     }}
                   >
                     ${place.name}

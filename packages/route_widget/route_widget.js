@@ -44,7 +44,7 @@ class RoutePlanner extends LitElement {
     this.isFullScreen = false;
     this.mobile_open = false;
     this.departure_time = 1;
-    this.from = '';
+    this.from = { display_name: '', name: '', type: '' };
     this.departure_time_select_visible = false;
     this.departure_time_select_timings_visible = false;
     this.departure_time_hour = '0000';
