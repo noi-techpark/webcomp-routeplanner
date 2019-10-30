@@ -1,7 +1,8 @@
 export function getCurrentPosition(options = {}) {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation && navigator.geolocation.getCurrentPosition) {
-      navigator.geolocation.getCurrentPosition(resolve, reject, options);
+      // note: the timeout seems to start after the user gives or denies the permission
+      navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 10000, ...options });
     } else {
       reject(); // geolocalization probably not supported
     }
