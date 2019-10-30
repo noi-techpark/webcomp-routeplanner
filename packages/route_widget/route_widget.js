@@ -137,6 +137,8 @@ class RoutePlanner extends LitElement {
 
       this.loading = false;
     } catch (err) {
+      // removes loading indicator if there is any error with the location (ie: no permission) since the loading was for that
+      this.loading = false;
       console.log(err);
     }
   }
