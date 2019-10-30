@@ -1,4 +1,6 @@
 import L from 'leaflet';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
 import { request_get_poi } from './api/efa_sta';
@@ -14,9 +16,10 @@ import {
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
+import currentLocationImage from './img/find-position.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
-import { getSearchContainerHeight, getStyle } from './utilities';
+import { getSearchContainerHeight, getStyle, toLeaflet } from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -49,6 +52,7 @@ class RoutePlanner extends LitElement {
     this.search_results_height = 0;
     this.current_location = {};
     this.search_results = [];
+    this.destination_place = { display_name: '', name: '', type: '' };
   }
 
   static get properties() {
@@ -56,23 +60,17 @@ class RoutePlanner extends LitElement {
   }
 
   async initializeMap() {
-    try {
-      const position = await getCurrentPosition();
-      const { latitude, longitude } = position.coords;
-      this.current_location.lat = latitude;
-      this.current_location.lng = longitude;
-    } catch (error) {
-      this.current_location.lat = 46.4899575;
-      this.current_location.lng = 11.3305934;
-    }
-    this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false }).setView(
-      [this.current_location.lat, this.current_location.lng],
-      13
-    );
+    const DefaultIcon = L.icon({
+      iconUrl: icon,
+      shadowUrl: iconShadow
+    });
+    L.Marker.prototype.options.icon = DefaultIcon;
+
+    this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false });
+
     L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: ''
     }).addTo(this.map);
-    this.loading = false;
   }
 
   async firstUpdated() {
@@ -81,6 +79,66 @@ class RoutePlanner extends LitElement {
     this.windowSizeListenerClose();
     // Calculate results height
     this.getSearchContainerHeight();
+    await this.handleDestination();
+  }
+
+  /**
+   * zooms the map to the point passed or to fit all the points on the map
+   * @param {Coordinate|Array<Coordinate>} positions
+   */
+  zoomOn(positions) {
+    if (Array.isArray(positions)) {
+      const markers = [this.current_location, this.destination_place].map(p => L.marker(toLeaflet(p)));
+      const group = L.featureGroup(markers);
+
+      this.map.fitBounds(group.getBounds().pad(0.5));
+    } else {
+      this.map.setView(toLeaflet(positions), 15);
+    }
+  }
+
+  async handleDestination() {
+    if (this.destination) {
+      const [longitude, latitude] = this.destination.split(':');
+
+      this.destination_place = {
+        display_name: this.destination_name,
+        type: 'coord',
+        name: `${this.destination}:WGS84[DD.DDDDD]`,
+        latitude,
+        longitude
+      };
+    }
+
+    if (this.destination) {
+      this.zoomOn(this.destination_place);
+      L.marker(toLeaflet(this.destination_place)).addTo(this.map);
+    }
+
+    try {
+      // sets current location
+      const positionResult = await getCurrentPosition();
+      const { latitude, longitude } = positionResult.coords;
+      this.current_location = { latitude, longitude };
+
+      // create marker for current location
+      const currentLocationIcon = L.icon({
+        iconUrl: currentLocationImage
+      });
+      const curr_loc_marker = L.marker(toLeaflet(this.current_location), { icon: currentLocationIcon }).addTo(this.map);
+
+      // zoom on what's available between current location and destination or both
+      if (this.destination) {
+        const markers = [curr_loc_marker, toLeaflet(this.destination_place)];
+        this.zoomOn(markers);
+      } else if (this.current_location) {
+        this.zoomOn(this.current_location);
+      }
+
+      this.loading = false;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   render() {

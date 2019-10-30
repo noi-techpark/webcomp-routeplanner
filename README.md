@@ -64,6 +64,14 @@ yarn wc
 
 This will watch the files in every package configured in the right way to create a Webpack bundle.
 
+#### Webpack Dev Server
+
+Alternatively the webpack development server can be opened with:
+
+```
+yarn start
+```
+
 ### Production
 
 Build all widgets using a `production` config of Webpack:
@@ -92,6 +100,18 @@ To deploy the web components:
 - Take the production bundle created with the command `yarn bc` and use it as a normal javascript script.
 
 In any case I suggest you to check the snippets of the first point.
+
+## How to embed on a web page
+
+TODO
+
+### Attributes
+
+| Attribute name     | Description                                                                  | Example                                      | Notes                                                                                                                                                   |
+| ------------------ | ---------------------------------------------------------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `destination`      | coordinates of the destination in the following format: "longitude:latitude" | `destination="11.1604034:46.6684672"`        | the `longitude:latitude` format is the opposite of what you can find on many websites, including google maps that uses the `latitude, longitude` format |
+| `destination-name` | display name of the destination                                              | `destination-name="Terme di Merano, Merano"` |                                                                                                                                                         |
+|                    |                                                                              |                                              |                                                                                                                                                         |
 
 ## Running the tests
 
