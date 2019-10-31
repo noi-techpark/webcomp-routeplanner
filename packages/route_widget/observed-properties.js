@@ -10,6 +10,8 @@ export const observed_properties = {
   search_results_height: { type: Number },
   search_results: { type: Array },
 
+  from_poi_search_results: { type: Array },
+
   destination_name: { type: String, attribute: 'destination-name' },
   destination: { type: String },
 

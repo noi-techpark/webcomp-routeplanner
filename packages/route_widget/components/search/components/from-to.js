@@ -13,7 +13,7 @@ import { getCurrentPosition } from '../../route_widget/mapControlsHandlers';
 async function fromInputHandler(inputString) {
   try {
     const results = await this.request_get_poi(inputString);
-    this.search_results = results;
+    this.from_poi_search_results = results;
   } catch (err) {
     console.log(err);
   }
@@ -114,7 +114,7 @@ export function render__fromTo() {
             <div class="fromTo__inputs__input_selection__element" @click=${this.setFromToCurrentPosition}>
               <img src=${crosshairImage} alt="" /> La mia posizione
             </div>
-            ${this.search_results.map(
+            ${this.from_poi_search_results.map(
               place =>
                 html`
                   <div
