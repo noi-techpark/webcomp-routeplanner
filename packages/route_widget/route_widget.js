@@ -8,15 +8,10 @@ import { render_backgroundMap } from './components/backgroundMap';
 import { render_closeFullscreenButton } from './components/closeFullscreenButton';
 import { render__details } from './components/details';
 import { render__mapControls } from './components/mapControls';
-import {
-  getCurrentPosition,
-  handleFullScreenMap,
-  mapControlsHandlers
-} from './components/route_widget/mapControlsHandlers';
+import { handleFullScreenMap, mapControlsHandlers } from './components/route_widget/mapControlsHandlers';
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
-import currentLocationImage from './img/find-position.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import { getSearchContainerHeight, getStyle, toLeaflet } from './utilities';
@@ -40,17 +35,17 @@ class RoutePlanner extends LitElement {
     this.request_get_poi = request_get_poi.bind(this);
 
     /** Observed values */
-    this.loading = true;
+    this.loading = false;
     this.isFullScreen = false;
     this.mobile_open = false;
     this.departure_time = 1;
-    this.from = '';
+    this.from = { display_name: '', name: '', type: '' };
     this.departure_time_select_visible = false;
     this.departure_time_select_timings_visible = false;
     this.departure_time_hour = '0000';
     this.details_data = undefined;
     this.search_results_height = 0;
-    this.current_location = {};
+    this.current_location = null;
     this.search_results = [];
     this.destination_place = { display_name: '', name: '', type: '' };
   }
@@ -62,14 +57,15 @@ class RoutePlanner extends LitElement {
   async initializeMap() {
     const DefaultIcon = L.icon({
       iconUrl: icon,
+      iconAnchor: [12.5, 41],
       shadowUrl: iconShadow
     });
     L.Marker.prototype.options.icon = DefaultIcon;
 
     this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false });
 
-    L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: ''
+    L.tileLayer('//maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
+      attribution: '<a href=“https://wikimediafoundation.org/wiki/Maps_Terms_of_Use“>Wikimedia</a>'
     }).addTo(this.map);
   }
 
@@ -113,31 +109,6 @@ class RoutePlanner extends LitElement {
     if (this.destination) {
       this.zoomOn(this.destination_place);
       L.marker(toLeaflet(this.destination_place)).addTo(this.map);
-    }
-
-    try {
-      // sets current location
-      const positionResult = await getCurrentPosition();
-      const { latitude, longitude } = positionResult.coords;
-      this.current_location = { latitude, longitude };
-
-      // create marker for current location
-      const currentLocationIcon = L.icon({
-        iconUrl: currentLocationImage
-      });
-      const curr_loc_marker = L.marker(toLeaflet(this.current_location), { icon: currentLocationIcon }).addTo(this.map);
-
-      // zoom on what's available between current location and destination or both
-      if (this.destination) {
-        const markers = [curr_loc_marker, toLeaflet(this.destination_place)];
-        this.zoomOn(markers);
-      } else if (this.current_location) {
-        this.zoomOn(this.current_location);
-      }
-
-      this.loading = false;
-    } catch (err) {
-      console.log(err);
     }
   }
 
