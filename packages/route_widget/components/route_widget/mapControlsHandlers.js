@@ -1,7 +1,8 @@
+const DEFAULT_GEOLOCATION_TIMEOUT = 10000;
 export function getCurrentPosition(options = {}) {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation && navigator.geolocation.getCurrentPosition) {
-      navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 10000, ...options });
+      navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: DEFAULT_GEOLOCATION_TIMEOUT, ...options });
     } else {
       reject(); // geolocalization probably not supported
     }
