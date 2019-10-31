@@ -5,6 +5,7 @@ import crosshairImage from '../../../img/crosshair-on.svg';
 import fromToDotsImage from '../../../img/from-to-dots.svg';
 import fromImage from '../../../img/from.svg';
 import toImage from '../../../img/to.svg';
+import { getCurrentPosition } from '../../route_widget/mapControlsHandlers';
 
 async function fromInputHandler(inputString) {
   try {
@@ -66,7 +67,7 @@ export function render__fromTo() {
           <div class=${`fromTo__inputs__input_selection ${this.from_input_select_visible ? '' : 'hidden'}`}>
             <div
               class="fromTo__inputs__input_selection__element"
-              @click=${() => {
+              @click=${async () => {
                 if (this.current_location) {
                   this.from = {
                     is_current_position: true,
@@ -75,8 +76,17 @@ export function render__fromTo() {
                     name: `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`
                   };
                 } else {
-                  // TODO: ask again?
-                  alert('Impossibile accedere alla posizione');
+                  try {
+                    const positionResult = await getCurrentPosition();
+                    const { latitude, longitude } = positionResult.coords;
+                    this.current_location = { latitude, longitude };
+                  } catch (error) {
+                    if (error.code === error.PERMISSION_DENIED) {
+                      alert('Non hai dato i permessi per la geolocalizzazione. Per piacere attivali e riprova.');
+                    } else if (error.code === error.TIMEOUT) {
+                      alert('Non è stato possibile geolocalizzarti.');
+                    }
+                  }
                 }
               }}
             >
