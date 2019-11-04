@@ -137,6 +137,32 @@
 
     .search__results__listElement__transports {
       margin-top: 0.5rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .search__results__listElement__transports__item {
+        display: inline-block;
+        margin-bottom: 2px;
+        padding: 2px;
+        height: 30px;
+
+        img {
+          width: 20px;
+        }
+        span {
+          font-size: 14px;
+          line-height: 24px;
+          color: $black-300;
+          position: relative;
+          top: 1px;
+        }
+      }
+      .search__results__listElement__transports__item__border {
+        border: 1px solid $black-300;
+        border-radius: 4px;
+      }
     }
 
     .search__results__listElement__time {

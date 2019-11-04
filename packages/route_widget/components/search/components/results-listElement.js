@@ -1,9 +1,9 @@
 import { html } from 'lit-html';
 import { FAKE_DETAILS } from '../../../fake_data';
 import chevronRightImage from '../../../img/chevron-right.svg';
-import { MEANS_ICONS } from '../../../means_icons';
 import { formatDuration } from '../../../utilities';
 import { render__badge } from '../../generics/badge';
+import render__leg_badge from './leg-badge';
 
 export function render__resultsListElement(trip) {
   return html`
@@ -21,14 +21,7 @@ export function render__resultsListElement(trip) {
           <p class="search__results__listElement__range">${trip.startTime} - ${trip.endTime}</p>
         </div>
         <div class="search__results__listElement__transports">
-          ${trip.legs
-            .map(leg => leg.type)
-            .map(
-              type =>
-                html`
-                  <img src=${MEANS_ICONS[type]} alt="${type}" />
-                `
-            )}
+          ${trip.legs.map((leg, i) => render__leg_badge(leg, i < trip.legs.length - 1))}
         </div>
       </div>
       <div class="search__results__listElement__right d-flex align-items-center">
