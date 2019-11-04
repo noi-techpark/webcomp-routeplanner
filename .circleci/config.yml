@@ -1,0 +1,100 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:dubnium # using node's dunbium LTS (10.x)
+    working_directory: /tmp/idm-routeplanner
+    steps:
+      - checkout
+
+      - run:
+          name: Saving the initial build timestamp
+          command: |
+            mkdir .build-info
+            touch .build-info/build-started
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - yarn-packages-v1-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-
+
+      - run: yarn install --non-interactive --cache-folder ~/.cache/yarn
+
+      - save_cache:
+          paths:
+            - ~/.cache/yarn
+          key: yarn-packages-v1-{{ checksum "yarn.lock" }}
+
+      # Actually build the webapp
+      - run: yarn build-components
+
+      # Persist the build path (./build) into the workspace for use in the deploy job.
+      - persist_to_workspace:
+          root: /tmp/idm-routeplanner
+          paths:
+            - build
+            - .build-info
+
+      - notify_job_status_on_failure
+
+  deploy:
+    machine:
+      enabled: true
+    working_directory: /tmp/idm-routeplanner
+    steps:
+      - attach_workspace:
+          at: /tmp/idm-routeplanner
+
+      - add_ssh_keys:
+          fingerprints:
+            - '1b:8a:92:c9:8e:ba:fe:ff:19:b1:8d:f9:6e:b5:c0:60'
+
+      - run:
+          name: Deploy Over SSH
+          command: |
+            scp dist/* root@clients.belka.us:/var/www/html/idm/cdn/
+
+      - notify_job_status_on_success
+      - notify_job_status_on_failure
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - devel
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - devel
+
+commands:
+  notify_job_status_on_success:
+    description: Send success webhook to "la portinaia"
+    steps:
+      - run:
+          name: On success
+          when: on_success
+          command: |
+            BUILD_INIT_TIMESTAMP=`date -r ./.build-info/build-started "+%s"`
+            BUILD_DURATION=$(($(date "+%s") - $BUILD_INIT_TIMESTAMP))
+            echo "{\"buildStatus\":\"success\", \"timestamp\": $BUILD_INIT_TIMESTAMP,\"duration\": $BUILD_DURATION,\"buildNumber\": $CIRCLE_BUILD_NUM,\"branch\": \"$CIRCLE_BRANCH\",\"username\": \"$CIRCLE_USERNAME\",\"job\": \"$CIRCLE_JOB\",\"buildUrl\": \"$CIRCLE_BUILD_URL\",\"commit\": \"$CIRCLE_SHA1\",\"workflow_id\": \"$CIRCLE_WORKFLOW_ID\",\"workflowUrl\": \"https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID\",\"pullRequest\": \"$CI_PULL_REQUEST\",\"apiLink\":\"https://circleci.com/api/v1.1/project/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM\"}" > post_data.json
+            curl -X POST $WEBHOOK_URL --data "@post_data.json" -H "Content-Type: application/json" -H "X-Webhook-Signature: $WEBHOOK_SIGNATURE"
+  notify_job_status_on_failure:
+    description: Send failure webhook to "la portinaia"
+    steps:
+      - run:
+          name: On fail
+          when: on_fail
+          command: |
+            BUILD_INIT_TIMESTAMP=`date -r ./.build-info/build-started "+%s"`
+            BUILD_DURATION=$(($(date "+%s") - $BUILD_INIT_TIMESTAMP))
+            echo "{\"buildStatus\":\"failure\", \"timestamp\": $BUILD_INIT_TIMESTAMP,\"duration\": $BUILD_DURATION,\"buildNumber\": $CIRCLE_BUILD_NUM,\"branch\": \"$CIRCLE_BRANCH\",\"username\": \"$CIRCLE_USERNAME\",\"job\": \"$CIRCLE_JOB\",\"buildUrl\": \"$CIRCLE_BUILD_URL\",\"commit\": \"$CIRCLE_SHA1\",\"workflow_id\": \"$CIRCLE_WORKFLOW_ID\",\"workflowUrl\": \"https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID\",\"pullRequest\": \"$CI_PULL_REQUEST\",\"apiLink\":\"https://circleci.com/api/v1.1/project/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM\"}" > post_data.json
+            curl -X POST $WEBHOOK_URL --data "@post_data.json" -H "Content-Type: application/json" -H "X-Webhook-Signature: $WEBHOOK_SIGNATURE"
