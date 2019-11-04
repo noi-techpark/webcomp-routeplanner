@@ -26,14 +26,14 @@ jobs:
             - ~/.cache/yarn
           key: yarn-packages-v1-{{ checksum "yarn.lock" }}
 
-      # Actually build the webapp
+      # Actually build the webcomponents
       - run: yarn build-components
 
-      # Persist the build path (./build) into the workspace for use in the deploy job.
+      # Persist the build path (./dist) into the workspace for use in the deploy job.
       - persist_to_workspace:
           root: /tmp/idm-routeplanner
           paths:
-            - build
+            - dist
             - .build-info
 
       - notify_job_status_on_failure
