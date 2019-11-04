@@ -1,4 +1,4 @@
-import { fetch_no_parallel } from '../utilities';
+import { fetch_no_parallel, toQueryParams } from '../utilities';
 
 const BASE_PATH = 'http://efa.sta.bz.it/apb';
 
@@ -19,10 +19,16 @@ export async function request_get_poi(query) {
 }
 
 export async function request_trip(origin, destination) {
-  const response = await fetch(
-    `${BASE_PATH}/XML_TRIP_REQUEST2?type_origin=stopID&name_origin=${origin}&type_destination=stopID&name_destination=${destination}&outputFormat=json`,
-    { method: 'GET' }
-  );
-  const list = await response.json();
-  console.log(list);
+  const params = {
+    language: 'it',
+    outputFormat: 'json',
+    coordOutputFormat: 'WGS84[DD.DDDDD]',
+    type_origin: origin.type,
+    name_origin: origin.name,
+    type_destination: destination.type,
+    name_destination: destination.name
+  };
+  const response = await fetch(`${BASE_PATH}/XML_TRIP_REQUEST2?${toQueryParams(params)}`, { method: 'GET' });
+  const data = await response.json();
+  return data.trips;
 }

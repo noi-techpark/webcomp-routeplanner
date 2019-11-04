@@ -3,7 +3,7 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
-import { request_get_poi } from './api/efa_sta';
+import { request_get_poi, request_trip } from './api/efa_sta';
 import { render_backgroundMap } from './components/backgroundMap';
 import { render_closeFullscreenButton } from './components/closeFullscreenButton';
 import { render__details } from './components/details';
@@ -14,7 +14,7 @@ import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
-import { getSearchContainerHeight, getStyle, toLeaflet } from './utilities';
+import { getSearchContainerHeight, getStyle, toLeaflet, last } from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -46,6 +46,7 @@ class RoutePlanner extends LitElement {
     this.details_data = undefined;
     this.search_results_height = 0;
     this.current_location = null;
+    this.search_results = false;
     this.from_poi_search_results = [];
     this.destination_place = { display_name: '', name: '', type: '' };
   }
@@ -110,6 +111,29 @@ class RoutePlanner extends LitElement {
       this.zoomOn(this.destination_place);
       L.marker(toLeaflet(this.destination_place)).addTo(this.map);
     }
+  }
+
+  async search() {
+    this.loading = true;
+    this.search_results = await request_trip(this.from, this.destination_place);
+    this.loading = false;
+
+    this.search_results = this.search_results.map(trip => {
+      const startTime = trip.legs[0].points[0].dateTime.time;
+      const endTime = last(last(trip.legs).points).dateTime.time;
+
+      const legTypes = {
+        6: 'train',
+        100: 'walking',
+        3: 'bus'
+      };
+      const legs = trip.legs.map(leg => {
+        const type = legTypes[leg.mode.type];
+        return { ...leg, type };
+      });
+
+      return { ...trip, startTime, endTime, legs };
+    });
   }
 
   render() {

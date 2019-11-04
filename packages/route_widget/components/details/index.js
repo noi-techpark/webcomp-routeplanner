@@ -4,20 +4,13 @@ import chevronRightImage from '../../img/chevron-right.svg';
 import downloadImage from '../../img/download.svg';
 import printImage from '../../img/print.svg';
 import shareImage from '../../img/share.svg';
-import trainImage from '../../img/train.svg';
 import tripFirstImage from '../../img/trip-first.svg';
 import tripLastImage from '../../img/trip-last.svg';
 import tripStandardImage from '../../img/trip-standard.svg';
 import verticalDotsImage from '../../img/vertical-dots.svg';
-import walkingImage from '../../img/walking.svg';
+import { MEANS_ICONS } from '../../means_icons';
 import { render__badge } from '../generics/badge';
 import { render__button } from '../generics/buttons';
-
-const MEANS_ICONS = {
-  walking: walkingImage,
-  train: trainImage,
-  car: carImage
-};
 
 export function render__details() {
   return html`

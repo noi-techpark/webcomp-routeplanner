@@ -37,4 +37,13 @@ export const fetch_no_parallel = () => {
   };
 };
 
+export const formatDuration = ([h, m]) => `${h}h ${m}m`;
+
+export const last = arr => arr[arr.length - 1];
+
+export const toQueryParams = params =>
+  Object.entries(params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
+
 export const toLeaflet = ({ latitude, longitude }) => ({ lat: latitude, lon: longitude });
