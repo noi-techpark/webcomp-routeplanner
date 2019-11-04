@@ -48,12 +48,12 @@ jobs:
 
       - add_ssh_keys:
           fingerprints:
-            - '1b:8a:92:c9:8e:ba:fe:ff:19:b1:8d:f9:6e:b5:c0:60'
+            - '52:60:fc:af:2a:63:fb:f4:bd:79:44:57:87:98:ec:2a'
 
       - run:
           name: Deploy Over SSH
           command: |
-            scp dist/* root@clients.belka.us:/var/www/html/idm/cdn/
+            scp dist/* $SSH_USER@$SSH_BASE_DEPLOY_PATH/idm/cdn/
 
       - notify_job_status_on_success
       - notify_job_status_on_failure
