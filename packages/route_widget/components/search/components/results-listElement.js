@@ -1,11 +1,9 @@
 import { html } from 'lit-html';
 import { FAKE_DETAILS } from '../../../fake_data';
 import chevronRightImage from '../../../img/chevron-right.svg';
-import infoCircleImage from '../../../img/info-circle.svg';
 import { MEANS_ICONS } from '../../../means_icons';
 import { formatDuration } from '../../../utilities';
 import { render__badge } from '../../generics/badge';
-import { render__tooltip } from '../../generics/tooltip';
 
 export function render__resultsListElement(trip) {
   return html`
@@ -38,18 +36,6 @@ export function render__resultsListElement(trip) {
           <div class="search__results__listElement__time">
             <div>
               <p>${formatDuration(trip.duration.split(':'))}</p>
-            </div>
-            <div class="search__results__listElement__time__price d-inline-flex align-items-center">
-              <p>€ 6,50</p>
-              ${render__tooltip(
-                '',
-                html`
-                  <h3>Prezzo indicativo per un adulto</h3>
-                  <p>La cifra mostrata si riferisce ad un biglietto di sola andata per un adulto.</p>
-                `,
-                infoCircleImage,
-                'left'
-              )}
             </div>
           </div>
         </div>
