@@ -125,7 +125,8 @@ class RoutePlanner extends LitElement {
       const legTypes = {
         6: 'train',
         100: 'walking',
-        3: 'bus'
+        3: 'bus',
+        4: 'bus'
       };
       const legs = trip.legs.map(leg => {
         const type = legTypes[leg.mode.type];
