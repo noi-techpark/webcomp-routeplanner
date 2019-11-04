@@ -3,7 +3,7 @@ import { render__button } from '../generics/buttons/index';
 import { render__departureTimePicker } from './components/departure-time-picker';
 import { render__fromTo } from './components/from-to';
 import { render__resultsTab } from './components/results-tab';
-import { render__resultsListElement } from './components/reults-listElement';
+import { render__resultsListElement } from './components/results-listElement';
 
 export function render__search() {
   this.render__fromTo = render__fromTo.bind(this);
