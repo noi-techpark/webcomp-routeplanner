@@ -118,6 +118,10 @@ class RoutePlanner extends LitElement {
     this.search_results = await request_trip(this.from, this.destination_place);
     this.loading = false;
 
+    const fastest = this.search_results.reduce((fastest_tmp, trip) =>
+      fastest_tmp.duration > trip.duration ? trip : fastest_tmp
+    );
+
     this.search_results = this.search_results.map(trip => {
       const startTime = trip.legs[0].points[0].dateTime.time;
       const endTime = last(last(trip.legs).points).dateTime.time;
@@ -140,7 +144,7 @@ class RoutePlanner extends LitElement {
         return { ...leg, type };
       });
 
-      return { ...trip, startTime, endTime, legs };
+      return { ...trip, startTime, endTime, legs, is_fastest: trip.duration === fastest.duration };
     });
   }
 
