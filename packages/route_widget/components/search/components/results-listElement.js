@@ -15,7 +15,7 @@ export function render__resultsListElement(trip) {
     <div
       class="search__results__listElement d-flex align-items-center justify-content-between"
       @click=${() => {
-        this.details_data = FAKE_DETAILS;
+        this.details_data = trip;
       }}
     >
       <div class="search__results__listElement__details">

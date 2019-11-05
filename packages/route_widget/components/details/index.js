@@ -4,6 +4,7 @@ import chevronRightImage from '../../img/chevron-right.svg';
 import downloadImage from '../../img/download.svg';
 import printImage from '../../img/print.svg';
 import shareImage from '../../img/share.svg';
+import infoCircleImage from '../../img/info-circle.svg';
 import tripFirstImage from '../../img/trip-first.svg';
 import tripLastImage from '../../img/trip-last.svg';
 import tripStandardImage from '../../img/trip-standard.svg';
@@ -11,8 +12,26 @@ import verticalDotsImage from '../../img/vertical-dots.svg';
 import { MEANS_ICONS } from '../../means_icons';
 import { render__badge } from '../generics/badge';
 import { render__button } from '../generics/buttons';
+import { render__tooltip } from '../generics/tooltip';
+import { formatDuration, last } from '../../utilities';
 
 export function render__details() {
+  const lastPoint = last(last(this.details_data.legs).points);
+
+  const points = [
+    ...this.details_data.legs.map(leg => {
+      console.log(leg);
+
+      return {
+        time: leg.points[0].dateTime.time,
+        place: leg.points[0].name,
+        type: leg.type,
+        means_desc: leg.type === 'walking' ? `A piedi (${leg.timeMinute} minuti)` : leg.mode.name
+      };
+    }),
+    { time: lastPoint.dateTime.time, place: lastPoint.name }
+  ];
+
   return html`
     <div class="details">
       <div class="details__background">
@@ -36,22 +55,13 @@ export function render__details() {
           <div class="col-12 mt-2">
             <div class="details__header_section__content">
               <div class="d-flex mt-1">
-                ${this.details_data.tags.map(o => {
-                  if (o === 'eco') {
-                    return html`
-                      ${render__badge('PIÚ ECONOMICO', 'green')}
-                    `;
-                  }
-                  if (o === 'faster') {
-                    return html`
-                      ${render__badge('PIÙ VELOCE', 'yellow')}
-                    `;
-                  }
-                  return html``;
-                })}
+                ${this.details_data.is_fastest ? render__badge('PIÙ VELOCE', 'yellow') : ''}
               </div>
 
-              <p class="details__header_section__timings mt-2">${this.details_data.timings}</p>
+              <p class="details__header_section__timings mt-2">
+                ${this.details_data.startTime} - ${this.details_data.startTime}
+                (${formatDuration(this.details_data.duration.split(':'))})
+              </p>
 
               <div class="details__header_section__description mt-2">
                 ${this.details_data.type === 'auto'
@@ -60,6 +70,7 @@ export function render__details() {
                       <p class="ml-2">${this.details_data.description}</p>
                     `
                   : html`
+                      <!--
                       <p>${this.details_data.description}</p>
                       ${render__tooltip(
                         '',
@@ -70,6 +81,7 @@ export function render__details() {
                         infoCircleImage,
                         'left'
                       )}
+                      -->
                     `}
               </div>
               <div class="details__header_section__show_others mt-4">
@@ -80,11 +92,11 @@ export function render__details() {
         </div>
         <div class="details__body_section">
           <div class="details__body_section__content">
-            ${this.details_data.trip.map((o, i) => {
+            ${points.map((point, i) => {
               let tripIcon = tripStandardImage;
               if (i === 0) {
                 tripIcon = tripFirstImage;
-              } else if (i === this.details_data.trip.length - 1) {
+              } else if (i === points.length - 1) {
                 tripIcon = tripLastImage;
               }
 
@@ -92,14 +104,14 @@ export function render__details() {
                 <div class="row details__body_section__content__element">
                   <div class="col-2 col-md">
                     <p class="details__body_section__content__time">
-                      ${o.time}
+                      ${point.time}
                     </p>
                   </div>
                   <div class="col-3 col-md details__body_section__content__middle">
                     <div class="d-flex justify-content-center">
                       <img src=${tripIcon} alt="" />
                     </div>
-                    ${i < this.details_data.trip.length - 1
+                    ${i < points.length - 1
                       ? html`
                           <div
                             class=${`d-flex justify-content-center align-items-center details__body_section__content__vertical_dots
@@ -111,15 +123,15 @@ export function render__details() {
                       : null}
                   </div>
                   <div class="col-6 col-md-8">
-                    <p class="details__body_section__content__place">${o.place}</p>
+                    <p class="details__body_section__content__place">${point.place}</p>
                     <div class="details__body_section__content__description">
-                      ${o.means_desc
+                      ${point.means_desc
                         ? html`
                             <p>
-                              <img src=${MEANS_ICONS[o.means]} alt="" />
+                              <img src=${MEANS_ICONS[point.type]} alt="" />
                             </p>
                             <p>
-                              ${o.means_desc}
+                              ${point.means_desc}
                             </p>
                           `
                         : null}
