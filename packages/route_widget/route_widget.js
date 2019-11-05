@@ -125,10 +125,17 @@ class RoutePlanner extends LitElement {
       const legTypes = {
         6: 'train',
         100: 'walking',
+        99: 'walking',
         3: 'bus',
         4: 'bus'
       };
+
       const legs = trip.legs.map(leg => {
+        // if (!legTypes[leg.mode.type]) {
+        //   console.log(`leg type ${leg} not in the legTypes object`);
+        //   alert(leg.mode.type);
+        // }
+
         const type = legTypes[leg.mode.type];
         return { ...leg, type };
       });
