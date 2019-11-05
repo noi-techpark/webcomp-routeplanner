@@ -1,5 +1,4 @@
 import { html } from 'lit-html';
-import { FAKE_DETAILS } from '../../../fake_data';
 import chevronRightImage from '../../../img/chevron-right.svg';
 import { formatDuration } from '../../../utilities';
 import { render__badge } from '../../generics/badge';
