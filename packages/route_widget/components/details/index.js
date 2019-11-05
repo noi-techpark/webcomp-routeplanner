@@ -20,8 +20,6 @@ export function render__details() {
 
   const points = [
     ...this.details_data.legs.map(leg => {
-      console.log(leg);
-
       return {
         time: leg.points[0].dateTime.time,
         place: leg.points[0].name,
