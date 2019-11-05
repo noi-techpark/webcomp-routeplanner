@@ -6,7 +6,7 @@ import { render__badge } from '../../generics/badge';
 import render__leg_badge from './leg-badge';
 
 export function render__resultsListElement(trip) {
-  const legs = trip.legs.splice(0, 5);
+  const legs = [...trip.legs].splice(0, 5);
   const half = Math.floor(legs.length / 2);
   const firstHalf = legs.slice(0, half);
   const secondHalf = legs.slice(half);
