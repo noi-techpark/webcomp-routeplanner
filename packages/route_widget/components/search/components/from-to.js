@@ -48,12 +48,16 @@ async function setFromToCurrentPosition() {
       iconUrl: currentLocationImage,
       iconAnchor: [12, 12]
     });
-    const curr_loc_marker = L.marker(toLeaflet(this.current_location), {
+
+    if (this.current_position_maker) {
+      this.map.removeLayer(this.current_position_maker);
+    }
+    this.current_position_maker = L.marker(toLeaflet(this.current_location), {
       icon: currentLocationIcon
     }).addTo(this.map);
     // zoom on what's available between current location and destination or both
     if (this.destination) {
-      const markers = [curr_loc_marker, this.destination_place];
+      const markers = [this.current_position_maker, this.destination_place];
       this.zoomOn(markers);
     } else if (this.current_location) {
       this.zoomOn(this.current_location);
@@ -68,14 +72,17 @@ function setFromToResult(result) {
 
   const [longitude, latitude] = result.ref.coords.split(',');
 
-  const from_marker = L.marker(toLeaflet({ longitude, latitude }), {
+  if (this.from_marker) {
+    this.map.removeLayer(this.from_marker);
+  }
+  this.from_marker = L.marker(toLeaflet({ longitude, latitude }), {
     icon: currentLocationIcon
   }).addTo(this.map);
 
   if (this.destination_place) {
-    this.zoomOn([from_marker, this.destination_place]);
+    this.zoomOn([this.from_marker, this.destination_place]);
   } else {
-    this.zoomOn(from_marker);
+    this.zoomOn(this.from_marker);
   }
 
   this.from = { display_name: result.name, type: 'stopID', name: result.ref.id };
