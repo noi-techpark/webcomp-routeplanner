@@ -88,7 +88,7 @@ class RoutePlanner extends LitElement {
    */
   zoomOn(positions) {
     if (Array.isArray(positions)) {
-      const markers = [this.current_location, this.destination_place].map(p => L.marker(toLeaflet(p)));
+      const markers = positions.map(p => L.marker(toLeaflet(p)));
       const group = L.featureGroup(markers);
 
       this.map.fitBounds(group.getBounds().pad(0.5));

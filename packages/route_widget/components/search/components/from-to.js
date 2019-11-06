@@ -53,7 +53,7 @@ async function setFromToCurrentPosition() {
     }).addTo(this.map);
     // zoom on what's available between current location and destination or both
     if (this.destination) {
-      const markers = [curr_loc_marker, toLeaflet(this.destination_place)];
+      const markers = [curr_loc_marker, this.destination_place];
       this.zoomOn(markers);
     } else if (this.current_location) {
       this.zoomOn(this.current_location);

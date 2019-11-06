@@ -48,4 +48,13 @@ export const toQueryParams = params =>
     .map(([key, value]) => `${key}=${value}`)
     .join('&');
 
-export const toLeaflet = ({ latitude, longitude }) => ({ lat: latitude, lon: longitude });
+export const toLeaflet = object => {
+  // returns object itself if it's already ok for leaflet
+  // eslint-disable-next-line no-underscore-dangle
+  if (object._latlng) return object._latlng;
+  if (object.lat && object.lon) return object;
+
+  // otherwise convert it
+  const { latitude, longitude } = object;
+  return { lat: latitude, lon: longitude };
+};
