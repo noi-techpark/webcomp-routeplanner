@@ -13,7 +13,8 @@ export async function request_get_poi(query) {
     odvSugMacro: 'true',
     outputFormat: 'JSON',
     useLocalityMainStop: 'true',
-    name_sf: query
+    name_sf: query,
+    coordOutputFormat: 'WGS84[DD.DDDDD]'
   };
 
   const response = await fetch_poi(`${BASE_PATH}/XSLT_STOPFINDER_REQUEST?${toQueryParams(params)}`, { method: 'GET' });

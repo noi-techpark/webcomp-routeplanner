@@ -60,12 +60,33 @@ async function setFromToCurrentPosition() {
     }
   }
 }
+function setFromToResult(result) {
+  const currentLocationIcon = L.icon({
+    iconUrl: fromImage,
+    iconAnchor: [12, 12]
+  });
+
+  const [longitude, latitude] = result.ref.coords.split(',');
+
+  const from_marker = L.marker(toLeaflet({ longitude, latitude }), {
+    icon: currentLocationIcon
+  }).addTo(this.map);
+
+  if (this.destination_place) {
+    this.zoomOn([from_marker, this.destination_place]);
+  } else {
+    this.zoomOn(from_marker);
+  }
+
+  this.from = { display_name: result.name, type: 'stopID', name: result.ref.id };
+}
 
 const throttledFromInputHandler = throttle(fromInputHandler, 500, { leading: true });
 
 export function render__fromTo() {
   this.throttledFromInputHandler = throttledFromInputHandler.bind(this);
   this.setFromToCurrentPosition = setFromToCurrentPosition.bind(this);
+  this.setFromToResult = setFromToResult.bind(this);
 
   const handleFocus = () => {
     if (window.innerWidth < 992 && !this.isFullScreen) {
@@ -117,13 +138,8 @@ export function render__fromTo() {
             ${this.from_poi_search_results.map(
               place =>
                 html`
-                  <div
-                    class="fromTo__inputs__input_selection__element"
-                    @click=${() => {
-                      this.from = { display_name: place.name, type: 'stopID', name: place.ref.id };
-                    }}
-                  >
-                    ${place.name}
+                  <div class="fromTo__inputs__input_selection__element" @click=${() => this.setFromToResult(result)}>
+                    ${result.name}
                   </div>
                 `
             )}
