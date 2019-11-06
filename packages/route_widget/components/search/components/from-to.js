@@ -65,7 +65,7 @@ async function setFromToCurrentPosition() {
   }
 }
 function setFromToResult(result) {
-  const currentLocationIcon = L.icon({
+  const fromIcon = L.icon({
     iconUrl: fromImage,
     iconAnchor: [12, 12]
   });
@@ -76,7 +76,7 @@ function setFromToResult(result) {
     this.map.removeLayer(this.from_marker);
   }
   this.from_marker = L.marker(toLeaflet({ longitude, latitude }), {
-    icon: currentLocationIcon
+    icon: fromIcon
   }).addTo(this.map);
 
   if (this.destination_place) {
