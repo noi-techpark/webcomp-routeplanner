@@ -57,7 +57,7 @@ export function render__details() {
               </div>
 
               <p class="details__header_section__timings mt-2">
-                ${this.details_data.startTime} - ${this.details_data.startTime}
+                ${this.details_data.startTime} - ${this.details_data.endTime}
                 (${formatDuration(this.details_data.duration.split(':'))})
               </p>
 
