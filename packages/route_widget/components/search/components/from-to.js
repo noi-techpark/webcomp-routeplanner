@@ -48,17 +48,44 @@ async function setFromToCurrentPosition() {
       iconUrl: currentLocationImage,
       iconAnchor: [12, 12]
     });
-    const curr_loc_marker = L.marker(toLeaflet(this.current_location), {
+
+    if (this.current_position_maker) {
+      this.map.removeLayer(this.current_position_maker);
+    }
+    this.current_position_maker = L.marker(toLeaflet(this.current_location), {
       icon: currentLocationIcon
     }).addTo(this.map);
     // zoom on what's available between current location and destination or both
     if (this.destination) {
-      const markers = [curr_loc_marker, toLeaflet(this.destination_place)];
+      const markers = [this.current_position_maker, this.destination_place];
       this.zoomOn(markers);
     } else if (this.current_location) {
       this.zoomOn(this.current_location);
     }
   }
+}
+function setFromToResult(result) {
+  const fromIcon = L.icon({
+    iconUrl: fromImage,
+    iconAnchor: [12, 12]
+  });
+
+  const [longitude, latitude] = result.ref.coords.split(',');
+
+  if (this.from_marker) {
+    this.map.removeLayer(this.from_marker);
+  }
+  this.from_marker = L.marker(toLeaflet({ longitude, latitude }), {
+    icon: fromIcon
+  }).addTo(this.map);
+
+  if (this.destination_place) {
+    this.zoomOn([this.from_marker, this.destination_place]);
+  } else {
+    this.zoomOn(this.from_marker);
+  }
+
+  this.from = { display_name: result.name, type: 'stopID', name: result.ref.id };
 }
 
 const throttledFromInputHandler = throttle(fromInputHandler, 500, { leading: true });
@@ -66,6 +93,7 @@ const throttledFromInputHandler = throttle(fromInputHandler, 500, { leading: tru
 export function render__fromTo() {
   this.throttledFromInputHandler = throttledFromInputHandler.bind(this);
   this.setFromToCurrentPosition = setFromToCurrentPosition.bind(this);
+  this.setFromToResult = setFromToResult.bind(this);
 
   const handleFocus = () => {
     if (window.innerWidth < 992 && !this.isFullScreen) {
@@ -115,15 +143,10 @@ export function render__fromTo() {
               <img src=${crosshairImage} alt="" /> La mia posizione
             </div>
             ${this.from_poi_search_results.map(
-              place =>
+              result =>
                 html`
-                  <div
-                    class="fromTo__inputs__input_selection__element"
-                    @click=${() => {
-                      this.from = { display_name: place.name, type: 'stopID', name: place.ref.id };
-                    }}
-                  >
-                    ${place.name}
+                  <div class="fromTo__inputs__input_selection__element" @click=${() => this.setFromToResult(result)}>
+                    ${result.name}
                   </div>
                 `
             )}

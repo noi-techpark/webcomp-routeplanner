@@ -52,6 +52,11 @@ class RoutePlanner extends LitElement {
     this.search_results = false;
     this.from_poi_search_results = [];
     this.destination_place = { display_name: '', name: '', type: '' };
+
+    /** refs to the markers */
+    this.from_marker = null;
+    this.to_marker = null;
+    this.current_position_marker = null;
   }
 
   static get properties() {
@@ -88,7 +93,7 @@ class RoutePlanner extends LitElement {
    */
   zoomOn(positions) {
     if (Array.isArray(positions)) {
-      const markers = [this.current_location, this.destination_place].map(p => L.marker(toLeaflet(p)));
+      const markers = positions.map(p => L.marker(toLeaflet(p)));
       const group = L.featureGroup(markers);
 
       this.map.fitBounds(group.getBounds().pad(0.5));

@@ -5,9 +5,19 @@ const BASE_PATH = '//efa.sta.bz.it/apb';
 
 const fetch_poi = fetch_no_parallel();
 export async function request_get_poi(query) {
-  const parameters = `language=de&outputFormat=JSON&itdLPxx_usage=origin&useLocalityMainStop=true&doNotSearchForStops_sf=1&SpEncId=0&odvSugMacro=true&name_sf=${query}`;
+  const params = {
+    language: 'it',
+    SpEncId: '0',
+    doNotSearchForStops_sf: '1',
+    itdLPxx_usage: 'origin',
+    odvSugMacro: 'true',
+    outputFormat: 'JSON',
+    useLocalityMainStop: 'true',
+    name_sf: query,
+    coordOutputFormat: 'WGS84[DD.DDDDD]'
+  };
 
-  const response = await fetch_poi(`${BASE_PATH}/XSLT_STOPFINDER_REQUEST?${parameters}`, { method: 'GET' });
+  const response = await fetch_poi(`${BASE_PATH}/XSLT_STOPFINDER_REQUEST?${toQueryParams(params)}`, { method: 'GET' });
   const data = await response.json();
 
   const list = data.stopFinder.points;
