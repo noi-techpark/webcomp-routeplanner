@@ -146,6 +146,9 @@ class RoutePlanner extends LitElement {
       };
 
       const legs = trip.legs.map(leg => {
+        /** this commented code is here to help finding the type of the leg causing a "undefined"
+         *  badge, this happens if the api returns a means of transport not already mapped in legTypes
+         */
         // if (!legTypes[leg.mode.type]) {
         //   console.log(`leg type ${leg} not in the legTypes object`);
         //   alert(leg.mode.type);
