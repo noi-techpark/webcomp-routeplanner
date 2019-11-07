@@ -143,7 +143,7 @@ export function render__fromTo() {
               <img src=${crosshairImage} alt="" /> La mia posizione
             </div>
             ${this.from_poi_search_results.map(
-              place =>
+              result =>
                 html`
                   <div class="fromTo__inputs__input_selection__element" @click=${() => this.setFromToResult(result)}>
                     ${result.name}
