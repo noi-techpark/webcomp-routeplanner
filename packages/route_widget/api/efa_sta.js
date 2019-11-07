@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { fetch_no_parallel, toQueryParams } from '../utilities';
 
 const BASE_PATH = '//efa.sta.bz.it/apb';
@@ -18,7 +19,8 @@ export async function request_get_poi(query) {
   return list || [];
 }
 
-export async function request_trip(origin, destination) {
+export async function request_trip(origin, destination, timing_options) {
+  const { type, hour, minute, day } = timing_options;
   const params = {
     language: 'it',
     outputFormat: 'json',
@@ -26,7 +28,11 @@ export async function request_trip(origin, destination) {
     type_origin: origin.type,
     name_origin: origin.name,
     type_destination: destination.type,
-    name_destination: destination.name
+    name_destination: destination.name,
+    itdTripDateTimeDepArr: type,
+    itdTimeHour: hour,
+    itdTimeMinute: minute,
+    itdDateDayMonthYear: moment(day).format('DD.MM.YYYY')
   };
   const response = await fetch(`${BASE_PATH}/XML_TRIP_REQUEST2?${toQueryParams(params)}`, { method: 'GET' });
   const data = await response.json();
