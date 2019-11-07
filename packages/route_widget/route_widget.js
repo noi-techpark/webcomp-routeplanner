@@ -57,6 +57,8 @@ class RoutePlanner extends LitElement {
     this.from_marker = null;
     this.to_marker = null;
     this.current_position_marker = null;
+
+    this.polylines = [];
   }
 
   static get properties() {
@@ -165,6 +167,32 @@ class RoutePlanner extends LitElement {
 
       return { ...trip, startTime, endTime, legs, is_fastest: trip.duration === fastest.duration };
     });
+  }
+
+  addTripToMap(trip) {
+    const colors = {
+      walking: 'gray',
+      train: 'blue',
+      car: 'red',
+      bus: 'red'
+    };
+
+    this.polylines = trip.legs
+      .map(
+        leg =>
+          leg.path
+            .split(' ') // splits in points
+            .map(s => s.split(',')) // splits in [long, lat]
+            .map(([long, lat]) => [lat, long]) // format as leaflet wants
+      )
+      .map((path, i) => L.polyline(path, { color: colors[trip.legs[i].type] }));
+
+    this.polylines.forEach(p => p.addTo(this.map));
+  }
+
+  removeTripFromMap() {
+    this.polylines.forEach(p => this.map.removeLayer(p));
+    this.polylines = [];
   }
 
   render() {

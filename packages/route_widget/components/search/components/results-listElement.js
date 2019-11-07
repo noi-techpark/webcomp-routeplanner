@@ -15,6 +15,8 @@ export function render__resultsListElement(trip) {
       class="search__results__listElement d-flex align-items-center justify-content-between"
       @click=${() => {
         this.details_data = trip;
+
+        this.addTripToMap(trip);
       }}
     >
       <div class="search__results__listElement__details">
