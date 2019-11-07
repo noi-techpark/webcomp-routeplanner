@@ -67,20 +67,7 @@ export function render__details() {
                       <img src=${carImage} alt="" />
                       <p class="ml-2">${this.details_data.description}</p>
                     `
-                  : html`
-                      <!--
-                      <p>${this.details_data.description}</p>
-                      ${render__tooltip(
-                        '',
-                        html`
-                          <h3>Prezzo indicativo per un adulto</h3>
-                          <p>La cifra mostrata si riferisce ad un biglietto di sola andata per un adulto.</p>
-                        `,
-                        infoCircleImage,
-                        'left'
-                      )}
-                      -->
-                    `}
+                  : ''}
               </div>
               <div class="details__header_section__show_others mt-4">
                 <a href="/">Visualizza altri orari ></a>
