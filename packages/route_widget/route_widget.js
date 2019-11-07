@@ -3,7 +3,9 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
-import { request_get_poi } from './api/efa_sta';
+import padStart from 'lodash/padStart';
+import moment from 'moment';
+import { request_get_poi, request_trip } from './api/efa_sta';
 import { render_backgroundMap } from './components/backgroundMap';
 import { render_closeFullscreenButton } from './components/closeFullscreenButton';
 import { render__details } from './components/details';
@@ -14,7 +16,7 @@ import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
-import { getSearchContainerHeight, getStyle, toLeaflet } from './utilities';
+import { getSearchContainerHeight, getStyle, last, toLeaflet } from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -38,15 +40,17 @@ class RoutePlanner extends LitElement {
     this.loading = false;
     this.isFullScreen = false;
     this.mobile_open = false;
-    this.departure_time = 1;
     this.from = { display_name: '', name: '', type: '' };
+    this.departure_time = 1;
     this.departure_time_select_visible = false;
     this.departure_time_select_timings_visible = false;
-    this.departure_time_hour = '0000';
+    this.departure_time_hour = moment().format(`HH`) + padStart(`${Math.floor(moment().minute() / 15) * 15}`, 2, '0');
+    this.departure_time_day = moment().format('YYYY-MM-DD');
     this.details_data = undefined;
     this.search_results_height = 0;
     this.current_location = null;
-    this.search_results = [];
+    this.search_results = false;
+    this.from_poi_search_results = [];
     this.destination_place = { display_name: '', name: '', type: '' };
   }
 
@@ -110,6 +114,52 @@ class RoutePlanner extends LitElement {
       this.zoomOn(this.destination_place);
       L.marker(toLeaflet(this.destination_place)).addTo(this.map);
     }
+  }
+
+  async search() {
+    this.loading = true;
+
+    const timing_options = {
+      type: ['', 'dep', 'dep', 'arr', ''][this.departure_time],
+      hour: this.departure_time_hour.slice(0, 2),
+      minute: this.departure_time_hour.slice(2, 4),
+      day: this.departure_time_day
+    };
+
+    this.search_results = await request_trip(this.from, this.destination_place, timing_options);
+    this.loading = false;
+
+    const fastest = this.search_results.reduce((fastest_tmp, trip) =>
+      fastest_tmp.duration > trip.duration ? trip : fastest_tmp
+    );
+
+    this.search_results = this.search_results.map(trip => {
+      const startTime = trip.legs[0].points[0].dateTime.time;
+      const endTime = last(last(trip.legs).points).dateTime.time;
+
+      const legTypes = {
+        6: 'train',
+        100: 'walking',
+        99: 'walking',
+        3: 'bus',
+        4: 'bus'
+      };
+
+      const legs = trip.legs.map(leg => {
+        /** this commented code is here to help finding the type of the leg causing a "undefined"
+         *  badge, this happens if the api returns a means of transport not already mapped in legTypes
+         */
+        // if (!legTypes[leg.mode.type]) {
+        //   console.log(`leg type ${leg} not in the legTypes object`);
+        //   alert(leg.mode.type);
+        // }
+
+        const type = legTypes[leg.mode.type];
+        return { ...leg, type };
+      });
+
+      return { ...trip, startTime, endTime, legs, is_fastest: trip.duration === fastest.duration };
+    });
   }
 
   render() {

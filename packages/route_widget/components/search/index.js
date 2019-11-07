@@ -3,7 +3,7 @@ import { render__button } from '../generics/buttons/index';
 import { render__departureTimePicker } from './components/departure-time-picker';
 import { render__fromTo } from './components/from-to';
 import { render__resultsTab } from './components/results-tab';
-import { render__resultsListElement } from './components/reults-listElement';
+import { render__resultsListElement } from './components/results-listElement';
 
 export function render__search() {
   this.render__fromTo = render__fromTo.bind(this);
@@ -22,27 +22,25 @@ export function render__search() {
               ${this.render__departureTimePicker()}
             </div>
             <div class=${`${this.departure_time > 1 ? 'ml-auto mt-3' : ''}`}>
-              ${render__button('Cambia percorso', () => console.log('default'), this.from ? '' : 'disabled')}
+              ${render__button('Cerca percorso', () => this.search(), this.from ? '' : 'disabled')}
             </div>
           </div>
         </div>
       </div>
-      ${this.from
-        ? html`
-            <div
-              class=${`search__results`}
-              style=${this.mobile_open
-                ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
-                : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`}
-            >
-              ${render__resultsTab()}
-              <div class="search__results__list_container">
-                ${this.render__resultsListElement()} ${this.render__resultsListElement()}
-                ${this.render__resultsListElement()} ${this.render__resultsListElement()}
-              </div>
-            </div>
-          `
-        : null}
+      ${html`
+        <div
+          class=${`search__results`}
+          style=${(this.search_results ? '' : `display: none; `) +
+            (this.mobile_open
+              ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
+              : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`)}
+        >
+          ${render__resultsTab()}
+          <div class="search__results__list_container">
+            ${this.search_results && this.search_results.map(this.render__resultsListElement)}
+          </div>
+        </div>
+      `}
     </div>
   `;
 }

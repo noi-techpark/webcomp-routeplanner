@@ -1,5 +1,4 @@
 import { html } from 'lit-html';
-import moment from 'moment';
 import clockImage from '../../../img/clock.svg';
 import { render__picker } from '../../generics/picker';
 
@@ -62,7 +61,7 @@ export function render__departureTimePicker() {
         ${this.departure_time > 1
           ? html`
               <div class="departure_time_picker__input_date">
-                <input type="date" value=${moment().format('YYYY-MM-DD')} />
+                <input type="date" value=${this.departure_time_day} />
               </div>
             `
           : ``}
