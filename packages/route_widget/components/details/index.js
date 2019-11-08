@@ -4,15 +4,13 @@ import chevronRightImage from '../../img/chevron-right.svg';
 import downloadImage from '../../img/download.svg';
 import printImage from '../../img/print.svg';
 import shareImage from '../../img/share.svg';
-import infoCircleImage from '../../img/info-circle.svg';
 import tripFirstImage from '../../img/trip-first.svg';
 import tripLastImage from '../../img/trip-last.svg';
 import tripStandardImage from '../../img/trip-standard.svg';
 import verticalDotsImage from '../../img/vertical-dots.svg';
-import { MEANS_ICONS } from '../../means_icons';
+import { MEANS_ICONS } from '../../constants';
 import { render__badge } from '../generics/badge';
 import { render__button } from '../generics/buttons';
-import { render__tooltip } from '../generics/tooltip';
 import { formatDuration, last } from '../../utilities';
 
 export function render__details() {
@@ -36,6 +34,7 @@ export function render__details() {
         <div
           class="row details__back_section"
           @click=${() => {
+            this.removeTripFromMap();
             this.details_data = undefined;
           }}
         >

@@ -3,6 +3,7 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
+import flatten from 'lodash/flatten';
 import padStart from 'lodash/padStart';
 import moment from 'moment';
 import { request_get_poi, request_trip } from './api/efa_sta';
@@ -14,6 +15,7 @@ import { handleFullScreenMap, mapControlsHandlers } from './components/route_wid
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
+import { TRIP_COLORS } from './constants';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import { getSearchContainerHeight, getStyle, last, toLeaflet } from './utilities';
@@ -57,6 +59,8 @@ class RoutePlanner extends LitElement {
     this.from_marker = null;
     this.to_marker = null;
     this.current_position_marker = null;
+
+    this.polylines = [];
   }
 
   static get properties() {
@@ -165,6 +169,27 @@ class RoutePlanner extends LitElement {
 
       return { ...trip, startTime, endTime, legs, is_fastest: trip.duration === fastest.duration };
     });
+  }
+
+  addTripToMap(trip) {
+    this.polylines = trip.legs
+      .map(
+        leg =>
+          leg.path
+            .split(' ') // splits in points
+            .map(s => s.split(',')) // splits in [long, lat]
+            .map(([long, lat]) => [lat, long]) // format as leaflet wants
+      )
+      .map((path, i) => L.polyline(path, { color: TRIP_COLORS[trip.legs[i].type] }));
+
+    this.polylines.forEach(p => p.addTo(this.map));
+
+    this.zoomOn(flatten(this.polylines.map(p => p.getLatLngs())));
+  }
+
+  removeTripFromMap() {
+    this.polylines.forEach(p => this.map.removeLayer(p));
+    this.polylines = [];
   }
 
   render() {
