@@ -52,9 +52,9 @@ export const toLeaflet = o => {
   // returns object itself if it's already ok for leaflet
   // eslint-disable-next-line no-underscore-dangle
   if (o._latlng) return o._latlng;
-  if (o.lat && o.lon) return o;
+  if (o.lat && (o.lng || o.lon)) return o;
 
   // otherwise convert it
   const { latitude, longitude } = o;
-  return { lat: latitude, lon: longitude };
+  return { lat: latitude, lng: longitude };
 };

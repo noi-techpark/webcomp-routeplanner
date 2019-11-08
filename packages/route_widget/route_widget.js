@@ -3,6 +3,7 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
+import flatten from 'lodash/flatten';
 import padStart from 'lodash/padStart';
 import moment from 'moment';
 import { request_get_poi, request_trip } from './api/efa_sta';
@@ -188,6 +189,8 @@ class RoutePlanner extends LitElement {
       .map((path, i) => L.polyline(path, { color: colors[trip.legs[i].type] }));
 
     this.polylines.forEach(p => p.addTo(this.map));
+
+    this.zoomOn(flatten(this.polylines.map(p => p.getLatLngs())));
   }
 
   removeTripFromMap() {
