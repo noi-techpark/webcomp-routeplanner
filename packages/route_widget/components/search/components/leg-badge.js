@@ -1,5 +1,5 @@
 import { html } from 'lit-html';
-import { MEANS_ICONS } from '../../../means_icons';
+import { MEANS_ICONS } from '../../../constants';
 import chevronRight from '../../../img/chevron-right-gray.svg';
 
 export default function render__leg_badge(leg, has_next = false) {

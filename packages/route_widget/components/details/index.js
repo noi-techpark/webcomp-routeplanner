@@ -8,7 +8,7 @@ import tripFirstImage from '../../img/trip-first.svg';
 import tripLastImage from '../../img/trip-last.svg';
 import tripStandardImage from '../../img/trip-standard.svg';
 import verticalDotsImage from '../../img/vertical-dots.svg';
-import { MEANS_ICONS } from '../../means_icons';
+import { MEANS_ICONS } from '../../constants';
 import { render__badge } from '../generics/badge';
 import { render__button } from '../generics/buttons';
 import { formatDuration, last } from '../../utilities';

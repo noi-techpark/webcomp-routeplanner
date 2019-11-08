@@ -9,3 +9,10 @@ export const MEANS_ICONS = {
   car: carImage,
   bus: busImage
 };
+
+export const TRIP_COLORS = {
+  walking: 'gray',
+  train: 'blue',
+  car: 'red',
+  bus: 'red'
+};
