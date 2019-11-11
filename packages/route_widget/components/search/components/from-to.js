@@ -7,7 +7,7 @@ import currentLocationImage from '../../../img/find-position.svg';
 import fromToDotsImage from '../../../img/from-to-dots.svg';
 import fromImage from '../../../img/from.svg';
 import toImage from '../../../img/to.svg';
-import { toLeaflet } from '../../../utilities';
+import { toLeaflet, isValidPosition } from '../../../utilities';
 import { getCurrentPosition } from '../../route_widget/mapControlsHandlers';
 
 async function fromInputHandler(place, inputString) {
@@ -20,19 +20,20 @@ async function fromInputHandler(place, inputString) {
   }
 }
 
-async function setFromToCurrentPosition() {
+async function setPlaceToCurrentPosition(place, input) {
   try {
     this.loading = true;
     const positionResult = await getCurrentPosition();
     const { latitude, longitude } = positionResult.coords;
     this.current_location = { latitude, longitude };
 
-    this.from.is_current_position = true;
-    this.from.display_name = 'Posizione corrente';
-    this.from.type = 'coord';
-    this.from.name = `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`;
-    this.from.latitude = latitude;
-    this.from.longitude = longitude;
+    place.is_current_position = true;
+    place.display_name = 'Posizione corrente';
+    place.type = 'coord';
+    place.name = `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`;
+    place.latitude = latitude;
+    place.longitude = longitude;
+    this.requestUpdate();
   } catch (error) {
     if (error.code === error.PERMISSION_DENIED) {
       // eslint-disable-next-line no-alert
@@ -44,6 +45,7 @@ async function setFromToCurrentPosition() {
   } finally {
     this.loading = false;
   }
+
   if (this.current_location) {
     // create marker for current location
     const currentLocationIcon = L.icon({
@@ -57,34 +59,34 @@ async function setFromToCurrentPosition() {
     this.current_position_maker = L.marker(toLeaflet(this.current_location), {
       icon: currentLocationIcon
     }).addTo(this.map);
-    // zoom on what's available between current location and destination or both
-    if (this.destination) {
-      const markers = [this.current_position_maker, this.destination_place];
-      this.zoomOn(markers);
-    } else if (this.current_location) {
-      this.zoomOn(this.current_location);
+
+    if (input === 'from') {
+      this.setFromMarker(this.current_location);
+    } else if (input === 'destination') {
+      this.setDestinationMarker(this.current_location);
     }
   }
 }
 function setFromToResult(result) {
   const [longitude, latitude] = result.ref.coords.split(',');
-  this.setFromMarker(toLeaflet({ lon: longitude, lat: latitude }));
-
-  if (this.destination_place) {
-    this.zoomOn([this.from_marker, this.destination_place]);
-  } else {
-    this.zoomOn(this.from_marker);
-  }
+  this.setFromMarker({ longitude, latitude });
 
   this.from.display_name = result.name;
   this.from.type = 'stopID';
   this.from.name = result.ref.id;
   this.from.longitude = longitude;
   this.from.latitude = latitude;
+
+  if (isValidPosition(this.destination_place)) {
+    this.zoomOn([this.from_marker, this.destination_place]);
+  } else {
+    this.zoomOn(this.from_marker);
+  }
 }
 
 function setDestinationToResult(result) {
   const [longitude, latitude] = result.ref.coords.split(',');
+  this.setDestinationMarker({ longitude, latitude });
 
   this.destination_place.display_name = result.name;
   this.destination_place.type = 'stopID';
@@ -92,14 +94,18 @@ function setDestinationToResult(result) {
   this.destination_place.longitude = longitude;
   this.destination_place.latitude = latitude;
 
-  this.setDestinationMarker(this.destination_place);
+  if (isValidPosition(this.destination_place)) {
+    this.zoomOn([this.from_marker, this.destination_place]);
+  } else {
+    this.zoomOn(this.from_marker);
+  }
 }
 
 const throttledFromInputHandler = throttle(fromInputHandler, 500, { leading: true });
 
 export function render__fromTo() {
   this.throttledFromInputHandler = throttledFromInputHandler.bind(this);
-  this.setFromToCurrentPosition = setFromToCurrentPosition.bind(this);
+  this.setPlaceToCurrentPosition = setPlaceToCurrentPosition.bind(this);
   this.setFromToResult = setFromToResult.bind(this);
   this.setDestinationToResult = setDestinationToResult.bind(this);
 
@@ -175,8 +181,12 @@ export function render__fromTo() {
         <img src=${toImage} alt="" />
       </div>
       <div class="fromTo__inputs">
-        ${renderPlaceInput(this.from, this.setFromToCurrentPosition, this.setFromToResult)}
-        ${renderPlaceInput(this.destination_place, () => {}, this.setDestinationToResult)}
+        ${renderPlaceInput(this.from, () => this.setPlaceToCurrentPosition(this.from, 'from'), this.setFromToResult)}
+        ${renderPlaceInput(
+          this.destination_place,
+          () => this.setPlaceToCurrentPosition(this.destination_place, 'destination'),
+          this.setDestinationToResult
+        )}
       </div>
       <div class="fromTo__button">
         <img src=${changeImage} alt="" @click=${this.swapFromTo} />

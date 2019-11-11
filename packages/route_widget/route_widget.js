@@ -19,7 +19,7 @@ import { TRIP_COLORS } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
-import { getSearchContainerHeight, getStyle, last, toLeaflet } from './utilities';
+import { getSearchContainerHeight, getStyle, last, toLeaflet, isValidPosition } from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -137,10 +137,10 @@ class RoutePlanner extends LitElement {
       this.map.removeLayer(this.destination_marker);
     }
 
-    if (destination.latitude) {
+    if (isValidPosition(destination)) {
       this.destination_marker = L.marker(toLeaflet(destination)).addTo(this.map);
 
-      if (this.from_marker) {
+      if (isValidPosition(this.from)) {
         this.zoomOn([this.destination_marker, this.from_marker]);
       } else {
         this.zoomOn(this.destination_marker);
@@ -157,12 +157,11 @@ class RoutePlanner extends LitElement {
     if (this.from_marker) {
       this.map.removeLayer(this.from_marker);
     }
-
-    if (from.latitude) {
+    if (isValidPosition(from)) {
       this.from_marker = L.marker(toLeaflet(from), { icon: fromIcon }).addTo(this.map);
 
-      if (this.destination_marker) {
-        this.zoomOn([this.destination_marker, this.from_marker]);
+      if (isValidPosition(this.destination_place)) {
+        this.zoomOn([this.destination_place, this.from_marker]);
       } else {
         this.zoomOn(this.from_marker);
       }
@@ -254,6 +253,10 @@ class RoutePlanner extends LitElement {
   }
 
   render() {
+    console.log('render');
+    console.log(this.from);
+    console.log(this.destination_place);
+
     return html`
       <style>
         ${getStyle(style__leaflet)}

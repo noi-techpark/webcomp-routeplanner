@@ -58,3 +58,14 @@ export const toLeaflet = o => {
   const { latitude, longitude } = o;
   return { lat: latitude, lng: longitude };
 };
+
+export const isValidPosition = o => {
+  if (!o) return false;
+
+  // eslint-disable-next-line no-underscore-dangle
+  if (o._latlng) return true;
+  if (o.lat && (o.lng || o.lon)) return true;
+  if (o.latitude && o.longitude) return true;
+
+  return false;
+};
