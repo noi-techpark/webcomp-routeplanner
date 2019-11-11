@@ -16,6 +16,7 @@ import { windowSizeListenerClose } from './components/route_widget/windowSizeLis
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
 import { TRIP_COLORS } from './constants';
+import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import { getSearchContainerHeight, getStyle, last, toLeaflet } from './utilities';
@@ -42,7 +43,6 @@ class RoutePlanner extends LitElement {
     this.loading = false;
     this.isFullScreen = false;
     this.mobile_open = false;
-    this.from = { display_name: '', name: '', type: '' };
     this.departure_time = 1;
     this.departure_time_select_visible = false;
     this.departure_time_select_timings_visible = false;
@@ -52,8 +52,26 @@ class RoutePlanner extends LitElement {
     this.search_results_height = 0;
     this.current_location = null;
     this.search_results = false;
+
     this.from_poi_search_results = [];
-    this.destination_place = { display_name: '', name: '', type: '' };
+    this.from = {
+      display_name: '',
+      name: '',
+      type: '',
+      locked: false,
+      poi_search_results: [],
+      input_select_visible: false
+    };
+
+    this.destination_poi_search_results = [];
+    this.destination_place = {
+      display_name: '',
+      name: '',
+      type: '',
+      locked: false,
+      poi_search_results: [],
+      input_select_visible: false
+    };
 
     /** refs to the markers */
     this.from_marker = null;
@@ -108,6 +126,49 @@ class RoutePlanner extends LitElement {
     }
   }
 
+  swapFromTo() {
+    [this.from, this.destination_place] = [this.destination_place, this.from];
+    this.setDestinationMarker(this.destination_place);
+    this.setFromMarker(this.from);
+  }
+
+  setDestinationMarker(destination) {
+    if (this.destination_marker) {
+      this.map.removeLayer(this.destination_marker);
+    }
+
+    if (destination.latitude) {
+      this.destination_marker = L.marker(toLeaflet(destination)).addTo(this.map);
+
+      if (this.from_marker) {
+        this.zoomOn([this.destination_marker, this.from_marker]);
+      } else {
+        this.zoomOn(this.destination_marker);
+      }
+    }
+  }
+
+  setFromMarker(from) {
+    const fromIcon = L.icon({
+      iconUrl: fromImage,
+      iconAnchor: [8, 8]
+    });
+
+    if (this.from_marker) {
+      this.map.removeLayer(this.from_marker);
+    }
+
+    if (from.latitude) {
+      this.from_marker = L.marker(toLeaflet(from), { icon: fromIcon }).addTo(this.map);
+
+      if (this.destination_marker) {
+        this.zoomOn([this.destination_marker, this.from_marker]);
+      } else {
+        this.zoomOn(this.from_marker);
+      }
+    }
+  }
+
   async handleDestination() {
     if (this.destination) {
       const [longitude, latitude] = this.destination.split(':');
@@ -117,13 +178,11 @@ class RoutePlanner extends LitElement {
         type: 'coord',
         name: `${this.destination}:WGS84[DD.DDDDD]`,
         latitude,
-        longitude
+        longitude,
+        locked: true
       };
-    }
-
-    if (this.destination) {
+      this.setDestinationMarker(this.destination_place);
       this.zoomOn(this.destination_place);
-      L.marker(toLeaflet(this.destination_place)).addTo(this.map);
     }
   }
 
