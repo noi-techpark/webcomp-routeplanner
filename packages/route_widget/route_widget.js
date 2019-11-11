@@ -80,6 +80,8 @@ class RoutePlanner extends LitElement {
     L.tileLayer('//maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
       attribution: '<a href=“https://wikimediafoundation.org/wiki/Maps_Terms_of_Use“>Wikimedia</a>'
     }).addTo(this.map);
+
+    this.map.setView({ lat: 46.49761, lon: 11.349261 }, 13);
   }
 
   async firstUpdated() {
