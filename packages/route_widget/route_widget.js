@@ -15,7 +15,7 @@ import { handleFullScreenMap, mapControlsHandlers } from './components/route_wid
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
-import { TRIP_COLORS } from './constants';
+import { TRIP_COLORS, WALKING_TRIP_COLOR } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
@@ -240,7 +240,11 @@ class RoutePlanner extends LitElement {
             .map(s => s.split(',')) // splits in [long, lat]
             .map(([long, lat]) => [lat, long]) // format as leaflet wants
       )
-      .map((path, i) => L.polyline(path, { color: TRIP_COLORS[trip.legs[i].type] }));
+      .map((path, i) =>
+        L.polyline(path, {
+          color: trip.legs[i].type == 'walking' ? WALKING_TRIP_COLOR : TRIP_COLORS[i % TRIP_COLORS.length]
+        })
+      );
 
     this.polylines.forEach(p => p.addTo(this.map));
 
