@@ -1,4 +1,7 @@
+import html2pdf from 'html2pdf.js';
 import { html } from 'lit-element';
+import printJS from 'print-js';
+import { MEANS_ICONS } from '../../constants';
 import carImage from '../../img/car.svg';
 import chevronRightImage from '../../img/chevron-right.svg';
 import downloadImage from '../../img/download.svg';
@@ -8,10 +11,9 @@ import tripFirstImage from '../../img/trip-first.svg';
 import tripLastImage from '../../img/trip-last.svg';
 import tripStandardImage from '../../img/trip-standard.svg';
 import verticalDotsImage from '../../img/vertical-dots.svg';
-import { MEANS_ICONS } from '../../constants';
+import { formatDuration, last } from '../../utilities';
 import { render__badge } from '../generics/badge';
 import { render__button } from '../generics/buttons';
-import { formatDuration, last } from '../../utilities';
 
 export function render__details() {
   const lastPoint = last(last(this.details_data.legs).points);
@@ -27,6 +29,29 @@ export function render__details() {
     }),
     { time: lastPoint.dateTime.time, place: lastPoint.name }
   ];
+
+  const generatePDF = () => {
+    html2pdf()
+      .set({
+        margin: 1,
+        html2canvas: { scale: 4 },
+        jsPDF: { unit: 'cm', format: 'a4', orientation: 'portrait' }
+      })
+      .from(this.shadowRoot.querySelector('.details__body_section').innerHTML);
+  };
+
+  const downloadPDF = () => {
+    generatePDF().save(`percorso per ${this.destination_place.display_name}`);
+  };
+
+  const printPDF = () => {
+    generatePDF()
+      .outputPdf('blob')
+      .then(blob => {
+        const url = URL.createObjectURL(blob);
+        printJS(url);
+      });
+  };
 
   return html`
     <div class="details">
@@ -85,7 +110,7 @@ export function render__details() {
               }
 
               return html`
-                <div class="row details__body_section__content__element">
+                <div class="row details__body_section__content__element" style="max-height:150px">
                   <div class="col-2 col-md">
                     <p class="details__body_section__content__time">
                       ${point.time}
@@ -131,14 +156,14 @@ export function render__details() {
             html`
               <img src="${downloadImage}" alt="" /> Scarica PDF
             `,
-            () => console.log('default'),
+            downloadPDF,
             'grey'
           )}
           ${render__button(
             html`
               <img src="${printImage}" alt="" /> Stampa
             `,
-            () => console.log('default'),
+            printPDF,
             'grey'
           )}
           ${render__button(
