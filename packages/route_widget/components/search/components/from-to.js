@@ -10,6 +10,10 @@ import toImage from '../../../img/to.svg';
 import { toLeaflet, isValidPosition } from '../../../utilities';
 import { getCurrentPosition } from '../../route_widget/mapControlsHandlers';
 
+const FROM = 'FROM';
+const DESTINATION = 'DESTINATION';
+const stopID = 'stopID';
+
 async function fromInputHandler(place, inputString) {
   try {
     const results = await this.request_get_poi(inputString);
@@ -60,9 +64,9 @@ async function setPlaceToCurrentPosition(place, input) {
       icon: currentLocationIcon
     }).addTo(this.map);
 
-    if (input === 'from') {
+    if (input === FROM) {
       this.setFromMarker(this.current_location);
-    } else if (input === 'destination') {
+    } else if (input === DESTINATION) {
       this.setDestinationMarker(this.current_location);
     }
   }
@@ -72,7 +76,7 @@ function setFromToResult(result) {
   this.setFromMarker({ longitude, latitude });
 
   this.from.display_name = result.name;
-  this.from.type = 'stopID';
+  this.from.type = stopID;
   this.from.name = result.ref.id;
   this.from.longitude = longitude;
   this.from.latitude = latitude;
@@ -89,7 +93,7 @@ function setDestinationToResult(result) {
   this.setDestinationMarker({ longitude, latitude });
 
   this.destination_place.display_name = result.name;
-  this.destination_place.type = 'stopID';
+  this.destination_place.type = stopID;
   this.destination_place.name = result.ref.id;
   this.destination_place.longitude = longitude;
   this.destination_place.latitude = latitude;
@@ -181,10 +185,10 @@ export function render__fromTo() {
         <img src=${toImage} alt="" />
       </div>
       <div class="fromTo__inputs">
-        ${renderPlaceInput(this.from, () => this.setPlaceToCurrentPosition(this.from, 'from'), this.setFromToResult)}
+        ${renderPlaceInput(this.from, () => this.setPlaceToCurrentPosition(this.from, FROM), this.setFromToResult)}
         ${renderPlaceInput(
           this.destination_place,
-          () => this.setPlaceToCurrentPosition(this.destination_place, 'destination'),
+          () => this.setPlaceToCurrentPosition(this.destination_place, DESTINATION),
           this.setDestinationToResult
         )}
       </div>
