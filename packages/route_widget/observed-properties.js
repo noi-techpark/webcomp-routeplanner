@@ -5,13 +5,8 @@ export const observed_properties = {
   current_location: { type: Object },
   // Select places
   from: { type: Object },
-  // from_input_select_visible: { type: Boolean },
-
   search_results_height: { type: Number },
   search_results: { type: Array },
-
-  // from_poi_search_results: { type: Array },
-
   destination_name: { type: String, attribute: 'destination-name' },
   destination: { type: String },
   destination_place: { type: Object },
