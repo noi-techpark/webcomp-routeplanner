@@ -1,15 +1,15 @@
 import { html } from 'lit-html';
-import { MEANS_ICONS } from '../../../constants';
+import { MEANS_ICONS, WALKING, TRAIN, BUS } from '../../../constants';
 import chevronRight from '../../../img/chevron-right-gray.svg';
 
 export default function render__leg_badge(leg, has_next = false) {
   let description = '';
 
   switch (leg.type) {
-    case 'train':
+    case TRAIN:
       description = `${leg.mode.trainType}${leg.mode.number}`;
       break;
-    case 'bus':
+    case BUS:
       description = `${leg.mode.name}`;
       break;
     default:
@@ -18,7 +18,7 @@ export default function render__leg_badge(leg, has_next = false) {
 
   return html`
     <span
-      class="search__results__listElement__transports__item ${leg.type !== 'walking'
+      class="search__results__listElement__transports__item ${leg.type !== WALKING
         ? 'search__results__listElement__transports__item--with-border'
         : ''}"
     >

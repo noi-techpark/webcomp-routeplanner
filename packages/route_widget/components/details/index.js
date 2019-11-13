@@ -8,7 +8,7 @@ import tripFirstImage from '../../img/trip-first.svg';
 import tripLastImage from '../../img/trip-last.svg';
 import tripStandardImage from '../../img/trip-standard.svg';
 import verticalDotsImage from '../../img/vertical-dots.svg';
-import { MEANS_ICONS } from '../../constants';
+import { MEANS_ICONS, WALKING } from '../../constants';
 import { render__badge } from '../generics/badge';
 import { render__button } from '../generics/buttons';
 import { formatDuration, last } from '../../utilities';
@@ -22,7 +22,7 @@ export function render__details() {
         time: leg.points[0].dateTime.time,
         place: leg.points[0].name,
         type: leg.type,
-        means_desc: leg.type === 'walking' ? `A piedi (${leg.timeMinute} minuti)` : leg.mode.name
+        means_desc: leg.type === WALKING ? `A piedi (${leg.timeMinute} minuti)` : leg.mode.name
       };
     }),
     { time: lastPoint.dateTime.time, place: lastPoint.name }

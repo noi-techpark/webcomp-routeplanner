@@ -15,7 +15,7 @@ import { handleFullScreenMap, mapControlsHandlers } from './components/route_wid
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
-import { TRIP_COLORS, WALKING_TRIP_COLOR } from './constants';
+import { TRIP_COLORS, WALKING_TRIP_COLOR, WALKING, TRAIN, BUS } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
@@ -207,11 +207,11 @@ class RoutePlanner extends LitElement {
       const endTime = last(last(trip.legs).points).dateTime.time;
 
       const legTypes = {
-        6: 'train',
-        100: 'walking',
-        99: 'walking',
-        3: 'bus',
-        4: 'bus'
+        6: TRAIN,
+        100: WALKING,
+        99: WALKING,
+        3: BUS,
+        4: BUS
       };
 
       const legs = trip.legs.map(leg => {
@@ -242,7 +242,7 @@ class RoutePlanner extends LitElement {
       )
       .map((path, i) =>
         L.polyline(path, {
-          color: trip.legs[i].type == 'walking' ? WALKING_TRIP_COLOR : TRIP_COLORS[i % TRIP_COLORS.length]
+          color: trip.legs[i].type === WALKING_TRIP_COLOR ? WALKING_TRIP_COLOR : TRIP_COLORS[i % TRIP_COLORS.length]
         })
       );
 
