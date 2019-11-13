@@ -15,7 +15,7 @@ import { handleFullScreenMap, mapControlsHandlers } from './components/route_wid
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
-import { TRIP_COLORS, WALKING_TRIP_COLOR, WALKING, TRAIN, BUS } from './constants';
+import { TRIP_COLORS, WALKING_TRIP_COLOR, WALKING, TRAIN, BUS, coord } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
@@ -174,7 +174,7 @@ class RoutePlanner extends LitElement {
 
       this.destination_place = {
         display_name: this.destination_name,
-        type: 'coord',
+        type: coord,
         name: `${this.destination}:WGS84[DD.DDDDD]`,
         latitude,
         longitude,

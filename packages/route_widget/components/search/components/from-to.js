@@ -9,10 +9,7 @@ import fromImage from '../../../img/from.svg';
 import toImage from '../../../img/to.svg';
 import { toLeaflet, isValidPosition } from '../../../utilities';
 import { getCurrentPosition } from '../../route_widget/mapControlsHandlers';
-
-const FROM = 'FROM';
-const DESTINATION = 'DESTINATION';
-const stopID = 'stopID';
+import { FROM, DESTINATION, stopID, coord } from '../../../constants';
 
 async function fromInputHandler(input_name, input_string) {
   try {
@@ -39,7 +36,7 @@ async function setPlaceToCurrentPosition(input_name) {
     const newValues = {
       is_current_position: true,
       display_name: 'Posizione corrente',
-      type: 'coord',
+      type: coord,
       name: `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`,
       latitude,
       longitude,
