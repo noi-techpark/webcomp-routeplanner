@@ -145,6 +145,10 @@ class RoutePlanner extends LitElement {
     this.search_results = await request_trip(this.from, this.destination_place, timing_options);
     this.loading = false;
 
+    if (this.search_results === null) {
+      this.alert('Non abbiamo trovato nessun percorso per questa destinazione');
+      return;
+    }
     const fastest = this.search_results.reduce((fastest_tmp, trip) =>
       fastest_tmp.duration > trip.duration ? trip : fastest_tmp
     );
