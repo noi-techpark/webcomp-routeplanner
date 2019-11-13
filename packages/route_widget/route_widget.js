@@ -257,10 +257,6 @@ class RoutePlanner extends LitElement {
   }
 
   render() {
-    console.log('render');
-    console.log(this.from);
-    console.log(this.destination_place);
-
     return html`
       <style>
         ${getStyle(style__leaflet)}
