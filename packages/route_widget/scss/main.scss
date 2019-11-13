@@ -1,11 +1,13 @@
 @import 'colors';
 @import 'mixins';
+@import 'breakpoints';
 @import './typography.scss';
 @import './bts-utilities.scss';
 // Components
 @import '../components/search/search.scss';
 @import '../components/details/details.scss';
 @import '../components/mapControls/map-controls.scss';
+@import '../components/alert/alert.scss';
 // Generics
 @import '../components/generics/buttons/buttons.scss';
 @import '../components/generics/picker/picker.scss';
@@ -22,8 +24,9 @@
   font-family: sans-serif;
   color: $black;
   width: 100%;
+  overflow: hidden;
 
-  @media (max-width: 576px) {
+  @media (max-width: $mobile-breakpoint) {
     &.MODE__mobile__open {
       @include full-width-height();
       position: fixed;
