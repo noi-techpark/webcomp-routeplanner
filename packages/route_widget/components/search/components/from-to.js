@@ -53,10 +53,10 @@ async function setPlaceToCurrentPosition(input_name) {
   } catch (error) {
     if (error.code === error.PERMISSION_DENIED) {
       // eslint-disable-next-line no-alert
-      alert('Non hai dato i permessi per la geolocalizzazione. Per piacere attivali e riprova.');
+      this.alert('Non hai dato i permessi per la geolocalizzazione. Per piacere attivali e riprova.');
     } else if (error.code === error.TIMEOUT) {
       // eslint-disable-next-line no-alert
-      alert('Non è stato possibile geolocalizzarti.');
+      this.alert('Non è stato possibile geolocalizzarti.');
     }
   } finally {
     this.loading = false;

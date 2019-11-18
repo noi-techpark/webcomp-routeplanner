@@ -18,5 +18,9 @@ export const observed_properties = {
   departure_time_select_timings_visible: { type: Boolean },
 
   // Details
-  details_data: { type: Object }
+  details_data: { type: Object },
+
+  // Alert
+  alert_active: { type: Boolean },
+  alert_message: { type: String }
 };

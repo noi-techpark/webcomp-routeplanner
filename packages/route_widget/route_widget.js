@@ -10,6 +10,7 @@ import { request_get_poi, request_trip } from './api/efa_sta';
 import { render_backgroundMap } from './components/backgroundMap';
 import { render_closeFullscreenButton } from './components/closeFullscreenButton';
 import { render__details } from './components/details';
+import { render__alert } from './components/alert/index';
 import { render__mapControls } from './components/mapControls';
 import { handleFullScreenMap, mapControlsHandlers } from './components/route_widget/mapControlsHandlers';
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
@@ -33,6 +34,7 @@ class RoutePlanner extends LitElement {
     this.mapControlsHandlers = mapControlsHandlers.bind(this);
     this.handleFullScreenMap = handleFullScreenMap.bind(this);
     this.render_closeFullscreenButton = render_closeFullscreenButton.bind(this);
+    this.render__alert = render__alert.bind(this);
 
     /**
      * Api
@@ -79,6 +81,11 @@ class RoutePlanner extends LitElement {
     this.current_position_marker = null;
 
     this.polylines = [];
+
+    // alert
+    this.alert_active = false;
+    this.alert_message = 'Non sono riuscito a trovare la tua posizione';
+    this.alert_timeout_ref = null;
   }
 
   static get properties() {
@@ -198,6 +205,10 @@ class RoutePlanner extends LitElement {
     this.search_results = await request_trip(this.from, this.destination_place, timing_options);
     this.loading = false;
 
+    if (this.search_results === null) {
+      this.alert('Non abbiamo trovato nessun percorso per questa destinazione');
+      return;
+    }
     const fastest = this.search_results.reduce((fastest_tmp, trip) =>
       fastest_tmp.duration > trip.duration ? trip : fastest_tmp
     );
@@ -256,6 +267,20 @@ class RoutePlanner extends LitElement {
     this.polylines = [];
   }
 
+  alert(message) {
+    if (this.alert_timeout_ref) {
+      clearTimeout(this.alert_timeout_ref);
+    }
+    this.alert_active = true;
+    this.alert_message = message;
+
+    this.alert_timeout_ref = setTimeout(this.remove_alert.bind(this), 5000);
+  }
+
+  remove_alert() {
+    this.alert_active = false;
+  }
+
   render() {
     return html`
       <style>
@@ -280,6 +305,7 @@ class RoutePlanner extends LitElement {
           : html`
               ${this.render_details()}
             `}
+        ${this.render__alert()}
       </div>
     `;
   }
