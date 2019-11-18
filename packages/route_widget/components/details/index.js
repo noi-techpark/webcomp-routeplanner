@@ -1,7 +1,7 @@
 import html2pdf from 'html2pdf.js';
 import { html } from 'lit-element';
 import printJS from 'print-js';
-import { MEANS_ICONS } from '../../constants';
+import { MEANS_ICONS, WALKING } from '../../constants';
 import carImage from '../../img/car.svg';
 import chevronRightImage from '../../img/chevron-right.svg';
 import downloadImage from '../../img/download.svg';
@@ -30,14 +30,14 @@ export function render__details() {
         time: leg.points[0].dateTime.time,
         place: leg.points[0].name,
         type: leg.type,
-        means_desc: leg.type === 'walking' ? `A piedi (${leg.timeMinute} minuti)` : leg.mode.name
+        means_desc: leg.type === WALKING ? `A piedi (${leg.timeMinute} minuti)` : leg.mode.name
       };
     }),
     { time: lastPoint.dateTime.time, place: lastPoint.name }
   ];
 
   const generatePDF = () => {
-    html2pdf()
+    return html2pdf()
       .set(html2pdf_params)
       .from(this.shadowRoot.querySelector('.details__body_section').innerHTML);
   };

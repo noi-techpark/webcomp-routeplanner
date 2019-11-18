@@ -7,30 +7,49 @@ import currentLocationImage from '../../../img/find-position.svg';
 import fromToDotsImage from '../../../img/from-to-dots.svg';
 import fromImage from '../../../img/from.svg';
 import toImage from '../../../img/to.svg';
-import { toLeaflet } from '../../../utilities';
+import { toLeaflet, isValidPosition } from '../../../utilities';
 import { getCurrentPosition } from '../../route_widget/mapControlsHandlers';
+import { FROM, DESTINATION, stopID, coord } from '../../../constants';
 
-async function fromInputHandler(inputString) {
+async function fromInputHandler(input_name, input_string) {
   try {
-    const results = await this.request_get_poi(inputString);
-    this.from_poi_search_results = results;
+    const results = await this.request_get_poi(input_string);
+    if (input_name === FROM) {
+      this.from.poi_search_results = results;
+    } else if (input_name === DESTINATION) {
+      this.destination_place.poi_search_results = results;
+    }
+
+    this.requestUpdate();
   } catch (err) {
     console.log(err);
   }
 }
 
-async function setFromToCurrentPosition() {
+async function setPlaceToCurrentPosition(input_name) {
   try {
     this.loading = true;
     const positionResult = await getCurrentPosition();
     const { latitude, longitude } = positionResult.coords;
     this.current_location = { latitude, longitude };
-    this.from = {
+
+    const newValues = {
       is_current_position: true,
       display_name: 'Posizione corrente',
-      type: 'coord',
-      name: `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`
+      type: coord,
+      name: `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`,
+      latitude,
+      longitude,
+      input_select_visible: false
     };
+
+    if (input_name === FROM) {
+      this.from = { ...this.from, ...newValues };
+    } else if (input_name === DESTINATION) {
+      this.destination_place = { ...this.destination_place, ...newValues };
+    }
+
+    this.requestUpdate();
   } catch (error) {
     if (error.code === error.PERMISSION_DENIED) {
       // eslint-disable-next-line no-alert
@@ -42,6 +61,7 @@ async function setFromToCurrentPosition() {
   } finally {
     this.loading = false;
   }
+
   if (this.current_location) {
     // create marker for current location
     const currentLocationIcon = L.icon({
@@ -55,47 +75,57 @@ async function setFromToCurrentPosition() {
     this.current_position_maker = L.marker(toLeaflet(this.current_location), {
       icon: currentLocationIcon
     }).addTo(this.map);
-    // zoom on what's available between current location and destination or both
-    if (this.destination) {
-      const markers = [this.current_position_maker, this.destination_place];
-      this.zoomOn(markers);
-    } else if (this.current_location) {
-      this.zoomOn(this.current_location);
+
+    if (input_name === FROM) {
+      this.setFromMarker(this.current_location);
+    } else if (input_name === DESTINATION) {
+      this.setDestinationMarker(this.current_location);
     }
   }
 }
 function setFromToResult(result) {
-  const fromIcon = L.icon({
-    iconUrl: fromImage,
-    iconAnchor: [12, 12]
-  });
-
   const [longitude, latitude] = result.ref.coords.split(',');
+  this.setFromMarker({ longitude, latitude });
 
-  if (this.from_marker) {
-    this.map.removeLayer(this.from_marker);
-  }
-  this.from_marker = L.marker(toLeaflet({ longitude, latitude }), {
-    icon: fromIcon
-  }).addTo(this.map);
+  this.from.display_name = result.name;
+  this.from.type = stopID;
+  this.from.name = result.ref.id;
+  this.from.longitude = longitude;
+  this.from.latitude = latitude;
 
-  if (this.destination_place) {
+  if (isValidPosition(this.destination_place)) {
     this.zoomOn([this.from_marker, this.destination_place]);
   } else {
     this.zoomOn(this.from_marker);
   }
+}
 
-  this.from = { display_name: result.name, type: 'stopID', name: result.ref.id };
+function setDestinationToResult(result) {
+  const [longitude, latitude] = result.ref.coords.split(',');
+  this.setDestinationMarker({ longitude, latitude });
+
+  this.destination_place.display_name = result.name;
+  this.destination_place.type = stopID;
+  this.destination_place.name = result.ref.id;
+  this.destination_place.longitude = longitude;
+  this.destination_place.latitude = latitude;
+
+  if (isValidPosition(this.destination_place)) {
+    this.zoomOn([this.from_marker, this.destination_place]);
+  } else {
+    this.zoomOn(this.from_marker);
+  }
 }
 
 const throttledFromInputHandler = throttle(fromInputHandler, 500, { leading: true });
 
 export function render__fromTo() {
   this.throttledFromInputHandler = throttledFromInputHandler.bind(this);
-  this.setFromToCurrentPosition = setFromToCurrentPosition.bind(this);
+  this.setPlaceToCurrentPosition = setPlaceToCurrentPosition.bind(this);
   this.setFromToResult = setFromToResult.bind(this);
+  this.setDestinationToResult = setDestinationToResult.bind(this);
 
-  const handleFocus = () => {
+  const handleFocusFor = input_name => {
     if (window.innerWidth < 992 && !this.isFullScreen) {
       const map = this.shadowRoot.getElementById('map');
       map.classList.toggle('closed');
@@ -114,8 +144,53 @@ export function render__fromTo() {
       this.isFullScreen = true;
       this.mobile_open = true;
     }
+    if (input_name === FROM) {
+      this.from.input_select_visible = true;
+    } else if (input_name === DESTINATION) {
+      this.destination_place.input_select_visible = true;
+    }
+    this.requestUpdate();
+  };
 
-    this.from_input_select_visible = true;
+  const renderPlaceInput = (input_name, setToCurrentLocation, setToResult) => {
+    const place = input_name === 'FROM' ? this.from : this.destination_place;
+    return html`
+      <div class="fromTo__inputs__input_wrapper">
+        ${place.locked
+          ? html`
+              <div class="fromTo__inputs__input_wrapper">
+                <p>${place.display_name}</p>
+              </div>
+            `
+          : html`
+              <input
+                type="text"
+                .value=${place.input_select_visible && place.is_current_position ? '' : place.display_name}
+                @input=${event => this.throttledFromInputHandler(input_name, event.target.value)}
+                @focus=${() => handleFocusFor(input_name)}
+                @blur=${() => {
+                  setTimeout(() => {
+                    place.input_select_visible = false;
+                    this.requestUpdate();
+                  }, 200);
+                }}
+              />
+              <div class=${`fromTo__inputs__input_selection ${place.input_select_visible ? '' : 'hidden'}`}>
+                <div class="fromTo__inputs__input_selection__element" @click=${setToCurrentLocation}>
+                  <img src=${crosshairImage} alt="" /> La mia posizione
+                </div>
+                ${place.poi_search_results.map(
+                  result =>
+                    html`
+                      <div class="fromTo__inputs__input_selection__element" @click=${() => setToResult(result)}>
+                        ${result.name}
+                      </div>
+                    `
+                )}
+              </div>
+            `}
+      </div>
+    `;
   };
 
   return html`
@@ -126,44 +201,12 @@ export function render__fromTo() {
         <img src=${toImage} alt="" />
       </div>
       <div class="fromTo__inputs">
-        <div class="fromTo__inputs__input_wrapper">
-          <input
-            type="text"
-            .value=${this.from_input_select_visible && this.from.is_current_position ? '' : this.from.display_name}
-            @input=${event => this.throttledFromInputHandler(event.target.value)}
-            @focus=${handleFocus}
-            @blur=${() => {
-              setTimeout(() => {
-                this.from_input_select_visible = false;
-              }, 200);
-            }}
-          />
-          <div class=${`fromTo__inputs__input_selection ${this.from_input_select_visible ? '' : 'hidden'}`}>
-            <div class="fromTo__inputs__input_selection__element" @click=${this.setFromToCurrentPosition}>
-              <img src=${crosshairImage} alt="" /> La mia posizione
-            </div>
-            ${this.from_poi_search_results.map(
-              result =>
-                html`
-                  <div class="fromTo__inputs__input_selection__element" @click=${() => this.setFromToResult(result)}>
-                    ${result.name}
-                  </div>
-                `
-            )}
-          </div>
-        </div>
-        <div class="fromTo__inputs__input_wrapper">
-          <p>
-            ${this.destination_place.display_name}
-          </p>
-        </div>
+        ${renderPlaceInput(FROM, () => this.setPlaceToCurrentPosition(FROM), this.setFromToResult)}
+        ${renderPlaceInput(DESTINATION, () => this.setPlaceToCurrentPosition(DESTINATION), this.setDestinationToResult)}
       </div>
       <div class="fromTo__button">
-        <img src=${changeImage} alt="" />
+        <img src=${changeImage} alt="" @click=${this.swapFromTo} />
       </div>
     </div>
   `;
 }
-// @input=${e => {
-//   this.from = e.target.value;
-// }}

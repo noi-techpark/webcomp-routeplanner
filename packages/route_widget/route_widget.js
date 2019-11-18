@@ -15,10 +15,11 @@ import { handleFullScreenMap, mapControlsHandlers } from './components/route_wid
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
-import { TRIP_COLORS } from './constants';
+import { TRIP_COLORS, WALKING_TRIP_COLOR, WALKING, TRAIN, BUS, coord } from './constants';
+import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
-import { getSearchContainerHeight, getStyle, last, toLeaflet } from './utilities';
+import { getSearchContainerHeight, getStyle, last, toLeaflet, isValidPosition } from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -42,7 +43,6 @@ class RoutePlanner extends LitElement {
     this.loading = false;
     this.isFullScreen = false;
     this.mobile_open = false;
-    this.from = { display_name: '', name: '', type: '' };
     this.departure_time = 1;
     this.departure_time_select_visible = false;
     this.departure_time_select_timings_visible = false;
@@ -52,8 +52,26 @@ class RoutePlanner extends LitElement {
     this.search_results_height = 0;
     this.current_location = null;
     this.search_results = false;
+
     this.from_poi_search_results = [];
-    this.destination_place = { display_name: '', name: '', type: '' };
+    this.from = {
+      display_name: '',
+      name: '',
+      type: '',
+      locked: false,
+      poi_search_results: [],
+      input_select_visible: false
+    };
+
+    this.destination_poi_search_results = [];
+    this.destination_place = {
+      display_name: '',
+      name: '',
+      type: '',
+      locked: false,
+      poi_search_results: [],
+      input_select_visible: false
+    };
 
     /** refs to the markers */
     this.from_marker = null;
@@ -80,6 +98,8 @@ class RoutePlanner extends LitElement {
     L.tileLayer('//maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
       attribution: '<a href=“https://wikimediafoundation.org/wiki/Maps_Terms_of_Use“>Wikimedia</a>'
     }).addTo(this.map);
+
+    this.map.setView({ lat: 46.49761, lon: 11.349261 }, 13);
   }
 
   async firstUpdated() {
@@ -106,22 +126,62 @@ class RoutePlanner extends LitElement {
     }
   }
 
+  swapFromTo() {
+    [this.from, this.destination_place] = [this.destination_place, this.from];
+    this.setDestinationMarker(this.destination_place);
+    this.setFromMarker(this.from);
+  }
+
+  setDestinationMarker(destination) {
+    if (this.destination_marker) {
+      this.map.removeLayer(this.destination_marker);
+    }
+
+    if (isValidPosition(destination)) {
+      this.destination_marker = L.marker(toLeaflet(destination)).addTo(this.map);
+
+      if (isValidPosition(this.from)) {
+        this.zoomOn([this.destination_marker, this.from_marker]);
+      } else {
+        this.zoomOn(this.destination_marker);
+      }
+    }
+  }
+
+  setFromMarker(from) {
+    const fromIcon = L.icon({
+      iconUrl: fromImage,
+      iconAnchor: [8, 8]
+    });
+
+    if (this.from_marker) {
+      this.map.removeLayer(this.from_marker);
+    }
+    if (isValidPosition(from)) {
+      this.from_marker = L.marker(toLeaflet(from), { icon: fromIcon }).addTo(this.map);
+
+      if (isValidPosition(this.destination_place)) {
+        this.zoomOn([this.destination_place, this.from_marker]);
+      } else {
+        this.zoomOn(this.from_marker);
+      }
+    }
+  }
+
   async handleDestination() {
     if (this.destination) {
       const [longitude, latitude] = this.destination.split(':');
 
       this.destination_place = {
         display_name: this.destination_name,
-        type: 'coord',
+        type: coord,
         name: `${this.destination}:WGS84[DD.DDDDD]`,
         latitude,
-        longitude
+        longitude,
+        locked: true
       };
-    }
-
-    if (this.destination) {
+      this.setDestinationMarker(this.destination_place);
       this.zoomOn(this.destination_place);
-      L.marker(toLeaflet(this.destination_place)).addTo(this.map);
     }
   }
 
@@ -147,11 +207,11 @@ class RoutePlanner extends LitElement {
       const endTime = last(last(trip.legs).points).dateTime.time;
 
       const legTypes = {
-        6: 'train',
-        100: 'walking',
-        99: 'walking',
-        3: 'bus',
-        4: 'bus'
+        6: TRAIN,
+        100: WALKING,
+        99: WALKING,
+        3: BUS,
+        4: BUS
       };
 
       const legs = trip.legs.map(leg => {
@@ -180,7 +240,11 @@ class RoutePlanner extends LitElement {
             .map(s => s.split(',')) // splits in [long, lat]
             .map(([long, lat]) => [lat, long]) // format as leaflet wants
       )
-      .map((path, i) => L.polyline(path, { color: TRIP_COLORS[trip.legs[i].type] }));
+      .map((path, i) =>
+        L.polyline(path, {
+          color: trip.legs[i].type === WALKING_TRIP_COLOR ? WALKING_TRIP_COLOR : TRIP_COLORS[i % TRIP_COLORS.length]
+        })
+      );
 
     this.polylines.forEach(p => p.addTo(this.map));
 

@@ -10,9 +10,15 @@ export const MEANS_ICONS = {
   bus: busImage
 };
 
-export const TRIP_COLORS = {
-  walking: 'gray',
-  train: 'blue',
-  car: 'red',
-  bus: 'red'
-};
+export const WALKING_TRIP_COLOR = 'blue';
+export const TRIP_COLORS = ['purple', 'green', 'red', 'yellow'];
+
+export const WALKING = 'walking';
+export const TRAIN = 'train';
+export const CAR = 'car';
+export const BUS = 'bus';
+
+export const FROM = 'FROM';
+export const DESTINATION = 'DESTINATION';
+export const stopID = 'stopID';
+export const coord = 'coord';
