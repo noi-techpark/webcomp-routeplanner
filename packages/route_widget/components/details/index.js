@@ -15,6 +15,12 @@ import { formatDuration, last } from '../../utilities';
 import { render__badge } from '../generics/badge';
 import { render__button } from '../generics/buttons';
 
+const html2pdf_params = {
+  margin: 1,
+  html2canvas: { scale: 4 },
+  jsPDF: { unit: 'cm', format: 'a4', orientation: 'portrait' }
+};
+
 export function render__details() {
   const lastPoint = last(last(this.details_data.legs).points);
 
@@ -32,11 +38,7 @@ export function render__details() {
 
   const generatePDF = () => {
     html2pdf()
-      .set({
-        margin: 1,
-        html2canvas: { scale: 4 },
-        jsPDF: { unit: 'cm', format: 'a4', orientation: 'portrait' }
-      })
+      .set(html2pdf_params)
       .from(this.shadowRoot.querySelector('.details__body_section').innerHTML);
   };
 
