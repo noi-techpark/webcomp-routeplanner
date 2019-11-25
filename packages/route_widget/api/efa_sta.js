@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { fetch_no_parallel, toQueryParams } from '../utilities';
 
-const BASE_PATH = '//efa.sta.bz.it/apb';
+const BASE_PATH = '//efas.sta.bz.it/apb';
 
 const fetch_poi = fetch_no_parallel();
 export async function request_get_poi(query) {
