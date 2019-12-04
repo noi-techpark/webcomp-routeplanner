@@ -5,7 +5,6 @@ import chevronRight from '../../../img/chevron-right-gray.svg';
 export default function render__leg_badge(leg, has_next = false) {
   let description = '';
 
-  console.log(leg);
   switch (leg.type) {
     case TRAIN:
       description = `${leg.mode.trainType}${leg.mode.number}`;
