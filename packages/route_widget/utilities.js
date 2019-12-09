@@ -39,7 +39,7 @@ export const fetch_no_parallel = () => {
 
 const trimLeftZeros = string => string.replace(/^0+/, '');
 
-export const formatDuration = ([h, m]) => `${trimLeftZeros(h)}h ${trimLeftZeros(m)}m`;
+export const formatDuration = ([h, m]) => `${h > 0 ? `${trimLeftZeros(h)}h ` : ''}${trimLeftZeros(m)}m`;
 
 export const last = arr => arr[arr.length - 1];
 

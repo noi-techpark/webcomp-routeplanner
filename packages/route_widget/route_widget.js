@@ -16,7 +16,7 @@ import { handleFullScreenMap, mapControlsHandlers } from './components/route_wid
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
-import { TRIP_COLORS, WALKING_TRIP_COLOR, WALKING, TRAIN, BUS, coord } from './constants';
+import { TRIP_COLORS, WALKING_TRIP_COLOR, WALKING, TRAIN, BUS, CABLE_CAR, coord } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
@@ -218,11 +218,13 @@ class RoutePlanner extends LitElement {
       const endTime = last(last(trip.legs).points).dateTime.time;
 
       const legTypes = {
-        6: TRAIN,
-        100: WALKING,
-        99: WALKING,
         3: BUS,
-        4: BUS
+        4: BUS,
+        11: CABLE_CAR,
+        12: CABLE_CAR,
+        6: TRAIN,
+        99: WALKING,
+        100: WALKING
       };
 
       const legs = trip.legs.map(leg => {
@@ -246,11 +248,16 @@ class RoutePlanner extends LitElement {
     this.polylines = trip.legs
       .map(
         leg =>
-          leg.path
-            .split(' ') // splits in points
+          (leg.path
+            ? // splits in points
+              leg.path.split(' ')
+            : // if no path (ie cable car: use start and end points)
+              leg.points.map(p => p.ref.coords)
+          )
             .map(s => s.split(',')) // splits in [long, lat]
             .map(([long, lat]) => [lat, long]) // format as leaflet wants
       )
+
       .map((path, i) =>
         L.polyline(path, {
           color: trip.legs[i].type === WALKING_TRIP_COLOR ? WALKING_TRIP_COLOR : TRIP_COLORS[i % TRIP_COLORS.length]

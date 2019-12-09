@@ -12,8 +12,11 @@ export default function render__leg_badge(leg, has_next = false) {
     case BUS:
       description = `${leg.mode.name}`;
       break;
-    default:
+    case WALKING:
       description = `${leg.timeMinute}`;
+      break;
+    default:
+      description = leg.mode.name && leg.mode.name.length > 0 ? leg.mode.name : leg.timeMinute;
   }
 
   return html`
@@ -22,7 +25,10 @@ export default function render__leg_badge(leg, has_next = false) {
         ? 'search__results__listElement__transports__item--with-border'
         : ''}"
     >
-      <img src=${MEANS_ICONS[leg.type]} alt="${leg.type}" />
+      ${MEANS_ICONS[leg.type] &&
+        html`
+          <img src=${MEANS_ICONS[leg.type]} alt="${leg.type}" />
+        `}
       <span>${description}</span>
     </span>
     ${has_next

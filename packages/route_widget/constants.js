@@ -17,6 +17,7 @@ export const WALKING = 'walking';
 export const TRAIN = 'train';
 export const CAR = 'car';
 export const BUS = 'bus';
+export const CABLE_CAR = 'cable_car';
 
 export const FROM = 'FROM';
 export const DESTINATION = 'DESTINATION';
