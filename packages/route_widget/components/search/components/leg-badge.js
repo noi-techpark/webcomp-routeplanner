@@ -16,7 +16,7 @@ export default function render__leg_badge(leg, has_next = false) {
       description = `${leg.timeMinute}`;
       break;
     default:
-      description = `${leg.mode.name && leg.mode.name.length > 0 ? leg.mode.name : leg.timeMinute}`;
+      description = leg.mode.name && leg.mode.name.length > 0 ? leg.mode.name : leg.timeMinute;
   }
 
   return html`
