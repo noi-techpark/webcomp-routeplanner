@@ -130,6 +130,7 @@ TODO
 ## Authors
 
 - **Luca Fedrizzi** - _Initial work_ - [fedriz](https://github.com/fedriz)
+- **Nicolò Pretto** - _more development_ - [npretto](https://github.com/npretto)
 
 ## License
 
