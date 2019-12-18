@@ -37,9 +37,21 @@ export const fetch_no_parallel = () => {
   };
 };
 
-const trimLeftZeros = string => string.replace(/^0+/, '');
+const trimLeftZeros = string => (string ? string.toString().replace(/^0+/, '') : '');
+
+export const secondsToHMS = seconds => {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds - h * 3600) / 60);
+  const s = Math.floor((seconds - h * 3600 - m * 60) / 60);
+
+  return [h, m, s];
+};
 
 export const formatDuration = ([h, m]) => `${h > 0 ? `${trimLeftZeros(h)}h ` : ''}${trimLeftZeros(m)}m`;
+export const formatMinutesDuration = seconds => {
+  const [h, m, ...s] = secondsToHMS(seconds);
+  return formatDuration([h, m]);
+};
 
 export const last = arr => arr[arr.length - 1];
 

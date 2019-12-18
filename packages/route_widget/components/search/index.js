@@ -9,6 +9,7 @@ export function render__search() {
   this.render__fromTo = render__fromTo.bind(this);
   this.render__departureTimePicker = render__departureTimePicker.bind(this);
   this.render__resultsListElement = render__resultsListElement.bind(this);
+  this.render__resultsTab = render__resultsTab.bind(this);
 
   return html`
     <div class="search">
@@ -35,7 +36,7 @@ export function render__search() {
               ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
               : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`)}
         >
-          ${render__resultsTab()}
+          ${this.render__resultsTab()}
           <div class="search__results__list_container">
             ${this.search_results && this.search_results.map(this.render__resultsListElement)}
           </div>

@@ -7,20 +7,21 @@ import flatten from 'lodash/flatten';
 import padStart from 'lodash/padStart';
 import moment from 'moment';
 import { request_get_poi, request_trip } from './api/efa_sta';
+import { request_trip_by_car } from './api/here';
+import { render__alert } from './components/alert/index';
 import { render_backgroundMap } from './components/backgroundMap';
 import { render_closeFullscreenButton } from './components/closeFullscreenButton';
 import { render__details } from './components/details';
-import { render__alert } from './components/alert/index';
 import { render__mapControls } from './components/mapControls';
 import { handleFullScreenMap, mapControlsHandlers } from './components/route_widget/mapControlsHandlers';
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
-import { TRIP_COLORS, WALKING_TRIP_COLOR, WALKING, TRAIN, BUS, CABLE_CAR, coord } from './constants';
+import { BUS, CABLE_CAR, coord, TRAIN, TRIP_COLORS, WALKING, WALKING_TRIP_COLOR } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
-import { getSearchContainerHeight, getStyle, last, toLeaflet, isValidPosition } from './utilities';
+import { getSearchContainerHeight, getStyle, isValidPosition, last, toLeaflet } from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -202,7 +203,13 @@ class RoutePlanner extends LitElement {
       day: this.departure_time_day
     };
 
-    this.search_results = await request_trip(this.from, this.destination_place, timing_options);
+    [this.search_results, this.car_results] = await Promise.all([
+      request_trip(this.from, this.destination_place, timing_options),
+      request_trip_by_car(this.from, this.destination_place, timing_options)
+    ]);
+
+    console.log('this.car_results', this.car_results);
+
     this.loading = false;
 
     if (this.search_results === null) {

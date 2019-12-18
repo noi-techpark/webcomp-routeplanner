@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+require('dotenv').config();
 
 module.exports = {
   mode: 'production',
@@ -7,6 +9,11 @@ module.exports = {
     path: path.resolve(__dirname, '../../dist'),
     filename: 'routeplanner_widget.min.js'
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.HERE_API_KEY': JSON.stringify(process.env.HERE_API_KEY)
+    })
+  ],
   module: {
     rules: [
       {
