@@ -1,0 +1,29 @@
+{
+  "name": "routeplanner",
+  "version": "1.0.0",
+  "description": "Routeplanner widget",
+  "author": "lucafedri <luca.fedrizzi@belkadigital.us>",
+  "scripts": {
+    "build": "webpack --config webpack.prod.js",
+    "watch": "webpack --config webpack.dev.js"
+  },
+  "devDependencies": {
+    "css-loader": "^3.0.0",
+    "node-sass": "^4.11.0",
+    "raw-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "svg-url-loader": "^3.0.0",
+    "url-loader": "^2.0.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "html2pdf.js": "^0.9.1",
+    "leaflet": "^1.5.1",
+    "lit-element": "^2.2.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "print-js": "^1.0.61"
+  }
+}

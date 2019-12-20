@@ -1,0 +1,26 @@
+.badge {
+  font-size: 10px;
+  padding: 2px 4px;
+  line-height: 16px;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+
+  @media (min-width: 768px) {
+    font-size: 13px;
+    padding: 4px 8px;
+  }
+
+  &:not(:first-child) {
+    margin-left: 0.5rem;
+  }
+
+  &.yellow {
+    background-color: rgba(255, 255, 184, 0.99);
+    color: #805500;
+  }
+  &.green {
+    background-color: #dbecae;
+    color: #006600;
+  }
+}

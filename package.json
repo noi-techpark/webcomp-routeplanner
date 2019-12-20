@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "webpack-dev-server --config ./packages/route_widget/webpack.dev.js",
+    "bts": "lerna bootstrap",
+    "clean": "lerna clean",
+    "bc": "lerna run --parallel --stream build",
+    "wc": "lerna run --parallel --stream watch",
+    "build-components": "lerna run --parallel --stream build",
+    "watch-components": "lerna run --parallel --stream watch"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-lit": "^1.2.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "lerna": "^3.13.1",
+    "prettier": "^1.18.2"
+  },
+  "name": "routeplanner",
+  "version": "1.0.0"
+}

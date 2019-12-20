@@ -1,0 +1,84 @@
+@import '../../../scss/colors';
+
+.fromTo {
+  .fromTo__graphics {
+    width: 26px;
+    padding: 12px 8px 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-wrap: wrap;
+    img {
+      width: 18px;
+      &.fromTo__dots_icon {
+        width: 2px;
+        margin: 4px 0;
+      }
+    }
+  }
+  .fromTo__inputs {
+    flex: 1;
+    .fromTo__inputs__input_wrapper {
+      height: 40px;
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      &:first-child {
+        input {
+          border: 1px solid $black-300;
+        }
+      }
+      p {
+        color: $black-300;
+        font-size: 12px;
+        line-height: 24px;
+        @media (min-width: 992px) {
+          font-size: 14px;
+        }
+      }
+      input {
+        width: 100%;
+        height: 40px;
+        padding: 0 8px;
+        font-size: 14px;
+        line-height: 24px;
+        &:focus {
+          outline: none;
+        }
+      }
+      .fromTo__inputs__input_selection {
+        position: absolute;
+        left: 0;
+        top: 40px;
+        height: 300px;
+        width: 100%;
+        background-color: $white;
+        overflow-y: scroll;
+        z-index: 401;
+        border: 1px solid $black-300;
+        box-shadow: 0px 3px 6px rgba(51, 51, 51, 0.1), 0px 10px 20px rgba(51, 51, 51, 0.15);
+        &.hidden {
+          display: none;
+        }
+        .fromTo__inputs__input_selection__element {
+          cursor: pointer;
+          padding: 12px;
+          &:hover {
+            background-color: $black-50;
+          }
+        }
+      }
+    }
+  }
+  .fromTo__button {
+    width: 46px;
+    // border: 1px solid $black-300;
+    border: 0;
+    border-left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

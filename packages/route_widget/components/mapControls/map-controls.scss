@@ -1,0 +1,28 @@
+@import '../../scss/colors';
+
+.map_controls {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 401;
+
+  .map_controls__button {
+    background-color: $white;
+    padding: 8px;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .map_controls__button__element {
+    }
+
+    .map_controls__button__divider {
+      width: calc(100% - 4px);
+      border: 1px solid rgba(136, 137, 139, 0.24);
+      margin: 8px auto;
+    }
+  }
+}

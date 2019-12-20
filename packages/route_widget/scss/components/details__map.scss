@@ -1,0 +1,12 @@
+$sidebar-width: 400px;
+
+.details__map {
+  width: calc(100% - #{$sidebar-width});
+  display: inline-block;
+}
+.details__map {
+  #map {
+    height: calc(700px - 50px);
+    width: 100%;
+  }
+}

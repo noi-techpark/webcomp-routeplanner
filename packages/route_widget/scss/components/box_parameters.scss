@@ -1,0 +1,40 @@
+.box_parameters {
+}
+
+.box_parameters__container {
+  @media (min-width: 992px) {
+    border: 1px solid $black-200;
+  }
+}
+
+.box_parameters__dotted_line {
+  @media (min-width: 992px) {
+    border-top: 2px dotted $black-200;
+  }
+}
+
+.box_parameters__going_return_container {
+  width: 100%;
+  @media (min-width: 992px) {
+    width: auto;
+  }
+}
+
+.box_parameters__select {
+  width: 100%;
+  @media (min-width: 992px) {
+    width: auto;
+  }
+}
+
+.box_parameters__input_label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.box_parameters__input_box {
+  width: 100%;
+  @media (min-width: 992px) {
+    width: auto;
+  }
+}
