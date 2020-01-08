@@ -23,3 +23,6 @@ export const FROM = 'FROM';
 export const DESTINATION = 'DESTINATION';
 export const stopID = 'stopID';
 export const coord = 'coord';
+
+export const PUBLIC_TRANSPORT_TAB = 'PUBLIC_TRANSPORT_TAB';
+export const CAR_TAB = 'CAR_TAB';

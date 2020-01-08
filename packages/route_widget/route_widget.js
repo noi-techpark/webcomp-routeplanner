@@ -17,7 +17,16 @@ import { handleFullScreenMap, mapControlsHandlers } from './components/route_wid
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
-import { BUS, CABLE_CAR, coord, TRAIN, TRIP_COLORS, WALKING, WALKING_TRIP_COLOR } from './constants';
+import {
+  BUS,
+  CABLE_CAR,
+  coord,
+  TRAIN,
+  TRIP_COLORS,
+  WALKING,
+  WALKING_TRIP_COLOR,
+  PUBLIC_TRANSPORT_TAB
+} from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
@@ -55,6 +64,8 @@ class RoutePlanner extends LitElement {
     this.search_results_height = 0;
     this.current_location = null;
     this.search_results = false;
+    this.car_results = false;
+    this.active_tab = PUBLIC_TRANSPORT_TAB;
 
     this.from_poi_search_results = [];
     this.from = {

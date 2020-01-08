@@ -3,13 +3,27 @@ import { render__button } from '../generics/buttons/index';
 import { render__departureTimePicker } from './components/departure-time-picker';
 import { render__fromTo } from './components/from-to';
 import { render__resultsTab } from './components/results-tab';
+import { render__carListElement } from './components/results-carListElement';
 import { render__resultsListElement } from './components/results-listElement';
+import { PUBLIC_TRANSPORT_TAB, CAR_TAB } from '../../constants';
 
 export function render__search() {
   this.render__fromTo = render__fromTo.bind(this);
   this.render__departureTimePicker = render__departureTimePicker.bind(this);
+  this.render__carListElement = render__carListElement.bind(this);
   this.render__resultsListElement = render__resultsListElement.bind(this);
   this.render__resultsTab = render__resultsTab.bind(this);
+
+  const renderList = () => {
+    switch (this.active_tab) {
+      case CAR_TAB:
+        return this.car_results ? this.car_results.route.map(this.render__carListElement) : '';
+      case PUBLIC_TRANSPORT_TAB:
+        return this.search_results ? this.search_results.map(this.render__resultsListElement) : '';
+      default:
+        return '';
+    }
+  };
 
   return html`
     <div class="search">
@@ -38,7 +52,7 @@ export function render__search() {
         >
           ${this.render__resultsTab()}
           <div class="search__results__list_container">
-            ${this.search_results && this.search_results.map(this.render__resultsListElement)}
+            ${renderList()}
           </div>
         </div>
       `}
