@@ -220,8 +220,6 @@ class RoutePlanner extends LitElement {
       request_trip_by_car(this.from, this.destination_place, timing_options)
     ]);
 
-    console.log('this.car_results', this.car_results);
-
     this.loading = false;
 
     if (this.search_results === null) {
