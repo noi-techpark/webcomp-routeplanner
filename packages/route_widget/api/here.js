@@ -11,6 +11,7 @@ export async function request_trip_by_car(origin, destination, timing_options) {
   const params = {
     language: 'it-it',
     apikey: API_KEY,
+    jsonAttributes: 1 + 8,
     waypoint0: `geo!${origin.latitude},${origin.longitude}`,
     waypoint1: `geo!${destination.latitude},${destination.longitude}`,
     mode: 'fastest;car;traffic:disabled;tollroad:-2',

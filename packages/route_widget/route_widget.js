@@ -93,6 +93,7 @@ class RoutePlanner extends LitElement {
     this.current_position_marker = null;
 
     this.polylines = [];
+    this.polylinesHover = [];
 
     // alert
     this.alert_active = false;
@@ -262,29 +263,22 @@ class RoutePlanner extends LitElement {
     });
   }
 
-  addTripToMap(trip) {
-    this.polylines = trip.legs
-      .map(
-        leg =>
-          (leg.path
-            ? // splits in points
-              leg.path.split(' ')
-            : // if no path (ie cable car: use start and end points)
-              leg.points.map(p => p.ref.coords)
-          )
-            .map(s => s.split(',')) // splits in [long, lat]
-            .map(([long, lat]) => [lat, long]) // format as leaflet wants
-      )
-
-      .map((path, i) =>
-        L.polyline(path, {
-          color: trip.legs[i].type === WALKING_TRIP_COLOR ? WALKING_TRIP_COLOR : TRIP_COLORS[i % TRIP_COLORS.length]
-        })
-      );
+  addTripToMap(polylines) {
+    this.polylines = polylines;
 
     this.polylines.forEach(p => p.addTo(this.map));
 
     this.zoomOn(flatten(this.polylines.map(p => p.getLatLngs())));
+  }
+
+  addTripToMapHover(polylines) {
+    this.polylinesHover = polylines;
+    this.polylinesHover.forEach(p => p.addTo(this.map));
+  }
+
+  removeTripToMapHover() {
+    this.polylinesHover.forEach(p => this.map.removeLayer(p));
+    this.polylinesHover = [];
   }
 
   removeTripFromMap() {

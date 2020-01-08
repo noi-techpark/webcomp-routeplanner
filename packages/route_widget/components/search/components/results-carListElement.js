@@ -1,7 +1,7 @@
 import { html } from 'lit-html';
 import moment from 'moment';
 import chevronRightImage from '../../../img/chevron-right.svg';
-import { formatMinutesDuration, last } from '../../../utilities';
+import { formatMinutesDuration, last, HERETripToPolylines } from '../../../utilities';
 import { render__badge } from '../../generics/badge';
 import { MEANS_ICONS, CAR } from '../../../constants';
 
@@ -18,10 +18,12 @@ export function render__carListElement(trip) {
     <div
       class="search__results__listElement d-flex align-items-center justify-content-between"
       @click=${() => {
-        this.details_data = trip;
-
-        this.addCarTripToMap(trip);
+        this.details_data = { type: CAR, ...trip };
+        this.addTripToMap(HERETripToPolylines(trip));
+        this.removeTripToMapHover();
       }}
+      @mouseenter=${() => this.addTripToMapHover(HERETripToPolylines(trip))}
+      @mouseleave=${() => this.removeTripToMapHover()}
     >
       <div class="search__results__listElement__details">
         <div class="search__results__listElement__badges">
