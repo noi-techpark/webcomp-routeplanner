@@ -7,20 +7,30 @@ import flatten from 'lodash/flatten';
 import padStart from 'lodash/padStart';
 import moment from 'moment';
 import { request_get_poi, request_trip } from './api/efa_sta';
+import { request_trip_by_car } from './api/here';
+import { render__alert } from './components/alert/index';
 import { render_backgroundMap } from './components/backgroundMap';
 import { render_closeFullscreenButton } from './components/closeFullscreenButton';
 import { render__details } from './components/details';
-import { render__alert } from './components/alert/index';
 import { render__mapControls } from './components/mapControls';
 import { handleFullScreenMap, mapControlsHandlers } from './components/route_widget/mapControlsHandlers';
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
-import { TRIP_COLORS, WALKING_TRIP_COLOR, WALKING, TRAIN, BUS, CABLE_CAR, coord } from './constants';
+import {
+  BUS,
+  CABLE_CAR,
+  coord,
+  TRAIN,
+  TRIP_COLORS,
+  WALKING,
+  WALKING_TRIP_COLOR,
+  PUBLIC_TRANSPORT_TAB
+} from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
-import { getSearchContainerHeight, getStyle, last, toLeaflet, isValidPosition } from './utilities';
+import { getSearchContainerHeight, getStyle, isValidPosition, last, toLeaflet } from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -54,6 +64,8 @@ class RoutePlanner extends LitElement {
     this.search_results_height = 0;
     this.current_location = null;
     this.search_results = false;
+    this.car_results = false;
+    this.active_tab = PUBLIC_TRANSPORT_TAB;
 
     this.from_poi_search_results = [];
     this.from = {
@@ -81,6 +93,7 @@ class RoutePlanner extends LitElement {
     this.current_position_marker = null;
 
     this.polylines = [];
+    this.polylinesHover = [];
 
     // alert
     this.alert_active = false;
@@ -202,7 +215,11 @@ class RoutePlanner extends LitElement {
       day: this.departure_time_day
     };
 
-    this.search_results = await request_trip(this.from, this.destination_place, timing_options);
+    [this.search_results, this.car_results] = await Promise.all([
+      request_trip(this.from, this.destination_place, timing_options),
+      request_trip_by_car(this.from, this.destination_place, timing_options)
+    ]);
+
     this.loading = false;
 
     if (this.search_results === null) {
@@ -244,29 +261,22 @@ class RoutePlanner extends LitElement {
     });
   }
 
-  addTripToMap(trip) {
-    this.polylines = trip.legs
-      .map(
-        leg =>
-          (leg.path
-            ? // splits in points
-              leg.path.split(' ')
-            : // if no path (ie cable car: use start and end points)
-              leg.points.map(p => p.ref.coords)
-          )
-            .map(s => s.split(',')) // splits in [long, lat]
-            .map(([long, lat]) => [lat, long]) // format as leaflet wants
-      )
-
-      .map((path, i) =>
-        L.polyline(path, {
-          color: trip.legs[i].type === WALKING_TRIP_COLOR ? WALKING_TRIP_COLOR : TRIP_COLORS[i % TRIP_COLORS.length]
-        })
-      );
+  addTripToMap(polylines) {
+    this.polylines = polylines;
 
     this.polylines.forEach(p => p.addTo(this.map));
 
     this.zoomOn(flatten(this.polylines.map(p => p.getLatLngs())));
+  }
+
+  addTripToMapHover(polylines) {
+    this.polylinesHover = polylines;
+    this.polylinesHover.forEach(p => p.addTo(this.map));
+  }
+
+  removeTripToMapHover() {
+    this.polylinesHover.forEach(p => this.map.removeLayer(p));
+    this.polylinesHover = [];
   }
 
   removeTripFromMap() {

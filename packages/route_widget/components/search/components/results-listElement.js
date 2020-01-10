@@ -1,8 +1,9 @@
 import { html } from 'lit-html';
 import chevronRightImage from '../../../img/chevron-right.svg';
-import { formatDuration } from '../../../utilities';
+import { formatDuration, EFATripToPolylines } from '../../../utilities';
 import { render__badge } from '../../generics/badge';
 import render__leg_badge from './leg-badge';
+import { PUBLIC_TRANSPORT } from '../../../constants';
 
 export function render__resultsListElement(trip) {
   const legs = [...trip.legs].splice(0, 5);
@@ -14,10 +15,12 @@ export function render__resultsListElement(trip) {
     <div
       class="search__results__listElement d-flex align-items-center justify-content-between"
       @click=${() => {
-        this.details_data = trip;
-
-        this.addTripToMap(trip);
+        this.details_data = { type: PUBLIC_TRANSPORT, ...trip };
+        this.addTripToMap(EFATripToPolylines(trip));
+        this.removeTripToMapHover();
       }}
+      @mouseenter=${() => this.addTripToMapHover(EFATripToPolylines(trip))}
+      @mouseleave=${() => this.removeTripToMapHover()}
     >
       <div class="search__results__listElement__details">
         <div class="search__results__listElement__badges">

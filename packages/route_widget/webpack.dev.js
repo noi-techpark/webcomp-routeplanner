@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+require('dotenv').config();
 
 module.exports = {
   mode: 'development',
@@ -8,6 +10,11 @@ module.exports = {
     path: path.resolve(__dirname, '../../work/scripts'),
     filename: 'route_widget.js'
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.HERE_API_KEY': JSON.stringify(process.env.HERE_API_KEY)
+    })
+  ],
   // webpack-dev-server configuration
   devServer: {
     contentBase: path.resolve(__dirname, '../../work'),

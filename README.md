@@ -101,6 +101,12 @@ To deploy the web components:
 
 In any case I suggest you to check the snippets of the first point.
 
+## API Keys
+
+Here maps needs an API key that has to be set in the env variable `HERE_API_KEY` which is set through the [definePlugin](https://webpack.js.org/plugins/define-plugin/)
+
+The EFA/STA api doesn't require API keys.
+
 ## How to embed on a web page
 
 TODO

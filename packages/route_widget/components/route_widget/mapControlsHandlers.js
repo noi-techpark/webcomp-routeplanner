@@ -1,8 +1,14 @@
 const DEFAULT_GEOLOCATION_TIMEOUT = 10000;
 export function getCurrentPosition(options = {}) {
+  //                 milli * s * m   = 1h
+  const maximumAge = 1000 * 60 * 60;
   return new Promise((resolve, reject) => {
     if (navigator.geolocation && navigator.geolocation.getCurrentPosition) {
-      navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: DEFAULT_GEOLOCATION_TIMEOUT, ...options });
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        maximumAge,
+        timeout: DEFAULT_GEOLOCATION_TIMEOUT,
+        ...options
+      });
     } else {
       reject(); // geolocalization probably not supported
     }

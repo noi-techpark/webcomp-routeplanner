@@ -19,7 +19,12 @@ export const CAR = 'car';
 export const BUS = 'bus';
 export const CABLE_CAR = 'cable_car';
 
+export const PUBLIC_TRANSPORT = 'public_transport';
+
 export const FROM = 'FROM';
 export const DESTINATION = 'DESTINATION';
 export const stopID = 'stopID';
 export const coord = 'coord';
+
+export const PUBLIC_TRANSPORT_TAB = 'PUBLIC_TRANSPORT_TAB';
+export const CAR_TAB = 'CAR_TAB';

@@ -7,6 +7,7 @@ export const observed_properties = {
   from: { type: Object },
   search_results_height: { type: Number },
   search_results: { type: Array },
+  car_results: { type: Array },
   destination_name: { type: String, attribute: 'destination-name' },
   destination: { type: String },
   destination_place: { type: Object },
@@ -22,5 +23,7 @@ export const observed_properties = {
 
   // Alert
   alert_active: { type: Boolean },
-  alert_message: { type: String }
+  alert_message: { type: String },
+
+  active_tab: { type: String }
 };

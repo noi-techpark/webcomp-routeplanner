@@ -1,3 +1,6 @@
+import L from 'leaflet';
+import { WALKING_TRIP_COLOR, TRIP_COLORS } from './constants';
+
 export const getStyle = array => array[0][1];
 
 export const debounce = func => {
@@ -37,9 +40,21 @@ export const fetch_no_parallel = () => {
   };
 };
 
-const trimLeftZeros = string => string.replace(/^0+/, '');
+const trimLeftZeros = string => (string ? string.toString().replace(/^0+/, '') : '');
+
+export const secondsToHMS = seconds => {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds - h * 3600) / 60);
+  const s = Math.floor((seconds - h * 3600 - m * 60) / 60);
+
+  return [h, m, s];
+};
 
 export const formatDuration = ([h, m]) => `${h > 0 ? `${trimLeftZeros(h)}h ` : ''}${trimLeftZeros(m)}m`;
+export const formatMinutesDuration = seconds => {
+  const [h, m, ...s] = secondsToHMS(seconds);
+  return formatDuration([h, m]);
+};
 
 export const last = arr => arr[arr.length - 1];
 
@@ -69,3 +84,25 @@ export const isValidPosition = o => {
 
   return false;
 };
+
+export const EFATripToPolylines = trip =>
+  trip.legs
+    .map(
+      leg =>
+        (leg.path
+          ? // splits in points
+            leg.path.split(' ')
+          : // if no path (ie cable car: use start and end points)
+            leg.points.map(p => p.ref.coords)
+        )
+          .map(s => s.split(',')) // splits in [long, lat]
+          .map(([long, lat]) => [lat, long]) // format as leaflet wants
+    )
+
+    .map((path, i) =>
+      L.polyline(path, {
+        color: trip.legs[i].type === WALKING_TRIP_COLOR ? WALKING_TRIP_COLOR : TRIP_COLORS[i % TRIP_COLORS.length]
+      })
+    );
+
+export const HERETripToPolylines = trip => [L.polyline(trip.shape.map(s => s.split(',')))];
