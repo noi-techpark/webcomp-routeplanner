@@ -41,17 +41,23 @@
   }
 
   .details__header_section {
-    height: 28%;
-
+    height: 20%;
     .details__header_section__content {
       padding: 0 1rem;
+      display: flex;
+      flex-direction: row;
 
       .details__header_section__timings {
-        font-size: 18px;
-        line-height: 22px;
-        @media (min-width: 992px) {
+        margin: 10px;
+        .details__header_section__timings__label {
+          font-size: 13px;
+          text-transform: uppercase;
+          color: $gray-500;
+        }
+
+        .details__header_section__timings__time {
           font-size: 30px;
-          line-height: 40px;
+          color: $black;
         }
       }
 
@@ -61,6 +67,16 @@
         color: $black-300;
         display: flex;
         align-items: center;
+      }
+    }
+    .details__header_section__tags {
+      display: flex;
+    }
+    .details__header_section__tags__tag {
+      display: flex;
+      margin: 5px 28px;
+      p {
+        margin-left: 8px;
       }
     }
     .details__header_section__show_others {
@@ -78,7 +94,7 @@
   }
 
   .details__body_section {
-    height: 56%;
+    height: 64%;
     .details__body_section__content {
       border-top: 1px solid $black-100;
       overflow-x: hidden;

@@ -50,11 +50,13 @@ export const secondsToHMS = seconds => {
   return [h, m, s];
 };
 
-export const formatDuration = ([h, m]) => `${h > 0 ? `${trimLeftZeros(h)}h ` : ''}${trimLeftZeros(m)}m`;
-export const formatMinutesDuration = seconds => {
+export const formatDuration = ([h, m]) =>
+  `${h > 0 ? `${trimLeftZeros(h)}h ` : ''}${trimLeftZeros(m).padStart(1, '0')}m`;
+export const formatSecondsDuration = seconds => {
   const [h, m, ...s] = secondsToHMS(seconds);
   return formatDuration([h, m]);
 };
+export const formatMinutesDuration = minutes => formatSecondsDuration(minutes * 60);
 
 export const last = arr => arr[arr.length - 1];
 
