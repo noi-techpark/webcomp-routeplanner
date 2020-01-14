@@ -117,6 +117,7 @@ TODO
 | ------------------ | ---------------------------------------------------------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `destination`      | coordinates of the destination in the following format: "longitude:latitude" | `destination="11.1604034:46.6684672"`        | the `longitude:latitude` format is the opposite of what you can find on many websites, including google maps that uses the `latitude, longitude` format |
 | `destination-name` | display name of the destination                                              | `destination-name="Terme di Merano, Merano"` |                                                                                                                                                         |
+| `disable-car`      | if present it disables the HERE maps car routing integration                 |                                              |                                                                                                                                                         |
 |                    |                                                                              |                                              |                                                                                                                                                         |
 
 ## Running the tests

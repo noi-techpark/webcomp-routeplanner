@@ -25,5 +25,7 @@ export const observed_properties = {
   alert_active: { type: Boolean },
   alert_message: { type: String },
 
-  active_tab: { type: String }
+  active_tab: { type: String },
+
+  car_disabled: { type: Boolean, attribute: 'disable-car' }
 };

@@ -215,10 +215,14 @@ class RoutePlanner extends LitElement {
       day: this.departure_time_day
     };
 
-    [this.search_results, this.car_results] = await Promise.all([
-      request_trip(this.from, this.destination_place, timing_options),
-      request_trip_by_car(this.from, this.destination_place, timing_options)
-    ]);
+    if (this.car_disabled) {
+      this.search_results = await request_trip(this.from, this.destination_place, timing_options);
+    } else {
+      [this.search_results, this.car_results] = await Promise.all([
+        request_trip(this.from, this.destination_place, timing_options),
+        request_trip_by_car(this.from, this.destination_place, timing_options)
+      ]);
+    }
 
     this.loading = false;
 
@@ -305,6 +309,7 @@ class RoutePlanner extends LitElement {
         ${getStyle(style)}
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
+      ${this.car_disabled ? 'CAR DISABLED' : 'CAR ENABLED'}
       <div class="routeplanner-widget ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}">
         ${this.loading
           ? html`
