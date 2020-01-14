@@ -19,7 +19,11 @@ export function render__search() {
       case CAR_TAB:
         return this.car_results ? this.car_results.route.map(this.render__carListElement) : '';
       case PUBLIC_TRANSPORT_TAB:
-        return this.search_results ? this.search_results.map(this.render__resultsListElement) : '';
+        return this.search_results
+          ? this.search_results.map(this.render__resultsListElement)
+          : html`
+              <p style="margin:5px">Nessun risultato trovato con i mezzi pubblici</p>
+            `;
       default:
         return '';
     }
@@ -39,20 +43,18 @@ export function render__search() {
           </div>
         </div>
       </div>
-      ${html`
-        <div
-          class=${`search__results`}
-          style=${(this.search_results ? '' : `display: none; `) +
-            (this.mobile_open
-              ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
-              : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`)}
-        >
-          ${this.render__resultsTab()}
-          <div class="search__results__list_container">
-            ${renderList()}
-          </div>
+      <div
+        class=${`search__results`}
+        style=${(this.search_results || this.car_results ? '' : `display: none; `) +
+          (this.mobile_open
+            ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
+            : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`)}
+      >
+        ${this.render__resultsTab()}
+        <div class="search__results__list_container">
+          ${renderList()}
         </div>
-      `}
+      </div>
     </div>
   `;
 }
