@@ -6,7 +6,6 @@ import moment from 'moment';
 import printJS from 'print-js';
 import { CAR, MEANS_ICONS, PUBLIC_TRANSPORT, WALKING } from '../../constants';
 import carImage from '../../img/car.svg';
-import fromImage from '../../img/from.svg';
 import changesImage from '../../img/change.svg';
 import chevronRightImage from '../../img/chevron-right.svg';
 import clockImage from '../../img/clock.svg';
@@ -133,11 +132,15 @@ export function render__details() {
     }
 
     const maneuvers = flatMap(this.details_data.leg, l => l.maneuver);
+
     steps = html`
-      ${maneuvers.map(m => {
+      ${maneuvers.map((m, i) => {
+        let icon = tripStandardImage;
+        if (i === 0) icon = tripFirstImage;
+        if (i === maneuvers.length - 1) icon = tripLastImage;
         return html`
           <div class="details__car_step">
-            <div class="details__car_step__icon"><img src="${fromImage}" /></div>
+            <div class="details__car_step__icon"><img src="${icon}" /></div>
             <div class="details__car_step__content">
               <div class="details__car_step__content__row">
                 <div class="details__car_step__content__description">${unsafeHTML(m.instruction)}</div>
