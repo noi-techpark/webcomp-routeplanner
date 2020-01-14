@@ -36,9 +36,6 @@ export function render__search() {
             <div class="search__footer ${this.departure_time > 1 ? 'full_width' : ''}">
               ${this.render__departureTimePicker()}
             </div>
-            <div class=${`${this.departure_time > 1 ? 'ml-auto mt-3' : ''}`}>
-              ${render__button('Cerca percorso', () => this.search(), this.from ? '' : 'disabled')}
-            </div>
           </div>
         </div>
       </div>

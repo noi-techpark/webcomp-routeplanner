@@ -81,6 +81,8 @@ async function setPlaceToCurrentPosition(input_name) {
     } else if (input_name === DESTINATION) {
       this.setDestinationMarker(this.current_location);
     }
+
+    this.attemptSearch();
   }
 }
 function setFromToResult(result) {
@@ -98,6 +100,8 @@ function setFromToResult(result) {
   } else {
     this.zoomOn(this.from_marker);
   }
+
+  this.attemptSearch();
 }
 
 function setDestinationToResult(result) {
@@ -115,6 +119,8 @@ function setDestinationToResult(result) {
   } else {
     this.zoomOn(this.from_marker);
   }
+
+  this.attemptSearch();
 }
 
 const throttledFromInputHandler = throttle(fromInputHandler, 500, { leading: true });
@@ -192,6 +198,9 @@ export function render__fromTo() {
       </div>
     `;
   };
+
+  console.log('this.from', this.from);
+  console.log('this.destination_place', this.destination_place);
 
   return html`
     <div class="fromTo d-flex">
