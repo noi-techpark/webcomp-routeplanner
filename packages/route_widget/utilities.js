@@ -57,6 +57,10 @@ export const formatSecondsDuration = seconds => {
   return formatDuration([h, m]);
 };
 export const formatMinutesDuration = minutes => formatSecondsDuration(minutes * 60);
+export const formatApproximateSecondsDuration = seconds => {
+  if (seconds < 60) return '< 1m';
+  return formatSecondsDuration(seconds);
+};
 
 export const last = arr => arr[arr.length - 1];
 

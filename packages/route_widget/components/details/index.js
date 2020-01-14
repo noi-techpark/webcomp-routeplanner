@@ -1,23 +1,31 @@
 import html2pdf from 'html2pdf.js';
 import { html } from 'lit-element';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import flatMap from 'lodash/flatMap';
+import moment from 'moment';
 import printJS from 'print-js';
-import { MEANS_ICONS, WALKING, PUBLIC_TRANSPORT, PUBLIC_TRANSPORT_TAB, CAR } from '../../constants';
+import { CAR, MEANS_ICONS, PUBLIC_TRANSPORT, WALKING } from '../../constants';
 import carImage from '../../img/car.svg';
-import clockImage from '../../img/clock.svg';
+import fromImage from '../../img/from.svg';
 import changesImage from '../../img/change.svg';
-import walkingImage from '../../img/walking.svg';
 import chevronRightImage from '../../img/chevron-right.svg';
+import clockImage from '../../img/clock.svg';
 import downloadImage from '../../img/download.svg';
-import printImage from '../../img/print.svg';
 import paymentCardImage from '../../img/payment-card.svg';
+import printImage from '../../img/print.svg';
 import tripFirstImage from '../../img/trip-first.svg';
 import tripLastImage from '../../img/trip-last.svg';
 import tripStandardImage from '../../img/trip-standard.svg';
 import verticalDotsImage from '../../img/vertical-dots.svg';
-import { formatDuration, last, formatMinutesDuration, formatSecondsDuration } from '../../utilities';
-import { render__badge } from '../generics/badge';
+import walkingImage from '../../img/walking.svg';
+import {
+  formatDuration,
+  formatMinutesDuration,
+  formatSecondsDuration,
+  last,
+  formatApproximateSecondsDuration
+} from '../../utilities';
 import { render__button } from '../generics/buttons';
-import moment from 'moment';
 
 const html2pdf_params = {
   margin: 1,
@@ -123,6 +131,25 @@ export function render__details() {
     if (this.details_data.summary.flags.includes('tollroad')) {
       tags.push({ icon: paymentCardImage, label: 'Con pedaggi' });
     }
+
+    const maneuvers = flatMap(this.details_data.leg, l => l.maneuver);
+    steps = html`
+      ${maneuvers.map(m => {
+        return html`
+          <div class="details__car_step">
+            <div class="details__car_step__icon"><img src="${fromImage}" /></div>
+            <div class="details__car_step__content">
+              <div class="details__car_step__content__row">
+                <div class="details__car_step__content__description">${unsafeHTML(m.instruction)}</div>
+                <div class="details__car_step__content__duration">
+                  ${formatApproximateSecondsDuration(m.travelTime)}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      })}
+    `;
   }
 
   const generatePDF = () => {

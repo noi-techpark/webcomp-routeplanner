@@ -176,4 +176,49 @@
       }
     }
   }
+
+  .details__car_step {
+    display: flex;
+    flex-direction: row;
+    padding: 16px;
+    .details__car_step__icon {
+      min-width: 30px;
+      & > * {
+        margin: 8px;
+      }
+    }
+    .details__car_step__content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      .details__car_step__content__row {
+        display: flex;
+        flex-direction: row;
+        & > * {
+          margin: 0px 8px;
+        }
+
+        .details__car_step__content__description {
+          flex: 1;
+          font-size: 14px;
+          line-height: 24px;
+          color: #000000;
+          .length {
+            font-weight: bolder;
+          }
+          // element returned by the api
+          .sign {
+            word-break: break-all;
+          }
+        }
+        .details__car_step__content__duration {
+          min-width: 50px;
+          font-size: 14px;
+          line-height: 24px;
+          color: #000000;
+          text-align: right;
+        }
+      }
+    }
+  }
 }
