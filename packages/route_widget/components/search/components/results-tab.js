@@ -15,8 +15,9 @@ export function render__resultsTab() {
         <p>
           Mezzi pubblici
           <span
-            >${this.search_results &&
-              formatDuration(this.search_results.find(trip => trip.is_fastest).duration.split(':'))}</span
+            >${this.search_results
+              ? formatDuration(this.search_results.find(trip => trip.is_fastest).duration.split(':'))
+              : 'Nessun risultato'}</span
           >
         </p>
       </div>
@@ -26,7 +27,10 @@ export function render__resultsTab() {
           this.active_tab = CAR_TAB;
         }}
       >
-        <p>Auto <span>${this.car_results && formatSecondsDuration(this.car_results.shortestTime)}</span></p>
+        <p>
+          Auto
+          <span>${this.car_results ? formatSecondsDuration(this.car_results.shortestTime) : 'Nessun risultato'}</span>
+        </p>
       </div>
     </div>
   `;

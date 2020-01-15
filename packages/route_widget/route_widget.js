@@ -205,6 +205,13 @@ class RoutePlanner extends LitElement {
     }
   }
 
+  /** starts the search if destination and origin are */
+  attemptSearch() {
+    if (this.destination_place.type.length > 0 && this.from.type.length > 0) {
+      this.search();
+    }
+  }
+
   async search() {
     this.loading = true;
 
