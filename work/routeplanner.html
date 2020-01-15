@@ -33,8 +33,11 @@
     <script>
       function disableCarOnValue(e) {
         const widget = document.getElementById('widget');
-        if (e.target.checked) widget.setAttribute('disable-car', undefined);
-        else widget.removeAttribute('disable-car');
+        if (e.target.checked) {
+          widget.setAttribute('disable-car', undefined);
+        } else {
+          widget.removeAttribute('disable-car');
+        }
 
         const copy = widget.outerHTML;
         document.getElementById('target').innerHTML = copy;
