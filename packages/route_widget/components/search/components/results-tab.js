@@ -1,5 +1,5 @@
 import { html } from 'lit-html';
-import { formatMinutesDuration, formatDuration } from '../../../utilities';
+import { formatSecondsDuration, formatDuration } from '../../../utilities';
 import { PUBLIC_TRANSPORT_TAB, CAR_TAB } from '../../../constants';
 
 export function render__resultsTab() {
@@ -25,7 +25,7 @@ export function render__resultsTab() {
           this.active_tab = CAR_TAB;
         }}
       >
-        <p>Auto <span>${this.car_results && formatMinutesDuration(this.car_results.shortestTime)}</span></p>
+        <p>Auto <span>${this.car_results && formatSecondsDuration(this.car_results.shortestTime)}</span></p>
       </div>
     </div>
   `;

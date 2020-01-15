@@ -1,16 +1,12 @@
 import { html } from 'lit-html';
 import moment from 'moment';
 import chevronRightImage from '../../../img/chevron-right.svg';
-import { formatMinutesDuration, last, HERETripToPolylines } from '../../../utilities';
+import { formatSecondsDuration, last, HERETripToPolylines } from '../../../utilities';
 import { render__badge } from '../../generics/badge';
 import { MEANS_ICONS, CAR } from '../../../constants';
 
 export function render__carListElement(trip) {
-  const startTime = trip.leg[0].maneuver[0].time;
-  const endTime = last(last(trip.leg).maneuver).time;
   const dateFormat = 'HH:mm';
-
-  const length = Math.floor(trip.summary.distance / 1000);
 
   const label = trip.label.join(' - ');
 
@@ -31,9 +27,10 @@ export function render__carListElement(trip) {
         </div>
         <div class="search__results__listElement__times">
           <p class="search__results__listElement__range">
-            ${moment(startTime).format(dateFormat)} - ${moment(endTime).format(dateFormat)} ${length}km
+            ${moment(trip.startTime).format(dateFormat)} - ${moment(trip.endTime).format(dateFormat)}
+            ${trip.lengthInKilometers} km
           </p>
-          <p class="search__results__listElement__range">${formatMinutesDuration(trip.summary.trafficTime)}</p>
+          <p class="search__results__listElement__range">${formatSecondsDuration(trip.summary.trafficTime)}</p>
         </div>
         <div class="search__results__listElement__transports"><img src=${MEANS_ICONS[CAR]} alt="car" /> ${label}</div>
       </div>

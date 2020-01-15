@@ -41,17 +41,23 @@
   }
 
   .details__header_section {
-    height: 28%;
-
+    height: 20%;
     .details__header_section__content {
       padding: 0 1rem;
+      display: flex;
+      flex-direction: row;
 
       .details__header_section__timings {
-        font-size: 18px;
-        line-height: 22px;
-        @media (min-width: 992px) {
+        margin: 10px;
+        .details__header_section__timings__label {
+          font-size: 13px;
+          text-transform: uppercase;
+          color: $gray-500;
+        }
+
+        .details__header_section__timings__time {
           font-size: 30px;
-          line-height: 40px;
+          color: $black;
         }
       }
 
@@ -61,6 +67,16 @@
         color: $black-300;
         display: flex;
         align-items: center;
+      }
+    }
+    .details__header_section__tags {
+      display: flex;
+    }
+    .details__header_section__tags__tag {
+      display: flex;
+      margin: 5px 28px;
+      p {
+        margin-left: 8px;
       }
     }
     .details__header_section__show_others {
@@ -78,7 +94,7 @@
   }
 
   .details__body_section {
-    height: 56%;
+    height: 64%;
     .details__body_section__content {
       border-top: 1px solid $black-100;
       overflow-x: hidden;
@@ -157,6 +173,50 @@
         font-size: 14px;
         padding: 10px 24px;
         margin: 0 6px;
+      }
+    }
+  }
+
+  .details__car_step {
+    display: flex;
+    flex-direction: row;
+    padding: 16px;
+    .details__car_step__icon {
+      width: 48px;
+      display: flex;
+      justify-content: center;
+    }
+    .details__car_step__content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      .details__car_step__content__row {
+        display: flex;
+        flex-direction: row;
+        & > * {
+          margin: 0px 8px;
+        }
+
+        .details__car_step__content__description {
+          flex: 1;
+          font-size: 14px;
+          line-height: 24px;
+          color: #000000;
+          .length {
+            font-weight: bolder;
+          }
+          // element returned by the api
+          .sign {
+            word-break: break-all;
+          }
+        }
+        .details__car_step__content__duration {
+          min-width: 50px;
+          font-size: 14px;
+          line-height: 24px;
+          color: #000000;
+          text-align: right;
+        }
       }
     }
   }
