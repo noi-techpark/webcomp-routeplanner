@@ -15,15 +15,47 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-12">
+        <div>
+          <label><input type="checkbox" oninput="disableCarOnValue(event)" />Disable car</label>
+          <label><input type="checkbox" oninput="disableLocation(event)" />Remove fixed destination</label>
+        </div>
+        <div class="col-12" id="target">
           <routeplanner-widget
             destination-name="Terme di Merano, Merano"
             destination="11.1604034:46.6684672"
+            id="widget"
           ></routeplanner-widget>
         </div>
       </div>
     </div>
 
     <script src="https://clients.belka.us/idm/cdn/routeplanner_widget.min.js"></script>
+    <script>
+      function disableCarOnValue(e) {
+        const widget = document.getElementById('widget');
+        if (e.target.checked) {
+          widget.setAttribute('disable-car', undefined);
+        } else {
+          widget.removeAttribute('disable-car');
+        }
+
+        const copy = widget.outerHTML;
+        document.getElementById('target').innerHTML = copy;
+      }
+
+      function disableLocation(e) {
+        const widget = document.getElementById('widget');
+        if (e.target.checked) {
+          widget.removeAttribute('destination-name');
+          widget.removeAttribute('destination');
+        } else {
+          widget.setAttribute('destination-name', 'Terme di Merano, Merano');
+          widget.setAttribute('destination', '11.1604034:46.6684672');
+        }
+
+        const copy = widget.outerHTML;
+        document.getElementById('target').innerHTML = copy;
+      }
+    </script>
   </body>
 </html>
