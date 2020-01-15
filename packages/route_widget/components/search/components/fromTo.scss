@@ -68,6 +68,12 @@
           &:hover {
             background-color: $black-50;
           }
+
+          &.loading-skeleton {
+            padding: 0px;
+            margin: 12px;
+            height: 30px;
+          }
         }
       }
     }

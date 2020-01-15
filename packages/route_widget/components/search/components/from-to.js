@@ -13,11 +13,20 @@ import { FROM, DESTINATION, stopID, coord } from '../../../constants';
 
 async function fromInputHandler(input_name, input_string) {
   try {
+    if (input_name === FROM) {
+      this.from.poi_search_is_fetching = true;
+    } else if (input_name === DESTINATION) {
+      this.destination_place.poi_search_is_fetching = true;
+    }
+    this.requestUpdate();
+
     const results = await this.request_get_poi(input_string);
     if (input_name === FROM) {
       this.from.poi_search_results = results;
+      this.from.poi_search_is_fetching = false;
     } else if (input_name === DESTINATION) {
       this.destination_place.poi_search_results = results;
+      this.destination_place.poi_search_is_fetching = false;
     }
 
     this.requestUpdate();
@@ -40,7 +49,8 @@ async function setPlaceToCurrentPosition(input_name) {
       name: `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`,
       latitude,
       longitude,
-      input_select_visible: false
+      input_select_visible: false,
+      poi_search_is_fetching: false
     };
 
     if (input_name === FROM) {
@@ -185,14 +195,20 @@ export function render__fromTo() {
                 <div class="fromTo__inputs__input_selection__element" @click=${setToCurrentLocation}>
                   <img src=${crosshairImage} alt="" /> La mia posizione
                 </div>
-                ${place.poi_search_results.map(
-                  result =>
-                    html`
-                      <div class="fromTo__inputs__input_selection__element" @click=${() => setToResult(result)}>
-                        ${result.name}
-                      </div>
+                ${place.poi_search_is_fetching
+                  ? html`
+                      <div class="loading-skeleton fromTo__inputs__input_selection__element"></div>
+                      <div class="loading-skeleton fromTo__inputs__input_selection__element"></div>
+                      <div class="loading-skeleton fromTo__inputs__input_selection__element"></div>
                     `
-                )}
+                  : place.poi_search_results.map(
+                      result =>
+                        html`
+                          <div class="fromTo__inputs__input_selection__element" @click=${() => setToResult(result)}>
+                            ${result.name}
+                          </div>
+                        `
+                    )}
               </div>
             `}
       </div>

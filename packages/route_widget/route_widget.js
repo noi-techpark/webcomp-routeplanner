@@ -74,6 +74,7 @@ class RoutePlanner extends LitElement {
       type: '',
       locked: false,
       poi_search_results: [],
+      poi_search_is_fetching: false,
       input_select_visible: false
     };
 
@@ -84,6 +85,7 @@ class RoutePlanner extends LitElement {
       type: '',
       locked: false,
       poi_search_results: [],
+      poi_search_is_fetching: false,
       input_select_visible: false
     };
 
