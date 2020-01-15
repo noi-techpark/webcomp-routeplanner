@@ -3,7 +3,9 @@ import { formatSecondsDuration, formatDuration } from '../../../utilities';
 import { PUBLIC_TRANSPORT_TAB, CAR_TAB } from '../../../constants';
 
 export function render__resultsTab() {
-  if (this.car_disabled) return html``;
+  if (this.car_disabled) {
+    return html``;
+  }
   return html`
     <div class="search__results__tabs d-flex justify-content-between">
       <div
