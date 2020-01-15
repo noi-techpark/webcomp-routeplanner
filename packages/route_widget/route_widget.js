@@ -215,6 +215,8 @@ class RoutePlanner extends LitElement {
   async search() {
     this.loading = true;
 
+    this.search_started = true;
+
     const timing_options = {
       type: ['', 'dep', 'dep', 'arr', ''][this.departure_time],
       hour: this.departure_time_hour.slice(0, 2),
@@ -309,6 +311,18 @@ class RoutePlanner extends LitElement {
     this.alert_active = false;
   }
 
+  getAnimationState() {
+    if (!this.search_started) {
+      return 'state-start';
+    }
+
+    if (this.details_data) {
+      return 'state-details';
+    }
+
+    return 'state-results';
+  }
+
   render() {
     return html`
       <style>
@@ -316,7 +330,11 @@ class RoutePlanner extends LitElement {
         ${getStyle(style)}
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
-      <div class="routeplanner-widget ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}">
+      <div
+        class="routeplanner-widget 
+          ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}
+          ${this.getAnimationState()}"
+      >
         ${this.loading
           ? html`
               <div class="loading">

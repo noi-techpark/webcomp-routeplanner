@@ -45,10 +45,9 @@ export function render__search() {
       </div>
       <div
         class=${`search__results`}
-        style=${(this.search_results || this.car_results ? '' : `display: none; `) +
-          (this.mobile_open
-            ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
-            : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`)}
+        style=${this.mobile_open
+          ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
+          : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`}
       >
         ${this.render__resultsTab()}
         <div class="search__results__list_container">

@@ -77,6 +77,13 @@
   background-color: $white;
   width: 100%;
 
+  transform: translate(0px, 0px);
+  transition: transform 0.25s ease-in-out;
+
+  .state-start & {
+    transform: translate(0px, 100%);
+  }
+
   .search__results__tabs {
     text-align: center;
     border-bottom: 1px solid #f0f1f1;
