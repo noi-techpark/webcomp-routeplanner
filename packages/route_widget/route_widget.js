@@ -309,7 +309,6 @@ class RoutePlanner extends LitElement {
         ${getStyle(style)}
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
-      ${this.car_disabled ? 'CAR DISABLED' : 'CAR ENABLED'}
       <div class="routeplanner-widget ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}">
         ${this.loading
           ? html`
