@@ -7,7 +7,7 @@ import currentLocationImage from '../../../img/find-position.svg';
 import fromToDotsImage from '../../../img/from-to-dots.svg';
 import fromImage from '../../../img/from.svg';
 import toImage from '../../../img/to.svg';
-import { toLeaflet, isValidPosition } from '../../../utilities';
+import { toLeaflet, isValidPosition, repeatHtml } from '../../../utilities';
 import { getCurrentPosition } from '../../route_widget/mapControlsHandlers';
 import { FROM, DESTINATION, stopID, coord } from '../../../constants';
 
@@ -196,11 +196,12 @@ export function render__fromTo() {
                   <img src=${crosshairImage} alt="" /> La mia posizione
                 </div>
                 ${place.poi_search_is_fetching
-                  ? html`
-                      <div class="loading-skeleton fromTo__inputs__input_selection__element"></div>
-                      <div class="loading-skeleton fromTo__inputs__input_selection__element"></div>
-                      <div class="loading-skeleton fromTo__inputs__input_selection__element"></div>
-                    `
+                  ? repeatHtml(
+                      html`
+                        <div class="loading-skeleton fromTo__inputs__input_selection__element"></div>
+                      `,
+                      3
+                    )
                   : place.poi_search_results.map(
                       result =>
                         html`
