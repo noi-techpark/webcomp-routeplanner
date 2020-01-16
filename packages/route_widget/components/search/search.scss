@@ -88,11 +88,19 @@
     text-align: center;
     border-bottom: 1px solid #f0f1f1;
 
+    .loading-skeleton {
+      width: 100px;
+      height: 20px;
+      margin: 2px 0px;
+    }
+
     .search__results__tab {
       width: 100%;
       padding: 2px 0;
       font-size: 14px;
       line-height: 24px;
+      display: flex;
+      justify-content: center;
       p {
         span {
           color: $black-300;
@@ -112,6 +120,14 @@
     overflow-y: scroll;
     overflow-x: hidden;
     flex: 1;
+
+    .loading-skeleton {
+      margin: 5px;
+      // &:first-child() {
+      //   width: 30%;
+      // }
+      // width: 75%;
+    }
   }
 
   .search__results__listElement {

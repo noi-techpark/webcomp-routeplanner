@@ -52,7 +52,11 @@ class RoutePlanner extends LitElement {
     this.request_get_poi = request_get_poi.bind(this);
 
     /** Observed values */
+    // TODO: remove loading and use is_geolocating inside destination and origin
     this.loading = false;
+    this.is_fetching_efa = false;
+    this.is_fetching_here = false;
+
     this.isFullScreen = false;
     this.mobile_open = false;
     this.departure_time = 1;
@@ -215,8 +219,6 @@ class RoutePlanner extends LitElement {
   }
 
   async search() {
-    this.loading = true;
-
     this.search_started = true;
 
     const timing_options = {
@@ -227,15 +229,21 @@ class RoutePlanner extends LitElement {
     };
 
     if (this.car_disabled) {
+      this.is_fetching_efa = true;
       this.search_results = await request_trip(this.from, this.destination_place, timing_options);
+      this.is_fetching_efa = false;
     } else {
+      this.is_fetching_efa = true;
+      this.is_fetching_here = true;
+
       [this.search_results, this.car_results] = await Promise.all([
         request_trip(this.from, this.destination_place, timing_options),
         request_trip_by_car(this.from, this.destination_place, timing_options)
       ]);
-    }
 
-    this.loading = false;
+      this.is_fetching_efa = false;
+      this.is_fetching_here = false;
+    }
 
     if (this.search_results === null) {
       this.alert('Non abbiamo trovato nessun percorso per questa destinazione');

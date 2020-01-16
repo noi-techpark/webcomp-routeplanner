@@ -1,5 +1,6 @@
 import L from 'leaflet';
 import { WALKING_TRIP_COLOR, TRIP_COLORS } from './constants';
+import { html } from 'lit-element';
 
 export const getStyle = array => array[0][1];
 
@@ -128,3 +129,12 @@ export const EFATripToPolylines = trip =>
     );
 
 export const HERETripToPolylines = trip => [L.polyline(trip.shape.map(s => s.split(',')))];
+
+export const repeatHtml = (htmlToRepeat, amount) =>
+  [...new Array(amount)].reduce(
+    acc =>
+      html`
+        ${acc}${htmlToRepeat}
+      `,
+    html``
+  );
