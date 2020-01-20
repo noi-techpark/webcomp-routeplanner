@@ -36,30 +36,11 @@ async function fromInputHandler(input_name, input_string) {
 }
 
 async function setPlaceToCurrentPosition(input_name) {
+  this.loading = true;
   try {
-    this.loading = true;
     const positionResult = await getCurrentPosition();
     const { latitude, longitude } = positionResult.coords;
     this.current_location = { latitude, longitude };
-
-    const newValues = {
-      is_current_position: true,
-      display_name: 'Posizione corrente',
-      type: coord,
-      name: `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`,
-      latitude,
-      longitude,
-      input_select_visible: false,
-      poi_search_is_fetching: false
-    };
-
-    if (input_name === FROM) {
-      this.from = { ...this.from, ...newValues };
-    } else if (input_name === DESTINATION) {
-      this.destination_place = { ...this.destination_place, ...newValues };
-    }
-
-    this.requestUpdate();
   } catch (error) {
     if (error.code === error.PERMISSION_DENIED) {
       // eslint-disable-next-line no-alert
@@ -73,6 +54,24 @@ async function setPlaceToCurrentPosition(input_name) {
   }
 
   if (this.current_location) {
+    const newValues = {
+      is_current_position: true,
+      display_name: 'Posizione corrente',
+      type: coord,
+      name: `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`,
+      latitude: this.current_location.latitude,
+      longitude: this.current_location.longitude,
+      input_select_visible: false,
+      poi_search_is_fetching: false
+    };
+
+    if (input_name === FROM) {
+      this.from = { ...this.from, ...newValues };
+    } else if (input_name === DESTINATION) {
+      this.destination_place = { ...this.destination_place, ...newValues };
+    }
+
+    this.requestUpdate();
     // create marker for current location
     const currentLocationIcon = L.icon({
       iconUrl: currentLocationImage,
