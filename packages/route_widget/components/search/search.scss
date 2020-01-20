@@ -123,10 +123,14 @@
 
     .loading-skeleton {
       margin: 5px;
-      // &:first-child() {
-      //   width: 30%;
-      // }
-      // width: 75%;
+      &.small {
+        height: 20px;
+        width: 150px;
+      }
+      &.big {
+        height: 50px;
+        width: 350px;
+      }
     }
   }
 

@@ -17,8 +17,8 @@ export function render__search() {
 
   const loadingSkeleton = html`
     <div class="search__results__listElement">
-      <div class="loading-skeleton" style="height: 20px; width: 150px;"></div>
-      <div class="loading-skeleton" style="height: 50px; width: 350px;"></div>
+      <div class="loading-skeleton small"></div>
+      <div class="loading-skeleton big"></div>
     </div>
   `;
 
