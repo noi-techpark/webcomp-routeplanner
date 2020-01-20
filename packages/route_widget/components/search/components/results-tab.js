@@ -3,7 +3,14 @@ import { formatSecondsDuration, formatDuration } from '../../../utilities';
 import { PUBLIC_TRANSPORT_TAB, CAR_TAB } from '../../../constants';
 
 export function render__resultsTab() {
-  if (this.car_disabled) return html``;
+  if (this.car_disabled) {
+    return html``;
+  }
+
+  const loadingIndicator = html`
+    <div class="loading-skeleton"></div>
+  `;
+
   return html`
     <div class="search__results__tabs d-flex justify-content-between">
       <div
@@ -15,7 +22,9 @@ export function render__resultsTab() {
         <p>
           Mezzi pubblici
           <span
-            >${this.search_results
+            >${this.is_fetching_efa
+              ? loadingIndicator
+              : this.search_results
               ? formatDuration(this.search_results.find(trip => trip.is_fastest).duration.split(':'))
               : 'Nessun risultato'}</span
           >
@@ -29,7 +38,13 @@ export function render__resultsTab() {
       >
         <p>
           Auto
-          <span>${this.car_results ? formatSecondsDuration(this.car_results.shortestTime) : 'Nessun risultato'}</span>
+          <span
+            >${this.is_fetching_here
+              ? loadingIndicator
+              : this.car_results
+              ? formatSecondsDuration(this.car_results.shortestTime)
+              : 'Nessun risultato'}</span
+          >
         </p>
       </div>
     </div>

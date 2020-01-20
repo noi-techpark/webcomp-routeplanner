@@ -6,6 +6,7 @@ import { render__resultsTab } from './components/results-tab';
 import { render__carListElement } from './components/results-carListElement';
 import { render__resultsListElement } from './components/results-listElement';
 import { PUBLIC_TRANSPORT_TAB, CAR_TAB } from '../../constants';
+import { repeatHtml } from '../../utilities';
 
 export function render__search() {
   this.render__fromTo = render__fromTo.bind(this);
@@ -14,11 +15,24 @@ export function render__search() {
   this.render__resultsListElement = render__resultsListElement.bind(this);
   this.render__resultsTab = render__resultsTab.bind(this);
 
+  const loadingSkeleton = html`
+    <div class="search__results__listElement">
+      <div class="loading-skeleton small"></div>
+      <div class="loading-skeleton big"></div>
+    </div>
+  `;
+
   const renderList = () => {
     switch (this.active_tab) {
       case CAR_TAB:
+        if (this.is_fetching_here) {
+          return repeatHtml(loadingSkeleton, 5);
+        }
         return this.car_results ? this.car_results.route.map(this.render__carListElement) : '';
       case PUBLIC_TRANSPORT_TAB:
+        if (this.is_fetching_efa) {
+          return repeatHtml(loadingSkeleton, 5);
+        }
         return this.search_results
           ? this.search_results.map(this.render__resultsListElement)
           : html`
@@ -45,10 +59,9 @@ export function render__search() {
       </div>
       <div
         class=${`search__results`}
-        style=${(this.search_results || this.car_results ? '' : `display: none; `) +
-          (this.mobile_open
-            ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
-            : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`)}
+        style=${this.mobile_open
+          ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
+          : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`}
       >
         ${this.render__resultsTab()}
         <div class="search__results__list_container">

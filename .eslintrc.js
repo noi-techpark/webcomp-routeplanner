@@ -23,6 +23,7 @@ module.exports = {
     'arrow-parens': 0,
     'object-curly-newline': 0,
     'prettier/prettier': 'error',
-    'no-console': 0
+    'no-console': 0,
+    curly: [1, 'all'],
   }
 };

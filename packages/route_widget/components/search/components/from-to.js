@@ -7,17 +7,26 @@ import currentLocationImage from '../../../img/find-position.svg';
 import fromToDotsImage from '../../../img/from-to-dots.svg';
 import fromImage from '../../../img/from.svg';
 import toImage from '../../../img/to.svg';
-import { toLeaflet, isValidPosition } from '../../../utilities';
+import { toLeaflet, isValidPosition, repeatHtml } from '../../../utilities';
 import { getCurrentPosition } from '../../route_widget/mapControlsHandlers';
 import { FROM, DESTINATION, stopID, coord } from '../../../constants';
 
 async function fromInputHandler(input_name, input_string) {
   try {
+    if (input_name === FROM) {
+      this.from.poi_search_is_fetching = true;
+    } else if (input_name === DESTINATION) {
+      this.destination_place.poi_search_is_fetching = true;
+    }
+    this.requestUpdate();
+
     const results = await this.request_get_poi(input_string);
     if (input_name === FROM) {
       this.from.poi_search_results = results;
+      this.from.poi_search_is_fetching = false;
     } else if (input_name === DESTINATION) {
       this.destination_place.poi_search_results = results;
+      this.destination_place.poi_search_is_fetching = false;
     }
 
     this.requestUpdate();
@@ -27,29 +36,11 @@ async function fromInputHandler(input_name, input_string) {
 }
 
 async function setPlaceToCurrentPosition(input_name) {
+  this.loading = true;
   try {
-    this.loading = true;
     const positionResult = await getCurrentPosition();
     const { latitude, longitude } = positionResult.coords;
     this.current_location = { latitude, longitude };
-
-    const newValues = {
-      is_current_position: true,
-      display_name: 'Posizione corrente',
-      type: coord,
-      name: `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`,
-      latitude,
-      longitude,
-      input_select_visible: false
-    };
-
-    if (input_name === FROM) {
-      this.from = { ...this.from, ...newValues };
-    } else if (input_name === DESTINATION) {
-      this.destination_place = { ...this.destination_place, ...newValues };
-    }
-
-    this.requestUpdate();
   } catch (error) {
     if (error.code === error.PERMISSION_DENIED) {
       // eslint-disable-next-line no-alert
@@ -63,6 +54,24 @@ async function setPlaceToCurrentPosition(input_name) {
   }
 
   if (this.current_location) {
+    const newValues = {
+      is_current_position: true,
+      display_name: 'Posizione corrente',
+      type: coord,
+      name: `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`,
+      latitude: this.current_location.latitude,
+      longitude: this.current_location.longitude,
+      input_select_visible: false,
+      poi_search_is_fetching: false
+    };
+
+    if (input_name === FROM) {
+      this.from = { ...this.from, ...newValues };
+    } else if (input_name === DESTINATION) {
+      this.destination_place = { ...this.destination_place, ...newValues };
+    }
+
+    this.requestUpdate();
     // create marker for current location
     const currentLocationIcon = L.icon({
       iconUrl: currentLocationImage,
@@ -185,14 +194,21 @@ export function render__fromTo() {
                 <div class="fromTo__inputs__input_selection__element" @click=${setToCurrentLocation}>
                   <img src=${crosshairImage} alt="" /> La mia posizione
                 </div>
-                ${place.poi_search_results.map(
-                  result =>
-                    html`
-                      <div class="fromTo__inputs__input_selection__element" @click=${() => setToResult(result)}>
-                        ${result.name}
-                      </div>
-                    `
-                )}
+                ${place.poi_search_is_fetching
+                  ? repeatHtml(
+                      html`
+                        <div class="loading-skeleton fromTo__inputs__input_selection__element"></div>
+                      `,
+                      3
+                    )
+                  : place.poi_search_results.map(
+                      result =>
+                        html`
+                          <div class="fromTo__inputs__input_selection__element" @click=${() => setToResult(result)}>
+                            ${result.name}
+                          </div>
+                        `
+                    )}
               </div>
             `}
       </div>

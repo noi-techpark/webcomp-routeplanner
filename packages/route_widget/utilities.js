@@ -1,12 +1,15 @@
 import L from 'leaflet';
 import { WALKING_TRIP_COLOR, TRIP_COLORS } from './constants';
+import { html } from 'lit-element';
 
 export const getStyle = array => array[0][1];
 
 export const debounce = func => {
   let timer;
   return function(event) {
-    if (timer) clearTimeout(timer);
+    if (timer) {
+      clearTimeout(timer);
+    }
     timer = setTimeout(func, 500, event);
   };
 };
@@ -58,7 +61,9 @@ export const formatSecondsDuration = seconds => {
 };
 export const formatMinutesDuration = minutes => formatSecondsDuration(minutes * 60);
 export const formatApproximateSecondsDuration = seconds => {
-  if (seconds < 60) return '< 1m';
+  if (seconds < 60) {
+    return '< 1m';
+  }
   return formatSecondsDuration(seconds);
 };
 
@@ -72,8 +77,12 @@ export const toQueryParams = params =>
 export const toLeaflet = o => {
   // returns object itself if it's already ok for leaflet
   // eslint-disable-next-line no-underscore-dangle
-  if (o._latlng) return o._latlng;
-  if (o.lat && (o.lng || o.lon)) return o;
+  if (o._latlng) {
+    return o._latlng;
+  }
+  if (o.lat && (o.lng || o.lon)) {
+    return o;
+  }
 
   // otherwise convert it
   const { latitude, longitude } = o;
@@ -81,12 +90,20 @@ export const toLeaflet = o => {
 };
 
 export const isValidPosition = o => {
-  if (!o) return false;
+  if (!o) {
+    return false;
+  }
 
   // eslint-disable-next-line no-underscore-dangle
-  if (o._latlng) return true;
-  if (o.lat && (o.lng || o.lon)) return true;
-  if (o.latitude && o.longitude) return true;
+  if (o._latlng) {
+    return true;
+  }
+  if (o.lat && (o.lng || o.lon)) {
+    return true;
+  }
+  if (o.latitude && o.longitude) {
+    return true;
+  }
 
   return false;
 };
@@ -112,3 +129,12 @@ export const EFATripToPolylines = trip =>
     );
 
 export const HERETripToPolylines = trip => [L.polyline(trip.shape.map(s => s.split(',')))];
+
+export const repeatHtml = (htmlToRepeat, amount) =>
+  [...new Array(amount)].reduce(
+    acc =>
+      html`
+        ${acc}${htmlToRepeat}
+      `,
+    html``
+  );

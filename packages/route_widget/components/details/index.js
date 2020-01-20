@@ -136,8 +136,12 @@ export function render__details() {
     steps = html`
       ${maneuvers.map((m, i) => {
         let icon = tripStandardImage;
-        if (i === 0) icon = tripFirstImage;
-        if (i === maneuvers.length - 1) icon = tripLastImage;
+        if (i === 0) {
+          icon = tripFirstImage;
+        }
+        if (i === maneuvers.length - 1) {
+          icon = tripLastImage;
+        }
         return html`
           <div class="details__car_step">
             <div class="details__car_step__icon"><img src="${icon}" /></div>

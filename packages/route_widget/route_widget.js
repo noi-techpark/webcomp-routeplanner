@@ -52,7 +52,11 @@ class RoutePlanner extends LitElement {
     this.request_get_poi = request_get_poi.bind(this);
 
     /** Observed values */
+    // TODO: remove loading and use is_geolocating inside destination and origin
     this.loading = false;
+    this.is_fetching_efa = false;
+    this.is_fetching_here = false;
+
     this.isFullScreen = false;
     this.mobile_open = false;
     this.departure_time = 1;
@@ -74,6 +78,7 @@ class RoutePlanner extends LitElement {
       type: '',
       locked: false,
       poi_search_results: [],
+      poi_search_is_fetching: false,
       input_select_visible: false
     };
 
@@ -84,6 +89,7 @@ class RoutePlanner extends LitElement {
       type: '',
       locked: false,
       poi_search_results: [],
+      poi_search_is_fetching: false,
       input_select_visible: false
     };
 
@@ -213,7 +219,7 @@ class RoutePlanner extends LitElement {
   }
 
   async search() {
-    this.loading = true;
+    this.search_started = true;
 
     const timing_options = {
       type: ['', 'dep', 'dep', 'arr', ''][this.departure_time],
@@ -223,15 +229,21 @@ class RoutePlanner extends LitElement {
     };
 
     if (this.car_disabled) {
+      this.is_fetching_efa = true;
       this.search_results = await request_trip(this.from, this.destination_place, timing_options);
+      this.is_fetching_efa = false;
     } else {
+      this.is_fetching_efa = true;
+      this.is_fetching_here = true;
+
       [this.search_results, this.car_results] = await Promise.all([
         request_trip(this.from, this.destination_place, timing_options),
         request_trip_by_car(this.from, this.destination_place, timing_options)
       ]);
-    }
 
-    this.loading = false;
+      this.is_fetching_efa = false;
+      this.is_fetching_here = false;
+    }
 
     if (this.search_results === null) {
       this.alert('Non abbiamo trovato nessun percorso per questa destinazione');
@@ -309,6 +321,18 @@ class RoutePlanner extends LitElement {
     this.alert_active = false;
   }
 
+  getAnimationState() {
+    if (!this.search_started) {
+      return 'state-start';
+    }
+
+    if (this.details_data) {
+      return 'state-details';
+    }
+
+    return 'state-results';
+  }
+
   render() {
     return html`
       <style>
@@ -316,7 +340,11 @@ class RoutePlanner extends LitElement {
         ${getStyle(style)}
         ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
       </style>
-      <div class="routeplanner-widget ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}">
+      <div
+        class="routeplanner-widget 
+          ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}
+          ${this.getAnimationState()}"
+      >
         ${this.loading
           ? html`
               <div class="loading">
