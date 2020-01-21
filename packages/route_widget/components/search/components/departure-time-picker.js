@@ -4,9 +4,9 @@ import { render__picker } from '../../generics/picker';
 
 const DEPARTURE_TIME = {
   1: 'Partenza ora',
-  2: 'Partenza alle',
-  3: 'Arrivo entro le',
-  4: 'Ultimo'
+  2: 'Partenza alle'
+  // 3: 'Arrivo entro le',
+  // 4: 'Ultimo'
 };
 
 const time_options = {};
