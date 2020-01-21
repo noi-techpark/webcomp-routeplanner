@@ -2,6 +2,7 @@ import { html } from 'lit-html';
 import clone from 'lodash/clone';
 
 import { render__button } from '../generics/buttons/index';
+import { here_options } from '../../api/here';
 
 function render_filter_element(key) {
   return html`
@@ -36,7 +37,6 @@ export function render__options_panel() {
 
   const render_element = render_filter_element.bind(this);
 
-  const here_types = ['tollroad', 'motorway', 'boatFerry', 'railFerry', 'tunnel', 'dirtRoad'];
   const efa_types = ['funicolar', 'train', 'bus'];
 
   return html`
@@ -48,7 +48,7 @@ export function render__options_panel() {
         : html`
             <p class="category">In auto, evita:</p>
             <div class="filter_container">
-              ${here_types.map(render_element)}
+              ${here_options.map(render_element)}
             </div>
           `}
 

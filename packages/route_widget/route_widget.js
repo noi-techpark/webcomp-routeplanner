@@ -243,7 +243,12 @@ class RoutePlanner extends LitElement {
 
   async search_here(timing_options) {
     this.is_fetching_here = true;
-    this.car_results = await request_trip_by_car(this.from, this.destination_place, timing_options);
+    this.car_results = await request_trip_by_car(
+      this.from,
+      this.destination_place,
+      timing_options,
+      this.travel_options
+    );
     this.is_fetching_here = false;
   }
 
