@@ -27,5 +27,8 @@ export const observed_properties = {
 
   active_tab: { type: String },
 
-  car_disabled: { type: Boolean, attribute: 'disable-car' }
+  car_disabled: { type: Boolean, attribute: 'disable-car' },
+
+  is_travel_options_panel_open: { type: Boolean },
+  travel_options: { type: Object }
 };
