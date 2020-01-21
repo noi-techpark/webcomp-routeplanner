@@ -7,8 +7,6 @@ const BASE_PATH = 'https://route.ls.hereapi.com/routing/7.2/';
 const API_KEY = process.env.HERE_API_KEY;
 
 export async function request_trip_by_car(origin, destination, timing_options, travel_options) {
-  //   const { type, hour, minute, day } = timing_options;
-
   const here_travel_options = Object.entries(travel_options)
     .filter(([option, disabled]) => here_options.includes(option) && disabled)
     .map(([option, disabled]) => `${option}:-3`)
@@ -25,9 +23,16 @@ export async function request_trip_by_car(origin, destination, timing_options, t
     alternatives: 5,
     routeAttributes: 'none,sh,wp,sm,bb,lg,no,li,tx,la',
     maneuverAttributes: 'all',
-    metricSystem: 'metric',
-    departure: new Date().toISOString()
+    metricSystem: 'metric'
   };
+
+  const date = new Date(`${timing_options.day} ${timing_options.hour}:${timing_options.minute}`).toISOString();
+
+  if (timing_options.type === 'dep') {
+    params.departure = date;
+  } else {
+    params.arrival = date;
+  }
 
   const response = await fetch(`${BASE_PATH}/calculateroute.json?${toQueryParams(params)}`, { method: 'GET' });
   const data = await response.json();
