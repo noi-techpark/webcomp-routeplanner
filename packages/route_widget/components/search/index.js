@@ -1,14 +1,15 @@
 import { html } from 'lit-html';
+import { CAR_TAB, PUBLIC_TRANSPORT_TAB } from '../../constants';
+import { repeatHtml } from '../../utilities';
 import { render__button } from '../generics/buttons/index';
+import { render__options_panel } from '../options_panel';
 import { render__departureTimePicker } from './components/departure-time-picker';
 import { render__fromTo } from './components/from-to';
-import { render__resultsTab } from './components/results-tab';
 import { render__carListElement } from './components/results-carListElement';
 import { render__resultsListElement } from './components/results-listElement';
-import { PUBLIC_TRANSPORT_TAB, CAR_TAB } from '../../constants';
-import { repeatHtml } from '../../utilities';
-import { render__options_panel } from '../options_panel';
-
+import { render__resultsTab } from './components/results-tab';
+import settingsIcon from '../../img/settings.svg';
+import chevronDown from '../../img/chevron-down-green.svg';
 export function render__search() {
   this.render__fromTo = render__fromTo.bind(this);
   this.render__departureTimePicker = render__departureTimePicker.bind(this);
@@ -57,7 +58,13 @@ export function render__search() {
               ${this.render__departureTimePicker()}
             </div>
             <div class="search__options_button">
-              ${render__button('Opzioni v', this.toggle_options_panel, 'flat')}
+              ${render__button(
+                html`
+                  <img src="${settingsIcon}" /> Opzioni <img src="${chevronDown} " class="chevron" />
+                `,
+                this.toggle_options_panel,
+                `flat green ${this.is_travel_options_panel_open ? 'open' : 'closed'}`
+              )}
             </div>
           </div>
         </div>

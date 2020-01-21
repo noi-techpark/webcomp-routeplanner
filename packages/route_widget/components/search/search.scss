@@ -24,6 +24,22 @@
     @media (min-width: 992px) {
       padding: 1rem;
     }
+
+    .button.green {
+      color: $green;
+
+      img:first-child {
+        position: relative;
+        top: -2px;
+      }
+
+      &.open .chevron {
+        transform: rotate(180deg);
+      }
+      &.closed .chevron {
+        transform: rotate(0deg);
+      }
+    }
   }
 
   .search__footer {
