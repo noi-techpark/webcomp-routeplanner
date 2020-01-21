@@ -31,6 +31,7 @@ import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import { getSearchContainerHeight, getStyle, isValidPosition, last, toLeaflet } from './utilities';
+import clone from 'lodash/clone';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -109,6 +110,7 @@ class RoutePlanner extends LitElement {
 
     this.is_travel_options_panel_open = false;
     this.travel_options = {};
+    this.temp_travel_options = {};
   }
 
   static get properties() {
@@ -340,8 +342,9 @@ class RoutePlanner extends LitElement {
   }
 
   toggle_options_panel() {
+    // if closing: discard, if opening: prepare the temp
+    this.temp_travel_options = clone(this.travel_options);
     this.is_travel_options_panel_open = !this.is_travel_options_panel_open;
-    // TODO: discard changes
   }
 
   render() {
