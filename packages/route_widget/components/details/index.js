@@ -54,7 +54,7 @@ export function render__details() {
 
     tags.push({ icon: clockImage, label: formatDuration(this.details_data.duration.split(':')) });
     // TODO: singular/plural version
-    tags.push({ icon: changesImage, label: `${changes} cambi` });
+    tags.push({ icon: changesImage, label: `${changes} ${changes > 1 ? this.t('changes') : this.t('change')}` });
     tags.push({ icon: walkingImage, label: formatMinutesDuration(walkingTime) });
 
     const lastPoint = last(last(this.details_data.legs).points);
@@ -65,7 +65,8 @@ export function render__details() {
           time: leg.points[0].dateTime.time,
           place: leg.points[0].name,
           type: leg.type,
-          means_desc: leg.type === WALKING ? `A piedi (${leg.timeMinute} minuti)` : leg.mode.name
+          means_desc:
+            leg.type === WALKING ? this.t('by_foot_with_minutes').replace('$0', leg.timeMinute) : leg.mode.name
         };
       }),
       { time: lastPoint.dateTime.time, place: lastPoint.name }
@@ -128,7 +129,7 @@ export function render__details() {
     tags.push({ icon: carImage, label: `${this.details_data.lengthInKilometers} km` });
 
     if (this.details_data.summary.flags.includes('tollroad')) {
-      tags.push({ icon: paymentCardImage, label: 'Con pedaggi' });
+      tags.push({ icon: paymentCardImage, label: this.t('with_tolls') });
     }
 
     const maneuvers = flatMap(this.details_data.leg, l => l.maneuver);
@@ -192,7 +193,7 @@ export function render__details() {
             <div class="details__back_section__content">
               <img src=${chevronRightImage} alt="" />
               <p>
-                Tutti i risultati
+                ${this.t('all_results')}
               </p>
             </div>
           </div>
@@ -202,11 +203,11 @@ export function render__details() {
           <div class="col-12 mt-2">
             <div class="details__header_section__content">
               <div class="details__header_section__timings">
-                <p class="details__header_section__timings__label">Partenza:</p>
+                <p class="details__header_section__timings__label">${this.t('departure_time')}:</p>
                 <p class="details__header_section__timings__time">${startTime}</p>
               </div>
               <div class="details__header_section__timings">
-                <p class="details__header_section__timings__label">Arrivo:</p>
+                <p class="details__header_section__timings__label">${this.t('arrival_time')}:</p>
                 <p class="details__header_section__timings__time">${endTime}</p>
               </div>
             </div>
@@ -230,14 +231,14 @@ export function render__details() {
         <div class="details__footer_section">
           ${render__button(
             html`
-              <img src="${downloadImage}" alt="" /> Scarica PDF
+              <img src="${downloadImage}" alt="" /> ${this.t('download_pdf')}
             `,
             downloadPDF,
             'grey'
           )}
           ${render__button(
             html`
-              <img src="${printImage}" alt="" /> Stampa
+              <img src="${printImage}" alt="" /> ${this.t('print')}
             `,
             printPDF,
             'grey'

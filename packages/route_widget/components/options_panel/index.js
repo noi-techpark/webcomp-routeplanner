@@ -14,7 +14,7 @@ function render_filter_element(key) {
           this.requestUpdate();
         }}
       >
-        ${key}
+        ${this.t(key)}
       </a>
     </span>
   `;
@@ -41,23 +41,23 @@ export function render__options_panel() {
 
   return html`
     <div class="options_panel ${this.is_travel_options_panel_open ? 'open' : 'closed'}">
-      <p>Puoi escludere alcuni tipi di strada nella ricerca del percorso.</p>
+      <p>${this.t('options_text')}</p>
 
       ${this.car_disabled
         ? ''
         : html`
-            <p class="category">In auto, evita:</p>
+            <p class="category">${this.t('options_car_text')}</p>
             <div class="filter_container">
               ${here_options.map(render_element)}
             </div>
           `}
 
-      <p class="category">Coi mezzi pubblici, evita:</p>
+      <p class="category">${this.t('options_public_means_text')}</p>
       <div class="filter_container">
         ${efa_types.map(render_element)}
       </div>
       <div class="buttons">
-        ${render__button('Annulla', this.cancel, 'grey')} ${render__button('Salva', this.save, '')}
+        ${render__button(this.t('cancel'), this.cancel, 'grey')} ${render__button(this.t('save'), this.save, '')}
       </div>
     </div>
   `;

@@ -3,6 +3,7 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
+import clone from 'lodash/clone';
 import flatten from 'lodash/flatten';
 import padStart from 'lodash/padStart';
 import moment from 'moment';
@@ -12,26 +13,18 @@ import { render__alert } from './components/alert/index';
 import { render_backgroundMap } from './components/backgroundMap';
 import { render_closeFullscreenButton } from './components/closeFullscreenButton';
 import { render__details } from './components/details';
+import { render__language_flags } from './components/language_flags';
 import { render__mapControls } from './components/mapControls';
 import { handleFullScreenMap, mapControlsHandlers } from './components/route_widget/mapControlsHandlers';
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
-import {
-  BUS,
-  CABLE_CAR,
-  coord,
-  TRAIN,
-  TRIP_COLORS,
-  WALKING,
-  WALKING_TRIP_COLOR,
-  PUBLIC_TRANSPORT_TAB
-} from './constants';
+import { BUS, CABLE_CAR, coord, PUBLIC_TRANSPORT_TAB, TRAIN, WALKING } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
+import createTranslator from './translations';
 import { getSearchContainerHeight, getStyle, isValidPosition, last, toLeaflet } from './utilities';
-import clone from 'lodash/clone';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -47,6 +40,7 @@ class RoutePlanner extends LitElement {
     this.render_closeFullscreenButton = render_closeFullscreenButton.bind(this);
     this.render__alert = render__alert.bind(this);
     this.toggle_options_panel = this.toggle_options_panel.bind(this);
+    this.render__language_flags = render__language_flags.bind(this);
 
     /**
      * Api
@@ -111,6 +105,8 @@ class RoutePlanner extends LitElement {
     this.is_travel_options_panel_open = false;
     this.travel_options = {};
     this.temp_travel_options = {};
+
+    this.t = createTranslator(this.get_system_language());
   }
 
   static get properties() {
@@ -141,6 +137,11 @@ class RoutePlanner extends LitElement {
     // Calculate results height
     this.getSearchContainerHeight();
     await this.handleDestination();
+
+    if (!this.language) {
+      this.language = this.get_system_language();
+    }
+    this.switch_language(this.language);
   }
 
   /**
@@ -352,6 +353,19 @@ class RoutePlanner extends LitElement {
     this.is_travel_options_panel_open = !this.is_travel_options_panel_open;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  get_system_language() {
+    const locale = navigator.languages ? navigator.languages[0] : navigator.language;
+    const lang = locale.substr(0, 2);
+    const supported_languages = ['en', 'it', 'de'];
+    return supported_languages.includes(lang) ? lang : 'en';
+  }
+
+  switch_language(language) {
+    this.language = language;
+    this.t = createTranslator(language);
+  }
+
   render() {
     return html`
       <style>
@@ -364,6 +378,7 @@ class RoutePlanner extends LitElement {
           ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}
           ${this.getAnimationState()}"
       >
+        ${this.render__language_flags()}
         ${this.loading
           ? html`
               <div class="loading">

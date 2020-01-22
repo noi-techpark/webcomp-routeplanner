@@ -24,7 +24,7 @@ export function render__resultsListElement(trip) {
     >
       <div class="search__results__listElement__details">
         <div class="search__results__listElement__badges">
-          ${trip.is_fastest ? render__badge('PIÚ VELOCE', 'yellow') : ''}
+          ${trip.is_fastest ? render__badge(this.t('faster_badge'), 'yellow') : ''}
         </div>
         <div class="search__results__listElement__times">
           <p class="search__results__listElement__range">${trip.startTime} - ${trip.endTime}</p>

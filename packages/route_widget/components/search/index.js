@@ -39,7 +39,7 @@ export function render__search() {
         return this.search_results
           ? this.search_results.map(this.render__resultsListElement)
           : html`
-              <p style="margin:5px">Nessun risultato trovato con i mezzi pubblici</p>
+              <p style="margin:5px">${this.t('no_results_with_public_means_results')}</p>
             `;
       default:
         return '';
@@ -60,7 +60,7 @@ export function render__search() {
             <div class="search__options_button">
               ${render__button(
                 html`
-                  <img src="${settingsIcon}" /> Opzioni <img src="${chevronDown} " class="chevron" />
+                  <img src="${settingsIcon}" /> ${this.t('options')} <img src="${chevronDown} " class="chevron" />
                 `,
                 this.toggle_options_panel,
                 `flat green ${this.is_travel_options_panel_open ? 'open' : 'closed'}`

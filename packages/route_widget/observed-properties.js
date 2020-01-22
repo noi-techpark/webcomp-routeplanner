@@ -30,5 +30,6 @@ export const observed_properties = {
   car_disabled: { type: Boolean, attribute: 'disable-car' },
 
   is_travel_options_panel_open: { type: Boolean },
-  travel_options: { type: Object }
+  travel_options: { type: Object },
+  language: { type: String }
 };

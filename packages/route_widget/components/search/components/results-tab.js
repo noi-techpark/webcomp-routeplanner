@@ -20,7 +20,7 @@ export function render__resultsTab() {
         }}
       >
         <p>
-          Mezzi pubblici
+          ${this.t('public_means')}
           <span
             >${this.is_fetching_efa
               ? loadingIndicator
@@ -37,7 +37,7 @@ export function render__resultsTab() {
         }}
       >
         <p>
-          Auto
+          ${this.t('car')}
           <span
             >${this.is_fetching_here
               ? loadingIndicator
