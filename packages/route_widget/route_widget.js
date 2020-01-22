@@ -248,14 +248,21 @@ class RoutePlanner extends LitElement {
       this.from,
       this.destination_place,
       timing_options,
-      this.travel_options
+      this.travel_options,
+      this.language
     );
     this.is_fetching_here = false;
   }
 
   async search_efa(timing_options) {
     this.is_fetching_efa = true;
-    this.search_results = await request_trip(this.from, this.destination_place, timing_options, this.travel_options);
+    this.search_results = await request_trip(
+      this.from,
+      this.destination_place,
+      timing_options,
+      this.travel_options,
+      this.language
+    );
     this.is_fetching_efa = false;
 
     if (this.search_results === null) {

@@ -20,7 +20,7 @@ async function fromInputHandler(input_name, input_string) {
     }
     this.requestUpdate();
 
-    const results = await this.request_get_poi(input_string);
+    const results = await this.request_get_poi(input_string, this.language);
     if (input_name === FROM) {
       this.from.poi_search_results = results;
       this.from.poi_search_is_fetching = false;

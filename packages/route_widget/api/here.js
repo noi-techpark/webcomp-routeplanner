@@ -6,7 +6,7 @@ export const here_options = ['tollroad', 'motorway', 'boatFerry', 'railFerry', '
 const BASE_PATH = 'https://route.ls.hereapi.com/routing/7.2/';
 const API_KEY = process.env.HERE_API_KEY;
 
-export async function request_trip_by_car(origin, destination, timing_options, travel_options) {
+export async function request_trip_by_car(origin, destination, timing_options, travel_options, language = 'en') {
   const here_travel_options = Object.entries(travel_options)
     .filter(([option, disabled]) => here_options.includes(option) && disabled)
     .map(([option, disabled]) => `${option}:-3`)
@@ -14,7 +14,7 @@ export async function request_trip_by_car(origin, destination, timing_options, t
 
   // https://developer.here.com/documentation/routing/dev_guide/topics/resource-calculate-route.html
   const params = {
-    language: 'it-it',
+    language,
     apikey: API_KEY,
     jsonAttributes: 1 + 8,
     waypoint0: `geo!${origin.latitude},${origin.longitude}`,
