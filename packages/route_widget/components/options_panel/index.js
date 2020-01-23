@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import clone from 'lodash/clone';
 
 import { render__button } from '../generics/buttons/index';
-import { here_options } from '../../api/here';
+import { efa_types, here_options } from '../../constants';
 
 function render_filter_element(key) {
   return html`
@@ -36,8 +36,6 @@ export function render__options_panel() {
   this.cancel = cancel.bind(this);
 
   const render_element = render_filter_element.bind(this);
-
-  const efa_types = ['funicolar', 'train', 'bus'];
 
   return html`
     <div class="options_panel ${this.is_travel_options_panel_open ? 'open' : 'closed'}">
