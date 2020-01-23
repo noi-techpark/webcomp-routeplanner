@@ -1,7 +1,5 @@
-import moment from 'moment';
 import { toQueryParams, last } from '../utilities';
-
-export const here_options = ['tollroad', 'motorway', 'boatFerry', 'railFerry', 'tunnel', 'dirtRoad'];
+import { here_options } from '../constants';
 
 const BASE_PATH = 'https://route.ls.hereapi.com/routing/7.2/';
 const API_KEY = process.env.HERE_API_KEY;
