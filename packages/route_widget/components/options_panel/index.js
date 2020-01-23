@@ -10,7 +10,7 @@ function render_filter_element(key) {
       <a
         class="filter_element ${this.temp_travel_options[key] ? 'selected' : ''}"
         @click=${e => {
-          this.temp_travel_options[key] = !this.temp_travel_options[key]; // ? false : true;
+          this.temp_travel_options[key] = !this.temp_travel_options[key];
           this.requestUpdate();
         }}
       >
