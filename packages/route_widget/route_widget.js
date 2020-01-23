@@ -266,7 +266,6 @@ class RoutePlanner extends LitElement {
     this.is_fetching_efa = false;
 
     if (this.search_results === null) {
-      this.alert('Non abbiamo trovato nessun percorso con i mezzi pubblici per questa destinazione');
       return;
     }
 
