@@ -39,7 +39,7 @@ export function render__search() {
         return this.search_results
           ? this.search_results.map(this.render__resultsListElement)
           : html`
-              <p style="margin:5px">${this.t('no_results_with_public_means_results')}</p>
+              <p style="margin:5px">${this.t('no_results_with_public_means')}</p>
             `;
       default:
         return '';
