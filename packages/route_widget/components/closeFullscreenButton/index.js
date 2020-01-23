@@ -9,8 +9,6 @@ export function render_closeFullscreenButton() {
     <div
       class="close_fullscreen_button"
       @click=${() => {
-        this.from = '';
-        this.details_data = undefined;
         this.closeFullscreen();
       }}
     >
