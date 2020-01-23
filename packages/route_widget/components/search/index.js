@@ -31,7 +31,11 @@ export function render__search() {
         if (this.is_fetching_here) {
           return repeatHtml(loadingSkeleton, 5);
         }
-        return this.car_results ? this.car_results.route.map(this.render__carListElement) : '';
+        return this.car_results
+          ? this.car_results.route.map(this.render__carListElement)
+          : html`
+              <p style="margin:5px">${this.t('no_results_with_car')}</p>
+            `;
       case PUBLIC_TRANSPORT_TAB:
         if (this.is_fetching_efa) {
           return repeatHtml(loadingSkeleton, 5);
