@@ -114,6 +114,9 @@
   overflow: hidden;
   border-radius: 4px;
 
+  // dark magic to make safari apply overflow hidden correctly with boarder-radius
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+
   & > div {
     position: absolute;
     top: 0px;
