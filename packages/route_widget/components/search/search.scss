@@ -261,3 +261,10 @@
     }
   }
 }
+
+.search__search_results_container {
+  .state-start & {
+    // hide it  when there's nothing to show to not cover the buttons
+    height: 0px;
+  }
+}

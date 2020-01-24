@@ -73,7 +73,7 @@ export function render__search() {
           </div>
         </div>
       </div>
-      <div>
+      <div class="search__search_results_container">
         ${this.render__options_panel()}
 
         <div
