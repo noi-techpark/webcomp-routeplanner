@@ -19,7 +19,7 @@ import { handleFullScreenMap, mapControlsHandlers } from './components/route_wid
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
-import { BUS, CABLE_CAR, coord, PUBLIC_TRANSPORT_TAB, TRAIN, WALKING } from './constants';
+import { BUS, CABLE_CAR, coord, PUBLIC_TRANSPORT_TAB, TRAIN, WALKING, LANGUAGES } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
@@ -364,8 +364,7 @@ class RoutePlanner extends LitElement {
   get_system_language() {
     const locale = navigator.languages ? navigator.languages[0] : navigator.language;
     const lang = locale.substr(0, 2);
-    const supported_languages = ['en', 'it', 'de'];
-    return supported_languages.includes(lang) ? lang : 'en';
+    return Object.values(LANGUAGES).includes(lang) ? lang : LANGUAGES.EN;
   }
 
   switch_language(language) {

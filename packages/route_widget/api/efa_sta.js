@@ -1,10 +1,11 @@
 import moment from 'moment';
 import { fetch_no_parallel, toQueryParams } from '../utilities';
+import { LANGUAGES } from '../constants';
 
 const BASE_PATH = window.location.protocol === 'https:' ? 'https://efas.sta.bz.it/apb' : 'http://efa.sta.bz.it/apb';
 
 const fetch_poi = fetch_no_parallel();
-export async function request_get_poi(query, language = 'en') {
+export async function request_get_poi(query, language = LANGUAGES.EN) {
   const params = {
     language,
     SpEncId: '0',
@@ -29,7 +30,7 @@ export async function request_get_poi(query, language = 'en') {
   return list || [];
 }
 
-export async function request_trip(origin, destination, timing_options, options, language = 'en') {
+export async function request_trip(origin, destination, timing_options, options, language = LANGUAGES.EN) {
   const { type, hour, minute, day } = timing_options;
   const params = {
     language,

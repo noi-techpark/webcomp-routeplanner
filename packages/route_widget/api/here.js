@@ -1,12 +1,19 @@
 import moment from 'moment';
 import { toQueryParams, last } from '../utilities';
+import { LANGUAGES } from '../constants';
 
 export const here_options = ['tollroad', 'motorway', 'boatFerry', 'railFerry', 'tunnel', 'dirtRoad'];
 
 const BASE_PATH = 'https://route.ls.hereapi.com/routing/7.2/';
 const API_KEY = process.env.HERE_API_KEY;
 
-export async function request_trip_by_car(origin, destination, timing_options, travel_options, language = 'en') {
+export async function request_trip_by_car(
+  origin,
+  destination,
+  timing_options,
+  travel_options,
+  language = LANGUAGES.EN
+) {
   const here_travel_options = Object.entries(travel_options)
     .filter(([option, disabled]) => here_options.includes(option) && disabled)
     .map(([option, disabled]) => `${option}:-3`)
