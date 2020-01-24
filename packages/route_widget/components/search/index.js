@@ -79,8 +79,8 @@ export function render__search() {
         <div
           class=${`search__results`}
           style=${this.mobile_open
-            ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
-            : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`}
+            ? `max-height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
+            : `max-height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`}
         >
           ${this.render__resultsTab()}
           <div class="search__results__list_container">

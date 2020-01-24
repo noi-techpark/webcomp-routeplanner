@@ -98,7 +98,7 @@
   transition: transform 0.25s ease-in-out;
 
   .state-start & {
-    transform: translate(0px, 100%);
+    transform: translate(0px, 1000px);
   }
 
   .search__results__tabs {
