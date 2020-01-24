@@ -1,19 +1,22 @@
 import { html } from 'lit-html';
+import { CAR_TAB, PUBLIC_TRANSPORT_TAB } from '../../constants';
+import { repeatHtml } from '../../utilities';
 import { render__button } from '../generics/buttons/index';
+import { render__options_panel } from '../options_panel';
 import { render__departureTimePicker } from './components/departure-time-picker';
 import { render__fromTo } from './components/from-to';
-import { render__resultsTab } from './components/results-tab';
 import { render__carListElement } from './components/results-carListElement';
 import { render__resultsListElement } from './components/results-listElement';
-import { PUBLIC_TRANSPORT_TAB, CAR_TAB } from '../../constants';
-import { repeatHtml } from '../../utilities';
-
+import { render__resultsTab } from './components/results-tab';
+import settingsIcon from '../../img/settings.svg';
+import chevronDown from '../../img/chevron-down-green.svg';
 export function render__search() {
   this.render__fromTo = render__fromTo.bind(this);
   this.render__departureTimePicker = render__departureTimePicker.bind(this);
   this.render__carListElement = render__carListElement.bind(this);
   this.render__resultsListElement = render__resultsListElement.bind(this);
   this.render__resultsTab = render__resultsTab.bind(this);
+  this.render__options_panel = render__options_panel.bind(this);
 
   const loadingSkeleton = html`
     <div class="search__results__listElement">
@@ -54,18 +57,31 @@ export function render__search() {
             <div class="search__footer ${this.departure_time > 1 ? 'full_width' : ''}">
               ${this.render__departureTimePicker()}
             </div>
+            <div class="search__options_button">
+              ${render__button(
+                html`
+                  <img src="${settingsIcon}" /> Opzioni <img src="${chevronDown} " class="chevron" />
+                `,
+                this.toggle_options_panel,
+                `flat green ${this.is_travel_options_panel_open ? 'open' : 'closed'}`
+              )}
+            </div>
           </div>
         </div>
       </div>
-      <div
-        class=${`search__results`}
-        style=${this.mobile_open
-          ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
-          : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`}
-      >
-        ${this.render__resultsTab()}
-        <div class="search__results__list_container">
-          ${renderList()}
+      <div>
+        ${this.render__options_panel()}
+
+        <div
+          class=${`search__results`}
+          style=${this.mobile_open
+            ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
+            : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`}
+        >
+          ${this.render__resultsTab()}
+          <div class="search__results__list_container">
+            ${renderList()}
+          </div>
         </div>
       </div>
     </div>

@@ -35,4 +35,9 @@
     background-color: $black-100;
     color: $black-400;
   }
+
+  &.flat {
+    background-color: initial;
+    color: $black-400;
+  }
 }

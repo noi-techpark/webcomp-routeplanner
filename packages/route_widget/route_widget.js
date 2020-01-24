@@ -31,6 +31,7 @@ import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import { getSearchContainerHeight, getStyle, isValidPosition, last, toLeaflet } from './utilities';
+import clone from 'lodash/clone';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -45,6 +46,7 @@ class RoutePlanner extends LitElement {
     this.handleFullScreenMap = handleFullScreenMap.bind(this);
     this.render_closeFullscreenButton = render_closeFullscreenButton.bind(this);
     this.render__alert = render__alert.bind(this);
+    this.toggle_options_panel = this.toggle_options_panel.bind(this);
 
     /**
      * Api
@@ -105,6 +107,10 @@ class RoutePlanner extends LitElement {
     this.alert_active = false;
     this.alert_message = 'Non sono riuscito a trovare la tua posizione';
     this.alert_timeout_ref = null;
+
+    this.is_travel_options_panel_open = false;
+    this.travel_options = {};
+    this.temp_travel_options = {};
   }
 
   static get properties() {
@@ -218,9 +224,8 @@ class RoutePlanner extends LitElement {
     }
   }
 
-  async search() {
-    this.search_started = true;
-
+  search() {
+    // maybe it's just efa that needs this format
     const timing_options = {
       type: ['', 'dep', 'dep', 'arr', ''][this.departure_time],
       hour: this.departure_time_hour.slice(0, 2),
@@ -228,27 +233,35 @@ class RoutePlanner extends LitElement {
       day: this.departure_time_day
     };
 
-    if (this.car_disabled) {
-      this.is_fetching_efa = true;
-      this.search_results = await request_trip(this.from, this.destination_place, timing_options);
-      this.is_fetching_efa = false;
-    } else {
-      this.is_fetching_efa = true;
-      this.is_fetching_here = true;
+    this.search_started = true;
 
-      [this.search_results, this.car_results] = await Promise.all([
-        request_trip(this.from, this.destination_place, timing_options),
-        request_trip_by_car(this.from, this.destination_place, timing_options)
-      ]);
-
-      this.is_fetching_efa = false;
-      this.is_fetching_here = false;
+    if (!this.car_disabled) {
+      this.search_here(timing_options);
     }
+    this.search_efa(timing_options);
+  }
+
+  async search_here(timing_options) {
+    this.is_fetching_here = true;
+    this.car_results = await request_trip_by_car(
+      this.from,
+      this.destination_place,
+      timing_options,
+      this.travel_options
+    );
+    this.is_fetching_here = false;
+  }
+
+  async search_efa(timing_options) {
+    this.is_fetching_efa = true;
+    this.search_results = await request_trip(this.from, this.destination_place, timing_options, this.travel_options);
+    this.is_fetching_efa = false;
 
     if (this.search_results === null) {
-      this.alert('Non abbiamo trovato nessun percorso per questa destinazione');
+      this.alert('Non abbiamo trovato nessun percorso con i mezzi pubblici per questa destinazione');
       return;
     }
+
     const fastest = this.search_results.reduce((fastest_tmp, trip) =>
       fastest_tmp.duration > trip.duration ? trip : fastest_tmp
     );
@@ -331,6 +344,12 @@ class RoutePlanner extends LitElement {
     }
 
     return 'state-results';
+  }
+
+  toggle_options_panel() {
+    // if closing: discard, if opening: prepare the temp
+    this.temp_travel_options = clone(this.travel_options);
+    this.is_travel_options_panel_open = !this.is_travel_options_panel_open;
   }
 
   render() {

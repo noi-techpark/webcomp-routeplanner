@@ -28,3 +28,6 @@ export const coord = 'coord';
 
 export const PUBLIC_TRANSPORT_TAB = 'PUBLIC_TRANSPORT_TAB';
 export const CAR_TAB = 'CAR_TAB';
+
+export const here_options = ['tollroad', 'motorway', 'boatFerry', 'railFerry', 'tunnel', 'dirtRoad'];
+export const efa_types = ['funicolar', 'train', 'bus'];

@@ -29,7 +29,7 @@ export async function request_get_poi(query) {
   return list || [];
 }
 
-export async function request_trip(origin, destination, timing_options) {
+export async function request_trip(origin, destination, timing_options, options) {
   const { type, hour, minute, day } = timing_options;
   const params = {
     language: 'it',
@@ -42,8 +42,20 @@ export async function request_trip(origin, destination, timing_options) {
     itdTripDateTimeDepArr: type,
     itdTimeHour: hour,
     itdTimeMinute: minute,
-    itdDateDayMonthYear: moment(day).format('DD.MM.YYYY')
+    itdDateDayMonthYear: moment(day).format('DD.MM.YYYY'),
+    excludedMeans: 1
   };
+  if (options.train) {
+    params.exclMOT_0 = 1;
+  }
+  if (options.bus) {
+    params.exclMOT_5 = 1;
+    params.exclMOT_6 = 1;
+  }
+  if (options.funicolar) {
+    params.exclMOT_8 = 1;
+  }
+
   const response = await fetch(`${BASE_PATH}/XML_TRIP_REQUEST2?${toQueryParams(params)}`, { method: 'GET' });
   const data = await response.json();
   return data.trips;
