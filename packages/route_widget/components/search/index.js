@@ -34,7 +34,7 @@ export function render__search() {
         return this.car_results
           ? this.car_results.route.map(this.render__carListElement)
           : html`
-              <p style="margin:5px">${this.t('no_results_with_car')}</p>
+              <p class="no_results_message">${this.t('no_results_with_car')}</p>
             `;
       case PUBLIC_TRANSPORT_TAB:
         if (this.is_fetching_efa) {
@@ -43,7 +43,7 @@ export function render__search() {
         return this.search_results
           ? this.search_results.map(this.render__resultsListElement)
           : html`
-              <p style="margin:5px">${this.t('no_results_with_public_means')}</p>
+              <p class="no_results_message">${this.t('no_results_with_public_means')}</p>
             `;
       default:
         return '';
