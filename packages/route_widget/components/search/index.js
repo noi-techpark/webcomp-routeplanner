@@ -76,12 +76,7 @@ export function render__search() {
       <div class="search__search_results_container">
         ${this.render__options_panel()}
 
-        <div
-          class=${`search__results`}
-          style=${this.mobile_open
-            ? `max-height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
-            : `max-height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`}
-        >
+        <div class=${`search__results`} style=${this.getResultsStyle()}>
           ${this.render__resultsTab()}
           <div class="search__results__list_container">
             ${renderList()}

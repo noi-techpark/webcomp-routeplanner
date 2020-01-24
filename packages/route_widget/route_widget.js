@@ -375,6 +375,12 @@ class RoutePlanner extends LitElement {
     this.t = createTranslator(language);
   }
 
+  getResultsStyle() {
+    return this.mobile_open
+      ? `max-height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
+      : `max-height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`;
+  }
+
   render() {
     return html`
       <style>
