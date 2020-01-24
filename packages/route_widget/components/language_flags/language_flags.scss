@@ -1,0 +1,27 @@
+.language_flags {
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  top: 6px;
+  right: 6px;
+
+  @media (max-width: 992px) {
+    bottom: 6px;
+    top: unset;
+    right: unset;
+    left: 6px;
+  }
+
+  z-index: 401;
+
+  img {
+    cursor: pointer;
+    margin: 4px;
+    opacity: 0.4;
+
+    &.active {
+      opacity: 1;
+    }
+  }
+}

@@ -3,8 +3,8 @@ import clockImage from '../../../img/clock.svg';
 import { render__picker } from '../../generics/picker';
 
 const DEPARTURE_TIME = {
-  1: 'Partenza ora',
-  2: 'Partenza alle'
+  1: 'depart_now',
+  2: 'depart_at'
   // 3: 'Arrivo entro le',
   // 4: 'Ultimo'
 };

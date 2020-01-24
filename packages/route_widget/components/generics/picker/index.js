@@ -11,7 +11,7 @@ export function render__picker(trigger, values, currentValue, action, css_modifi
           this[trigger] = true;
         }}
       >
-        <span>${values[currentValue]} <img src=${chevronDownImage} alt=""/></span>
+        <span>${this.t(values[currentValue])} <img src=${chevronDownImage} alt=""/></span>
       </div>
 
       <div class=${`picker_box ${this[trigger] ? '' : 'hidden'}`}>
@@ -28,7 +28,7 @@ export function render__picker(trigger, values, currentValue, action, css_modifi
                       <img src=${checkImage} alt="" />
                     `
                   : ``}
-                ${values[key]}
+                ${this.t(values[key])}
               </div>
             `;
           })}

@@ -20,7 +20,7 @@ async function fromInputHandler(input_name, input_string) {
     }
     this.requestUpdate();
 
-    const results = await this.request_get_poi(input_string);
+    const results = await this.request_get_poi(input_string, this.language);
     if (input_name === FROM) {
       this.from.poi_search_results = results;
       this.from.poi_search_is_fetching = false;
@@ -56,7 +56,7 @@ async function setPlaceToCurrentPosition(input_name) {
   if (this.current_location) {
     const newValues = {
       is_current_position: true,
-      display_name: 'Posizione corrente',
+      display_name: 'current_position',
       type: coord,
       name: `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`,
       latitude: this.current_location.latitude,
@@ -180,7 +180,11 @@ export function render__fromTo() {
           : html`
               <input
                 type="text"
-                .value=${place.input_select_visible && place.is_current_position ? '' : place.display_name}
+                .value=${place.input_select_visible && place.is_current_position
+                  ? ''
+                  : place.display_name == 'current_position'
+                  ? this.t('current_position')
+                  : place.display_name}
                 @input=${event => this.throttledFromInputHandler(input_name, event.target.value)}
                 @focus=${() => handleFocusFor(input_name)}
                 @blur=${() => {
@@ -192,7 +196,7 @@ export function render__fromTo() {
               />
               <div class=${`fromTo__inputs__input_selection ${place.input_select_visible ? '' : 'hidden'}`}>
                 <div class="fromTo__inputs__input_selection__element" @click=${setToCurrentLocation}>
-                  <img src=${crosshairImage} alt="" /> La mia posizione
+                  <img src=${crosshairImage} alt="" /> ${this.t('use_my_position')}
                 </div>
                 ${place.poi_search_is_fetching
                   ? repeatHtml(

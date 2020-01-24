@@ -31,3 +31,9 @@ export const CAR_TAB = 'CAR_TAB';
 
 export const here_options = ['tollroad', 'motorway', 'boatFerry', 'railFerry', 'tunnel', 'dirtRoad'];
 export const efa_types = ['funicolar', 'train', 'bus'];
+
+export const LANGUAGES = {
+  EN: 'en',
+  DE: 'de',
+  IT: 'it'
+};
