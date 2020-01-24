@@ -30,7 +30,7 @@ export function render__carListElement(trip) {
             ${moment(trip.startTime).format(dateFormat)} - ${moment(trip.endTime).format(dateFormat)}
             ${trip.lengthInKilometers} km
           </p>
-          <p class="search__results__listElement__range">${formatSecondsDuration(trip.summary.trafficTime)}</p>
+          <p class="search__results__listElement__range">${formatSecondsDuration(trip.summary.baseTime)}</p>
         </div>
         <div class="search__results__listElement__transports"><img src=${MEANS_ICONS[CAR]} alt="car" /> ${label}</div>
       </div>
