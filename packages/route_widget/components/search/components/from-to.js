@@ -201,7 +201,7 @@ export function render__fromTo() {
                 ${place.poi_search_is_fetching
                   ? repeatHtml(
                       html`
-                        <div class="loading-skeleton fromTo__inputs__input_selection__element"></div>
+                        <div class="loading-skeleton fromTo__inputs__input_selection__element"><div></div></div>
                       `,
                       3
                     )

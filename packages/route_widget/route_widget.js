@@ -244,13 +244,17 @@ class RoutePlanner extends LitElement {
 
   async search_here(timing_options) {
     this.is_fetching_here = true;
-    this.car_results = await request_trip_by_car(
-      this.from,
-      this.destination_place,
-      timing_options,
-      this.travel_options,
-      this.language
-    );
+    try {
+      this.car_results = await request_trip_by_car(
+        this.from,
+        this.destination_place,
+        timing_options,
+        this.travel_options,
+        this.language
+      );
+    } catch (ex) {
+      this.car_results = false;
+    }
     this.is_fetching_here = false;
   }
 
@@ -369,6 +373,12 @@ class RoutePlanner extends LitElement {
   switch_language(language) {
     this.language = language;
     this.t = createTranslator(language);
+  }
+
+  getResultsStyle() {
+    return this.mobile_open
+      ? `max-height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
+      : `max-height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`;
   }
 
   render() {

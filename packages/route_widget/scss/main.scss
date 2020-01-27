@@ -23,7 +23,7 @@
 
 .routeplanner-widget {
   position: relative;
-  font-family: sans-serif;
+  font-family: 'Suedtirol Next TT', 'KievitWebPro', sans-serif;
   color: $black;
   width: 100%;
   overflow: hidden;
@@ -34,7 +34,7 @@
       position: fixed;
       top: 0;
       left: 0;
-      overflow: scroll;
+      height: 100vh;
       .MODE__mobile__expand_button_container {
         position: fixed;
         right: 15px;
@@ -114,11 +114,13 @@
   overflow: hidden;
   border-radius: 4px;
 
-  &:before {
+  // dark magic to make safari apply overflow hidden correctly with boarder-radius
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+
+  & > div {
     position: absolute;
     top: 0px;
     left: 0px;
-    content: '';
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, rgba(239, 239, 239, 0) -0.05%, #cccccc 49.43%, rgba(239, 239, 239, 0) 99.95%);

@@ -8,7 +8,7 @@ export function render__resultsTab() {
   }
 
   const loadingIndicator = html`
-    <div class="loading-skeleton"></div>
+    <div class="loading-skeleton"><div></div></div>
   `;
 
   return html`

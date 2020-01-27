@@ -98,7 +98,7 @@
   transition: transform 0.25s ease-in-out;
 
   .state-start & {
-    transform: translate(0px, 100%);
+    transform: translate(0px, 1000px);
   }
 
   .search__results__tabs {
@@ -148,6 +148,10 @@
         height: 50px;
         width: 350px;
       }
+    }
+
+    .no_results_message {
+      padding: 30px;
     }
   }
 
@@ -255,5 +259,12 @@
         // padding: 0 0.5rem;
       }
     }
+  }
+}
+
+.search__search_results_container {
+  .state-start & {
+    // hide it  when there's nothing to show to not cover the buttons
+    height: 0px;
   }
 }

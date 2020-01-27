@@ -38,7 +38,7 @@ export function render__options_panel() {
   const render_element = render_filter_element.bind(this);
 
   return html`
-    <div class="options_panel ${this.is_travel_options_panel_open ? 'open' : 'closed'}">
+    <div class="options_panel ${this.is_travel_options_panel_open ? 'open' : 'closed'}" style=${this.getResultsStyle()}>
       <p>${this.t('options_text')}</p>
 
       ${this.car_disabled

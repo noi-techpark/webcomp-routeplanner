@@ -20,8 +20,8 @@ export function render__search() {
 
   const loadingSkeleton = html`
     <div class="search__results__listElement">
-      <div class="loading-skeleton small"></div>
-      <div class="loading-skeleton big"></div>
+      <div class="loading-skeleton small"><div></div></div>
+      <div class="loading-skeleton big"><div></div></div>
     </div>
   `;
 
@@ -31,7 +31,11 @@ export function render__search() {
         if (this.is_fetching_here) {
           return repeatHtml(loadingSkeleton, 5);
         }
-        return this.car_results ? this.car_results.route.map(this.render__carListElement) : '';
+        return this.car_results
+          ? this.car_results.route.map(this.render__carListElement)
+          : html`
+              <p class="no_results_message">${this.t('no_results_with_car')}</p>
+            `;
       case PUBLIC_TRANSPORT_TAB:
         if (this.is_fetching_efa) {
           return repeatHtml(loadingSkeleton, 5);
@@ -39,7 +43,7 @@ export function render__search() {
         return this.search_results
           ? this.search_results.map(this.render__resultsListElement)
           : html`
-              <p style="margin:5px">${this.t('no_results_with_public_means_results')}</p>
+              <p class="no_results_message">${this.t('no_results_with_public_means')}</p>
             `;
       default:
         return '';
@@ -69,15 +73,10 @@ export function render__search() {
           </div>
         </div>
       </div>
-      <div>
+      <div class="search__search_results_container">
         ${this.render__options_panel()}
 
-        <div
-          class=${`search__results`}
-          style=${this.mobile_open
-            ? `height: calc(100vh - ${this.search_results_height}px - 1rem - 26px);`
-            : `height: calc(700px - ${this.search_results_height}px - 1rem - 16px);`}
-        >
+        <div class=${`search__results`} style=${this.getResultsStyle()}>
           ${this.render__resultsTab()}
           <div class="search__results__list_container">
             ${renderList()}

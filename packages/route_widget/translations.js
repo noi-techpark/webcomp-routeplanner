@@ -30,6 +30,7 @@ const translations = {
     tunnel: 'Gallerie',
     dirtRoad: 'Strade non asfaltate',
     no_results_with_public_means: 'Nessun risultato trovato con i mezzi pubblici',
+    no_results_with_car: 'Nessun percorso trovato in macchina',
     by_foot_with_minutes: `A piedi ($0 minuti)`,
     faster_badge: 'PIÚ VELOCE'
   },
@@ -63,7 +64,8 @@ const translations = {
     railFerry: 'Motorail trains',
     tunnel: 'Tunnels',
     dirtRoad: 'Unpaved Roads',
-    no_results_with_public_means: 'No result found with public means',
+    no_results_with_public_means: 'No results found with public means',
+    no_results_with_car: 'Nessun percorso trovato in macchina',
     by_foot_with_minutes: `By foot ($0 minutes)`,
     faster_badge: 'FASTER'
   },
@@ -97,7 +99,8 @@ const translations = {
     railFerry: 'bababa',
     tunnel: 'Gallerie',
     dirtRoad: 'Strade non asfaltate',
-    no_results_with_public_means: 'No result found with public means',
+    no_results_with_public_means: 'No results found with public means',
+    no_results_with_car: 'Nessun percorso trovato in macchina',
     by_foot_with_minutes: `By foot ($0 minutes)`,
     faster_badge: 'PIÚ VELOCE'
   }
