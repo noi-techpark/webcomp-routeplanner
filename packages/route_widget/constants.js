@@ -11,7 +11,7 @@ export const MEANS_ICONS = {
 };
 
 export const WALKING_TRIP_COLOR = 'blue';
-export const TRIP_COLORS = ['purple', 'green', 'red', 'yellow'];
+export const TRIP_COLORS = ['#E6040E', '#4285F4', '#97BE0E', '#A682FF'];
 
 export const WALKING = 'walking';
 export const TRAIN = 'train';

@@ -4,7 +4,7 @@ import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import flatMap from 'lodash/flatMap';
 import moment from 'moment';
 import printJS from 'print-js';
-import { CAR, MEANS_ICONS, PUBLIC_TRANSPORT, WALKING } from '../../constants';
+import { CAR, MEANS_ICONS, PUBLIC_TRANSPORT, WALKING, TRIP_COLORS } from '../../constants';
 import carImage from '../../img/car.svg';
 import changesImage from '../../img/change.svg';
 import chevronRightImage from '../../img/chevron-right.svg';
@@ -97,7 +97,16 @@ export function render__details() {
                       class=${`d-flex justify-content-center align-items-center details__body_section__content__vertical_dots
                      ${i === 0 ? `first_element` : ``}`}
                     >
-                      <img src=${verticalDotsImage} alt="" />
+                      ${point.type === WALKING
+                        ? html`
+                            <img src=${verticalDotsImage} alt="" />
+                          `
+                        : html`
+                            <div
+                              class="details__body__line_separator"
+                              style=${`background-color: ${TRIP_COLORS[i % TRIP_COLORS.length]}`}
+                            ></div>
+                          `}
                     </div>
                   `
                 : null}

@@ -105,6 +105,12 @@
       overflow-y: scroll;
       height: 100%;
 
+      .details__body__line_separator {
+        position: relative;
+        width: 2px;
+        height: 100%;
+      }
+
       .details__body_section__content__element {
         &:first-child {
           padding-top: 1rem;
