@@ -14,10 +14,11 @@
     background-color: $white;
     height: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
   .details__back_section {
-    height: 6%;
     cursor: pointer;
 
     .details__back_section__content {
@@ -41,7 +42,7 @@
   }
 
   .details__header_section {
-    height: 20%;
+    flex: none;
     .details__header_section__content {
       padding: 0 1rem;
       display: flex;
@@ -71,10 +72,11 @@
     }
     .details__header_section__tags {
       display: flex;
+      justify-content: space-around;
     }
     .details__header_section__tags__tag {
       display: flex;
-      margin: 5px 28px;
+      margin: 5px 0px;
       p {
         margin-left: 8px;
       }
@@ -94,12 +96,20 @@
   }
 
   .details__body_section {
-    height: 64%;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0px;
     .details__body_section__content {
       border-top: 1px solid $black-100;
       overflow-x: hidden;
       overflow-y: scroll;
       height: 100%;
+
+      .details__body__line_separator {
+        position: relative;
+        width: 2px;
+        height: 100%;
+      }
 
       .details__body_section__content__element {
         &:first-child {
@@ -139,7 +149,7 @@
       .details__body_section__content__description {
         margin: 1.5rem 0;
         font-size: 14px;
-        line-height: 16px;
+        line-height: 24px;
         color: $black-300;
         display: flex;
         align-items: center;
@@ -152,15 +162,12 @@
 
   .details__footer_section {
     border-top: 1px solid $black-100;
-    height: 10%;
     display: flex;
     position: relative;
     justify-content: center;
     align-items: center;
-    padding: 0 4px;
-    @media (min-width: 992px) {
-      padding: 0 10px;
-    }
+    padding: 10px;
+
     .button {
       font-size: 12px;
       margin: 0 4px;

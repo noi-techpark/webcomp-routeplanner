@@ -4,7 +4,7 @@ import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import flatMap from 'lodash/flatMap';
 import moment from 'moment';
 import printJS from 'print-js';
-import { CAR, MEANS_ICONS, PUBLIC_TRANSPORT, WALKING } from '../../constants';
+import { CAR, MEANS_ICONS, PUBLIC_TRANSPORT, WALKING, TRIP_COLORS } from '../../constants';
 import carImage from '../../img/car.svg';
 import changesImage from '../../img/change.svg';
 import chevronRightImage from '../../img/chevron-right.svg';
@@ -65,8 +65,8 @@ export function render__details() {
           time: leg.points[0].dateTime.time,
           place: leg.points[0].name,
           type: leg.type,
-          means_desc:
-            leg.type === WALKING ? this.t('by_foot_with_minutes').replace('$0', leg.timeMinute) : leg.mode.name
+          means_desc: leg.type === WALKING ? this.t('by_foot') : leg.mode.name,
+          duration: leg.timeMinute
         };
       }),
       { time: lastPoint.dateTime.time, place: lastPoint.name }
@@ -97,7 +97,16 @@ export function render__details() {
                       class=${`d-flex justify-content-center align-items-center details__body_section__content__vertical_dots
                      ${i === 0 ? `first_element` : ``}`}
                     >
-                      <img src=${verticalDotsImage} alt="" />
+                      ${point.type === WALKING
+                        ? html`
+                            <img src=${verticalDotsImage} alt="" />
+                          `
+                        : html`
+                            <div
+                              class="details__body__line_separator"
+                              style=${`background-color: ${TRIP_COLORS[i % TRIP_COLORS.length]}`}
+                            ></div>
+                          `}
                     </div>
                   `
                 : null}
@@ -110,9 +119,16 @@ export function render__details() {
                       <p>
                         <img src=${MEANS_ICONS[point.type]} alt="" />
                       </p>
-                      <p>
-                        ${point.means_desc}
-                      </p>
+                      <div class="d-flex flex-column">
+                        <p>
+                          ${point.means_desc}
+                        </p>
+                        <p>
+                          ${html`
+                            (${point.duration} ${this.t('minutes')})
+                          `}
+                        </p>
+                      </div>
                     `
                   : null}
               </div>

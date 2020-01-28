@@ -31,7 +31,8 @@ const translations = {
     dirtRoad: 'Strade non asfaltate',
     no_results_with_public_means: 'Nessun risultato trovato con i mezzi pubblici',
     no_results_with_car: 'Nessun percorso trovato in macchina',
-    by_foot_with_minutes: `A piedi ($0 minuti)`,
+    by_foot: `A piedi `,
+    minutes: 'minuti',
     faster_badge: 'PIÚ VELOCE'
   },
   en: {
@@ -66,7 +67,8 @@ const translations = {
     dirtRoad: 'Unpaved Roads',
     no_results_with_public_means: 'No results found with public means',
     no_results_with_car: 'Nessun percorso trovato in macchina',
-    by_foot_with_minutes: `By foot ($0 minutes)`,
+    by_foot: `By foot`,
+    minutes: 'minutes',
     faster_badge: 'FASTER'
   },
   de: {
@@ -101,7 +103,8 @@ const translations = {
     dirtRoad: 'Strade non asfaltate',
     no_results_with_public_means: 'No results found with public means',
     no_results_with_car: 'Nessun percorso trovato in macchina',
-    by_foot_with_minutes: `By foot ($0 minutes)`,
+    by_foot: `By foot`,
+    minutes: 'minutes',
     faster_badge: 'PIÚ VELOCE'
   }
 };
