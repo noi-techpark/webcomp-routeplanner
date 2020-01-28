@@ -65,8 +65,8 @@ export function render__details() {
           time: leg.points[0].dateTime.time,
           place: leg.points[0].name,
           type: leg.type,
-          means_desc:
-            leg.type === WALKING ? this.t('by_foot_with_minutes').replace('$0', leg.timeMinute) : leg.mode.name
+          means_desc: leg.type === WALKING ? this.t('by_foot') : leg.mode.name,
+          duration: leg.timeMinute
         };
       }),
       { time: lastPoint.dateTime.time, place: lastPoint.name }
@@ -119,9 +119,16 @@ export function render__details() {
                       <p>
                         <img src=${MEANS_ICONS[point.type]} alt="" />
                       </p>
-                      <p>
-                        ${point.means_desc}
-                      </p>
+                      <div class="d-flex flex-column">
+                        <p>
+                          ${point.means_desc}
+                        </p>
+                        <p>
+                          ${html`
+                            (${point.duration} ${this.t('minutes')})
+                          `}
+                        </p>
+                      </div>
                     `
                   : null}
               </div>
