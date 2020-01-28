@@ -2,12 +2,14 @@ import carImage from './img/car.svg';
 import busImage from './img/bus.svg';
 import trainImage from './img/train.svg';
 import walkingImage from './img/walking.svg';
+import cableCarImage from './img/cable-car.svg';
 
 export const MEANS_ICONS = {
   walking: walkingImage,
   train: trainImage,
   car: carImage,
-  bus: busImage
+  bus: busImage,
+  cable_car: cableCarImage
 };
 
 export const WALKING_TRIP_COLOR = 'blue';
