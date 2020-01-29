@@ -7,9 +7,11 @@ import currentLocationImage from '../../../img/find-position.svg';
 import fromToDotsImage from '../../../img/from-to-dots.svg';
 import fromImage from '../../../img/from.svg';
 import toImage from '../../../img/to.svg';
+import geolocationBlue from '../../../img/geolocation-blue.svg';
+import geolocationHole from '../../../img/geolocation-hole.svg';
 import { toLeaflet, isValidPosition, repeatHtml } from '../../../utilities';
 import { getCurrentPosition } from '../../route_widget/mapControlsHandlers';
-import { FROM, DESTINATION, stopID, coord } from '../../../constants';
+import { FROM, DESTINATION, stopID, coord, PLACE_STATES, GEOLOCATION_ERRORS } from '../../../constants';
 
 async function fromInputHandler(input_name, input_string) {
   try {
@@ -37,17 +39,29 @@ async function fromInputHandler(input_name, input_string) {
 
 async function setPlaceToCurrentPosition(input_name) {
   this.loading = true;
+
+  if (input_name === FROM) {
+    this.from = { state: PLACE_STATES.is_geolocating };
+  } else if (input_name === DESTINATION) {
+    this.destination_place = { state: PLACE_STATES.is_geolocating };
+  }
+
   try {
     const positionResult = await getCurrentPosition();
     const { latitude, longitude } = positionResult.coords;
     this.current_location = { latitude, longitude };
   } catch (error) {
+    let geolocation_error_name = '';
     if (error.code === error.PERMISSION_DENIED) {
-      // eslint-disable-next-line no-alert
-      this.alert('Non hai dato i permessi per la geolocalizzazione. Per piacere attivali e riprova.');
+      geolocation_error_name = GEOLOCATION_ERRORS.no_permissions;
     } else if (error.code === error.TIMEOUT) {
-      // eslint-disable-next-line no-alert
-      this.alert('Non è stato possibile geolocalizzarti.');
+      geolocation_error_name = GEOLOCATION_ERRORS.timeout;
+    }
+
+    if (input_name === FROM) {
+      this.from = { state: PLACE_STATES.geolocation_error, geolocation_error_name };
+    } else if (input_name === DESTINATION) {
+      this.destination_place = { state: PLACE_STATES.geolocation_error, geolocation_error_name };
     }
   } finally {
     this.loading = false;
@@ -57,6 +71,7 @@ async function setPlaceToCurrentPosition(input_name) {
     const newValues = {
       is_current_position: true,
       display_name: 'current_position',
+      state: PLACE_STATES.geolocation_success,
       type: coord,
       name: `${this.current_location.longitude}:${this.current_location.latitude}:WGS84[DD.DDDDD]`,
       latitude: this.current_location.latitude,
@@ -103,6 +118,7 @@ function setFromToResult(result) {
   this.from.name = result.ref.id;
   this.from.longitude = longitude;
   this.from.latitude = latitude;
+  this.from.state = PLACE_STATES.result_selected;
 
   if (isValidPosition(this.destination_place)) {
     this.zoomOn([this.from_marker, this.destination_place]);
@@ -122,6 +138,7 @@ function setDestinationToResult(result) {
   this.destination_place.name = result.ref.id;
   this.destination_place.longitude = longitude;
   this.destination_place.latitude = latitude;
+  this.destination_place.state = PLACE_STATES.result_selected;
 
   if (isValidPosition(this.destination_place)) {
     this.zoomOn([this.from_marker, this.destination_place]);
@@ -169,6 +186,30 @@ export function render__fromTo() {
 
   const renderPlaceInput = (input_name, setToCurrentLocation, setToResult) => {
     const place = input_name === 'FROM' ? this.from : this.destination_place;
+
+    let textLabel = place.display_name;
+    if (place.display_name === 'current_position') {
+      textLabel = this.t('current_position');
+    }
+    if (place.state === PLACE_STATES.is_geolocating) {
+      textLabel = 'IS GEOLOCATING';
+    }
+
+    if (place.state === PLACE_STATES.geolocation_error) {
+      textLabel = this.t(place.geolocation_error_name);
+    }
+
+    // some of the states are "placeholders", they should be deleted when the input is selected
+    if (
+      place.input_select_visible &&
+      [PLACE_STATES.geolocation_error, PLACE_STATES.geolocation_success, PLACE_STATES.is_geolocating].includes(
+        place.state
+      )
+    ) {
+      textLabel = '';
+    }
+
+    console.log('place', place);
     return html`
       <div class="fromTo__inputs__input_wrapper">
         ${place.locked
@@ -180,11 +221,7 @@ export function render__fromTo() {
           : html`
               <input
                 type="text"
-                .value=${place.input_select_visible && place.is_current_position
-                  ? ''
-                  : place.display_name == 'current_position'
-                  ? this.t('current_position')
-                  : place.display_name}
+                .value=${textLabel}
                 @input=${event => this.throttledFromInputHandler(input_name, event.target.value)}
                 @focus=${() => handleFocusFor(input_name)}
                 @blur=${() => {
@@ -205,7 +242,8 @@ export function render__fromTo() {
                       `,
                       3
                     )
-                  : place.poi_search_results.map(
+                  : place.poi_search_results &&
+                    place.poi_search_results.map(
                       result =>
                         html`
                           <div class="fromTo__inputs__input_selection__element" @click=${() => setToResult(result)}>
@@ -222,12 +260,40 @@ export function render__fromTo() {
   console.log('this.from', this.from);
   console.log('this.destination_place', this.destination_place);
 
+  const renderFromToIcon = (place, fallback) => {
+    if (place.state === PLACE_STATES.is_geolocating) {
+      return html`
+        <div class="fromToIconContainer">
+          <img class="${`left_image ${place.state} `}" src=${geolocationHole} alt="" />
+          <img class="${`left_image ${place.state} on_off`}" src=${geolocationBlue} alt="" />
+        </div>
+      `;
+    }
+    if (place.state === PLACE_STATES.geolocation_success) {
+      return html`
+        <img class="${`left_image ${place.state}`}" src=${geolocationBlue} alt="" />
+      `;
+    }
+
+    return fallback;
+  };
+
   return html`
     <div class="fromTo d-flex">
       <div class="fromTo__graphics">
-        <img src=${fromImage} alt="" />
+        ${renderFromToIcon(
+          this.from,
+          html`
+            <img src=${fromImage} alt="" />
+          `
+        )}
         <img class="fromTo__dots_icon" src=${fromToDotsImage} alt="" />
-        <img src=${toImage} alt="" />
+        ${renderFromToIcon(
+          this.destination_place,
+          html`
+            <img src=${toImage} alt="" />
+          `
+        )}
       </div>
       <div class="fromTo__inputs">
         ${renderPlaceInput(FROM, () => this.setPlaceToCurrentPosition(FROM), this.setFromToResult)}
