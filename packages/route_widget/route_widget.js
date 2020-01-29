@@ -19,7 +19,7 @@ import { handleFullScreenMap, mapControlsHandlers } from './components/route_wid
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
 import { render_spinner } from './components/spinner';
-import { BUS, CABLE_CAR, coord, PUBLIC_TRANSPORT_TAB, TRAIN, WALKING, LANGUAGES } from './constants';
+import { BUS, CABLE_CAR, coord, PUBLIC_TRANSPORT_TAB, TRAIN, WALKING, LANGUAGES, PLACE_STATES } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
@@ -393,16 +393,8 @@ class RoutePlanner extends LitElement {
           ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}
           ${this.getAnimationState()}"
       >
-        ${this.render__language_flags()}
-        ${this.loading
-          ? html`
-              <div class="loading">
-                ${render_spinner()}
-              </div>
-            `
-          : null}
-        ${this.isFullScreen ? this.render_closeFullscreenButton() : null} ${this.render_backgroundMap()}
-        ${this.render__mapControls()}
+        ${this.render__language_flags()} ${this.isFullScreen ? this.render_closeFullscreenButton() : null}
+        ${this.render_backgroundMap()} ${this.render__mapControls()}
         ${!this.details_data
           ? html`
               ${this.render_search()}

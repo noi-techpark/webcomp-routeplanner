@@ -22,6 +22,8 @@
 
     .fromToIconContainer {
       position: relative;
+      top: -4px;
+      height: 18px;
     }
 
     .on_off {
@@ -53,6 +55,17 @@
       &:first-child {
         input {
           border: 1px solid $black-300;
+        }
+      }
+      input {
+        &.geolocation_success,
+        &.is_geolocating {
+          &:not(.select_open) {
+            color: $blue;
+          }
+        }
+        &.geolocation_error {
+          color: $orange;
         }
       }
       p {
@@ -92,6 +105,10 @@
           padding: 12px;
           &:hover {
             background-color: $black-50;
+          }
+
+          &.use_my_position {
+            color: $blue;
           }
 
           &.loading-skeleton {

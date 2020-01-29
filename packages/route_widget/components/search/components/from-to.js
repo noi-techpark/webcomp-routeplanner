@@ -221,6 +221,7 @@ export function render__fromTo() {
           : html`
               <input
                 type="text"
+                class=${`${place.state} ${place.input_select_visible ? 'select_open' : ''}`}
                 .value=${textLabel}
                 @input=${event => this.throttledFromInputHandler(input_name, event.target.value)}
                 @focus=${() => handleFocusFor(input_name)}
@@ -232,7 +233,7 @@ export function render__fromTo() {
                 }}
               />
               <div class=${`fromTo__inputs__input_selection ${place.input_select_visible ? '' : 'hidden'}`}>
-                <div class="fromTo__inputs__input_selection__element" @click=${setToCurrentLocation}>
+                <div class="fromTo__inputs__input_selection__element use_my_position" @click=${setToCurrentLocation}>
                   <img src=${crosshairImage} alt="" /> ${this.t('use_my_position')}
                 </div>
                 ${place.poi_search_is_fetching

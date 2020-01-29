@@ -73,7 +73,7 @@ const translations = {
     minutes: 'minutes',
     faster_badge: 'FASTER',
     geolocation_no_permissions: 'No geolocation permissions given',
-    geolocation_timeout: 'It was not possible to gelocate you.'
+    geolocation_timeout: 'It was not possible to geolocate you.'
   },
   de: {
     public_means: 'placeholder',
