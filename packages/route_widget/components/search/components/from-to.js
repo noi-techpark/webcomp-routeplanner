@@ -38,8 +38,6 @@ async function fromInputHandler(input_name, input_string) {
 }
 
 async function setPlaceToCurrentPosition(input_name) {
-  this.loading = true;
-
   if (input_name === FROM) {
     this.from = { state: PLACE_STATES.is_geolocating };
   } else if (input_name === DESTINATION) {
@@ -63,8 +61,6 @@ async function setPlaceToCurrentPosition(input_name) {
     } else if (input_name === DESTINATION) {
       this.destination_place = { state: PLACE_STATES.geolocation_error, geolocation_error_name };
     }
-  } finally {
-    this.loading = false;
   }
 
   if (this.current_location) {

@@ -48,8 +48,7 @@ class RoutePlanner extends LitElement {
     this.request_get_poi = request_get_poi.bind(this);
 
     /** Observed values */
-    // TODO: remove loading and use is_geolocating inside destination and origin
-    this.loading = false;
+
     this.is_fetching_efa = false;
     this.is_fetching_here = false;
 
