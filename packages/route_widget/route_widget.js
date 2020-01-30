@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import L, { Point } from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import style__leaflet from 'leaflet/dist/leaflet.css';
@@ -143,18 +143,36 @@ class RoutePlanner extends LitElement {
     this.switch_language(this.language);
   }
 
+  translatePositionByPixelsOnScreen(position, offset) {
+    const pointOnScreen = this.map.project(toLeaflet(position), this.map.getZoom());
+    const newPoint = L.point(pointOnScreen.x + offset.x, pointOnScreen.y + offset.y);
+    const newLatLong = this.map.unproject(newPoint, this.map.getZoom());
+
+    return newLatLong;
+  }
+
   /**
    * zooms the map to the point passed or to fit all the points on the map
    * @param {Coordinate|Array<Coordinate>} positions
    */
   zoomOn(positions) {
+    const width = document.body.offsetWidth;
+    const containerSize = this.shadowRoot.querySelector('.search__search_container').offsetWidth;
+    const offset = L.point(width < 992 ? 0 : -containerSize / 2, 0);
+
     if (Array.isArray(positions)) {
       const markers = positions.map(p => L.marker(toLeaflet(p)));
       const group = L.featureGroup(markers);
+      const bounds = group.getBounds();
 
-      this.map.fitBounds(group.getBounds().pad(0.5));
+      const p1 = this.translatePositionByPixelsOnScreen(bounds.getNorthEast(), offset);
+      const p2 = this.translatePositionByPixelsOnScreen(bounds.getSouthWest(), offset);
+
+      this.map.fitBounds(L.latLngBounds(p1, p2).pad(0.5));
     } else {
-      this.map.setView(toLeaflet(positions), 15);
+      const translatedPosition = this.translatePositionByPixelsOnScreen(positions, offset);
+
+      this.map.setView(translatedPosition, 15);
     }
   }
 
@@ -174,6 +192,9 @@ class RoutePlanner extends LitElement {
 
       if (isValidPosition(this.from)) {
         this.zoomOn([this.destination_marker, this.from_marker]);
+        setTimeout(() => {
+          this.zoomOn([this.destination_marker, this.from_marker]);
+        }, 500);
       } else {
         this.zoomOn(this.destination_marker);
       }
@@ -194,6 +215,9 @@ class RoutePlanner extends LitElement {
 
       if (isValidPosition(this.destination_place)) {
         this.zoomOn([this.destination_place, this.from_marker]);
+        setTimeout(() => {
+          this.zoomOn([this.destination_place, this.from_marker]);
+        }, 500);
       } else {
         this.zoomOn(this.from_marker);
       }
