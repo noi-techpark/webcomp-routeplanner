@@ -1,5 +1,15 @@
 @import '../../../scss/colors';
 
+@keyframes on_off {
+  from {
+    opacity: 0%;
+  }
+
+  to {
+    opacity: 1000%;
+  }
+}
+
 .fromTo {
   .fromTo__graphics {
     width: 26px;
@@ -9,6 +19,23 @@
     justify-content: center;
     overflow: hidden;
     flex-wrap: wrap;
+
+    .fromToIconContainer {
+      position: relative;
+      top: -4px;
+      height: 18px;
+    }
+
+    .on_off {
+      animation-duration: 1s;
+      animation-name: on_off;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      position: absolute;
+      left: 0px;
+      top: 4px;
+    }
+
     img {
       width: 18px;
       &.fromTo__dots_icon {
@@ -28,6 +55,17 @@
       &:first-child {
         input {
           border: 1px solid $black-300;
+        }
+      }
+      input {
+        &.geolocation_success,
+        &.is_geolocating {
+          &:not(.select_open) {
+            color: $blue;
+          }
+        }
+        &.geolocation_error {
+          color: $orange;
         }
       }
       p {
@@ -67,6 +105,10 @@
           padding: 12px;
           &:hover {
             background-color: $black-50;
+          }
+
+          &.use_my_position {
+            color: $blue;
           }
 
           &.loading-skeleton {

@@ -39,3 +39,15 @@ export const LANGUAGES = {
   DE: 'de',
   IT: 'it'
 };
+
+export const PLACE_STATES = {
+  is_geolocating: 'is_geolocating',
+  geolocation_success: 'geolocation_success',
+  geolocation_error: 'geolocation_error',
+  result_selected: 'result_selected'
+};
+
+export const GEOLOCATION_ERRORS = {
+  no_permissions: 'geolocation_no_permissions',
+  timeout: 'geolocation_timeout'
+};

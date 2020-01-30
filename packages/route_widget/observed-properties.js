@@ -1,5 +1,4 @@
 export const observed_properties = {
-  loading: { type: Boolean },
   font_family: { type: String },
   mobile_open: { type: Boolean },
   current_location: { type: Object },

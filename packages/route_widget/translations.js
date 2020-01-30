@@ -33,7 +33,9 @@ const translations = {
     no_results_with_car: 'Nessun percorso trovato in macchina',
     by_foot: `A piedi `,
     minutes: 'minuti',
-    faster_badge: 'PIÚ VELOCE'
+    faster_badge: 'PIÚ VELOCE',
+    geolocation_no_permissions: 'Non hai dato i permessi per la geolocalizzazione. Per piacere attivali e riprova.',
+    geolocation_timeout: 'Non è stato possibile geolocalizzarti.'
   },
   en: {
     public_means: 'Public means',
@@ -69,7 +71,9 @@ const translations = {
     no_results_with_car: 'Nessun percorso trovato in macchina',
     by_foot: `By foot`,
     minutes: 'minutes',
-    faster_badge: 'FASTER'
+    faster_badge: 'FASTER',
+    geolocation_no_permissions: 'No geolocation permissions given',
+    geolocation_timeout: 'It was not possible to geolocate you.'
   },
   de: {
     public_means: 'placeholder',
@@ -105,7 +109,9 @@ const translations = {
     no_results_with_car: 'Nessun percorso trovato in macchina',
     by_foot: `By foot`,
     minutes: 'minutes',
-    faster_badge: 'PIÚ VELOCE'
+    faster_badge: 'PIÚ VELOCE',
+    geolocation_no_permissions: 'Non hai dato i permessi per la geolocalizzazione. Per piacere attivali e riprova.',
+    geolocation_timeout: 'Non è stato possibile geolocalizzarti.'
   }
 };
 
