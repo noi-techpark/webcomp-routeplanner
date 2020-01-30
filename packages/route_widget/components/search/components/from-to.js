@@ -110,8 +110,8 @@ function setFromToResult(result) {
   this.setFromMarker({ longitude, latitude });
 
   this.from.display_name = result.name;
-  this.from.type = stopID;
-  this.from.name = result.ref.id;
+  this.from.type = 'any';
+  this.from.name = result.stateless;
   this.from.longitude = longitude;
   this.from.latitude = latitude;
   this.from.state = PLACE_STATES.result_selected;
