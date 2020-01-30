@@ -35,7 +35,8 @@ const translations = {
     minutes: 'minuti',
     faster_badge: 'PIÚ VELOCE',
     geolocation_no_permissions: 'Non hai dato i permessi per la geolocalizzazione. Per piacere attivali e riprova.',
-    geolocation_timeout: 'Non è stato possibile geolocalizzarti.'
+    geolocation_timeout: 'Non è stato possibile geolocalizzarti.',
+    is_geolocating: 'Ti sto localizzando'
   },
   en: {
     public_means: 'Public means',
@@ -73,6 +74,7 @@ const translations = {
     minutes: 'minutes',
     faster_badge: 'FASTER',
     geolocation_no_permissions: 'No geolocation permissions given',
+    is_geolocating: 'Ti sto localizzando',
     geolocation_timeout: 'It was not possible to geolocate you.'
   },
   de: {
@@ -111,7 +113,8 @@ const translations = {
     minutes: 'minutes',
     faster_badge: 'PIÚ VELOCE',
     geolocation_no_permissions: 'Non hai dato i permessi per la geolocalizzazione. Per piacere attivali e riprova.',
-    geolocation_timeout: 'Non è stato possibile geolocalizzarti.'
+    geolocation_timeout: 'Non è stato possibile geolocalizzarti.',
+    is_geolocating: 'Ti sto localizzando'
   }
 };
 
