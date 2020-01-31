@@ -54,7 +54,6 @@ export function render__details() {
       .reduce((a, b) => a + b, 0);
 
     tags.push({ icon: clockImage, label: formatDuration(this.details_data.duration.split(':')) });
-    // TODO: singular/plural version
     tags.push({ icon: changesImage, label: `${changes} ${changes > 1 ? this.t('changes') : this.t('change')}` });
     tags.push({ icon: walkingImage, label: formatMinutesDuration(walkingTime) });
 
@@ -142,7 +141,7 @@ export function render__details() {
     startTime = moment(this.details_data.leg[0].maneuver[0].time).format('HH:mm');
     endTime = moment(last(last(this.details_data.leg).maneuver).time).format('HH:mm');
 
-    tags.push({ icon: clockImage, label: formatSecondsDuration(this.details_data.summary.trafficTime) });
+    tags.push({ icon: clockImage, label: formatSecondsDuration(this.details_data.summary.baseTime) });
     tags.push({ icon: carImage, label: `${this.details_data.lengthInKilometers} km` });
 
     if (this.details_data.summary.flags.includes('tollroad')) {
