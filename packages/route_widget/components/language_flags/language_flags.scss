@@ -1,16 +1,18 @@
 .language_flags {
+  $distance: 16px;
+
   display: flex;
   flex-direction: column;
 
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: $distance;
+  right: $distance;
 
   @media (max-width: 992px) {
-    bottom: 6px;
+    bottom: $distance;
     top: unset;
     right: unset;
-    left: 6px;
+    left: $distance;
   }
 
   z-index: 401;
