@@ -104,7 +104,7 @@ class RoutePlanner extends LitElement {
     this.travel_options = {};
     this.temp_travel_options = {};
 
-    this.details_open = true;
+    this.details_open = false;
 
     this.t = createTranslator(this.get_system_language());
   }

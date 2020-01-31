@@ -16,6 +16,7 @@ export function render__resultsListElement(trip) {
       class="search__results__listElement d-flex align-items-center justify-content-between"
       @click=${() => {
         this.details_data = { type: PUBLIC_TRANSPORT, ...trip };
+        this.details_open = false;
         this.addTripToMap(EFATripToPolylines(trip));
         this.removeTripToMapHover();
       }}

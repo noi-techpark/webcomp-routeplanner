@@ -15,6 +15,7 @@ export function render__carListElement(trip) {
       class="search__results__listElement d-flex align-items-center justify-content-between"
       @click=${() => {
         this.details_data = { type: CAR, ...trip };
+        this.details_open = false;
         this.addTripToMap(HERETripToPolylines(trip));
         this.removeTripToMapHover();
       }}
