@@ -18,7 +18,6 @@ import { render__mapControls } from './components/mapControls';
 import { handleFullScreenMap, mapControlsHandlers } from './components/route_widget/mapControlsHandlers';
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
-import { render_spinner } from './components/spinner';
 import { BUS, CABLE_CAR, coord, PUBLIC_TRANSPORT_TAB, TRAIN, WALKING, LANGUAGES, PLACE_STATES } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
@@ -105,6 +104,8 @@ class RoutePlanner extends LitElement {
     this.travel_options = {};
     this.temp_travel_options = {};
 
+    this.details_open = true;
+
     this.t = createTranslator(this.get_system_language());
   }
 
@@ -151,14 +152,18 @@ class RoutePlanner extends LitElement {
     return newLatLong;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  isMobile() {
+    return document.body.offsetWidth < 992;
+  }
+
   /**
    * zooms the map to the point passed or to fit all the points on the map
    * @param {Coordinate|Array<Coordinate>} positions
    */
   zoomOn(positions) {
-    const width = document.body.offsetWidth;
     const containerSize = this.shadowRoot.querySelector('.search__search_container').offsetWidth;
-    const offset = L.point(width < 992 ? 0 : -containerSize / 2, 0);
+    const offset = L.point(this.isMobile() ? 0 : -containerSize / 2, 0);
 
     if (Array.isArray(positions)) {
       const markers = positions.map(p => L.marker(toLeaflet(p)));
@@ -406,6 +411,7 @@ class RoutePlanner extends LitElement {
 
   render() {
     return html`
+      ${this.mobile_open}
       <style>
         ${getStyle(style__leaflet)}
         ${getStyle(style)}
@@ -414,6 +420,7 @@ class RoutePlanner extends LitElement {
       <div
         class="routeplanner-widget 
           ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}
+          ${this.isMobile() ? `mobile` : ``}
           ${this.getAnimationState()}"
       >
         ${this.render__language_flags()} ${this.isFullScreen ? this.render_closeFullscreenButton() : null}
