@@ -126,7 +126,7 @@
     .details__body_section__content {
       border-top: 1px solid $black-100;
       overflow-x: hidden;
-      overflow-y: scroll;
+      overflow-y: auto;
       height: 100%;
 
       .details__body__line_separator {
