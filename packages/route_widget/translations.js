@@ -29,14 +29,14 @@ const translations = {
     railFerry: 'Treno traghetto FIXME',
     tunnel: 'Gallerie',
     dirtRoad: 'Strade non asfaltate',
-    no_results_with_public_means: 'Nessun risultato trovato con i mezzi pubblici',
-    no_results_with_car: 'Nessun percorso trovato in macchina',
+    no_results_with_public_means: 'Non ho trovato nessun risultato trovato con i mezzi pubblici',
+    no_results_with_car: 'Non ho trovato nessun percorso in auto',
     by_foot: `A piedi `,
     minutes: 'minuti',
     faster_badge: 'PIÚ VELOCE',
-    geolocation_no_permissions: 'Non hai dato i permessi per la geolocalizzazione. Per piacere attivali e riprova.',
-    geolocation_timeout: 'Non è stato possibile geolocalizzarti.',
-    is_geolocating: 'Ti sto localizzando'
+    geolocation_no_permissions: 'Non ho i permessi per la geolocalizzazione.',
+    geolocation_timeout: 'Non sono riuscito a trovare la tua posizione',
+    is_geolocating: 'Sto cercando…'
   },
   en: {
     public_means: 'Public means',
