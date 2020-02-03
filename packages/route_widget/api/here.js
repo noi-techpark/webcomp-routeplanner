@@ -30,7 +30,9 @@ export async function request_trip_by_car(
     metricSystem: 'metric'
   };
 
-  const date = new Date(`${timing_options.day} ${timing_options.hour}:${timing_options.minute}`).toISOString();
+  const date = new Date(
+    `${timing_options.day.split('-').join('/')} ${timing_options.hour}:${timing_options.minute}`
+  ).toISOString();
 
   if (timing_options.type === 'dep') {
     params.departure = date;
