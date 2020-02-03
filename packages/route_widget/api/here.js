@@ -20,7 +20,7 @@ export async function request_trip_by_car(
   const params = {
     language,
     apikey: API_KEY,
-    jsonAttributes: 1 + 8,
+    jsonAttributes: 1 + 8, // 1 and 8 are flags
     waypoint0: `geo!${origin.latitude},${origin.longitude}`,
     waypoint1: `geo!${destination.latitude},${destination.longitude}`,
     mode: `fastest;car;traffic:disabled;${here_travel_options}`,
@@ -30,14 +30,14 @@ export async function request_trip_by_car(
     metricSystem: 'metric'
   };
 
-  const date = new Date(
-    `${timing_options.day.split('-').join('/')} ${timing_options.hour}:${timing_options.minute}`
-  ).toISOString();
+  const properlyFormattedDay = timing_options.day.split('-').join('/');
+  const date = new Date(`${properlyFormattedDay} ${timing_options.hour}:${timing_options.minute}`);
+  const isoDate = date.toISOString();
 
   if (timing_options.type === 'dep') {
-    params.departure = date;
+    params.departure = isoDate;
   } else {
-    params.arrival = date;
+    params.arrival = isoDate;
   }
 
   const response = await fetch(`${BASE_PATH}/calculateroute.json?${toQueryParams(params)}`, { method: 'GET' });
