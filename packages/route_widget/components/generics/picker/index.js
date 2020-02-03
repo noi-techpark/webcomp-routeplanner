@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import chevronDownImage from '../../../img/chevron-down.svg';
 import checkImage from '../../../img/check.svg';
 
-export function render__picker(trigger, values, currentValue, action, css_modifiers) {
+export function render__picker(trigger, values, currentValue, action, css_modifiers, translator = s => s) {
   return html`
     <div class=${`picker ${css_modifiers ? css_modifiers.map(o => `${o} `) : ``}`}>
       <div
@@ -11,7 +11,7 @@ export function render__picker(trigger, values, currentValue, action, css_modifi
           this[trigger] = true;
         }}
       >
-        <span>${this.t(values[currentValue])} <img src=${chevronDownImage} alt=""/></span>
+        <span>${translator(values[currentValue])} <img src=${chevronDownImage} alt=""/></span>
       </div>
 
       <div class=${`picker_box ${this[trigger] ? '' : 'hidden'}`}>
@@ -28,7 +28,7 @@ export function render__picker(trigger, values, currentValue, action, css_modifi
                       <img src=${checkImage} alt="" />
                     `
                   : ``}
-                ${this.t(values[key])}
+                ${translator(values[key])}
               </div>
             `;
           })}
