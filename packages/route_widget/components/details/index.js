@@ -23,9 +23,12 @@ import {
   formatMinutesDuration,
   formatSecondsDuration,
   last,
-  formatApproximateSecondsDuration
+  formatApproximateSecondsDuration,
+  getStyle
 } from '../../utilities';
 import { render__button } from '../generics/buttons';
+
+import style from '../../scss/main.scss';
 
 const html2pdf_params = {
   margin: 1,
@@ -177,9 +180,30 @@ export function render__details() {
   }
 
   const generatePDF = () => {
+    const detailsHtml = this.shadowRoot.querySelector('.details__body_section').innerHTML;
+    const fullHtml = `
+      <div>
+        <div class="details">
+          <div class="details__body_section">
+            <div class="details__body_section__content">
+               ${detailsHtml}
+            </div>
+          </div>
+        </div>
+        <style>
+          ${getStyle(style)}
+          .details {
+            position: unset;
+            left: unset;
+            top:unset;
+            bottom:unset;
+          }
+        </style>
+      </div>
+    `;
     return html2pdf()
       .set(html2pdf_params)
-      .from(this.shadowRoot.querySelector('.details__body_section').innerHTML);
+      .from(fullHtml);
   };
 
   const downloadPDF = () => {
