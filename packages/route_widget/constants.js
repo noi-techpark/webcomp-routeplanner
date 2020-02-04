@@ -51,3 +51,8 @@ export const GEOLOCATION_ERRORS = {
   no_permissions: 'geolocation_no_permissions',
   timeout: 'geolocation_timeout'
 };
+
+export const PICKER_CLASSES = {
+  borderless: 'borderless',
+  text_center: 'text_center'
+};

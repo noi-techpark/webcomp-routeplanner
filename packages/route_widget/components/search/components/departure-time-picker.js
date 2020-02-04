@@ -1,6 +1,7 @@
 import { html } from 'lit-html';
 import clockImage from '../../../img/clock.svg';
 import { render__picker } from '../../generics/picker';
+import { PICKER_CLASSES } from '../../../constants';
 
 const DEPARTURE_TIME = {
   1: 'depart_now',
@@ -51,7 +52,7 @@ export function render__departureTimePicker() {
           DEPARTURE_TIME,
           this.departure_time,
           setDepartureTime,
-          ['borderless'],
+          [PICKER_CLASSES.borderless],
           this.t
         )}
         ${this.departure_time > 1
@@ -60,7 +61,7 @@ export function render__departureTimePicker() {
               time_options,
               this.departure_time_hour,
               setDepartureTimeHour,
-              ['text_center']
+              [PICKER_CLASSES.text_center]
             )
           : ``}
         ${this.departure_time > 1
