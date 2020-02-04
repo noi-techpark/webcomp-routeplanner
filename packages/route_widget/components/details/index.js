@@ -81,14 +81,14 @@ export function render__details() {
         }
 
         return html`
-          <div class="row details__body_section__content__element" style="max-height:150px">
-            <div class="col-2 col-md">
+          <div class="details__body_section__content__element" style="max-height:150px">
+            <div class="">
               <p class="details__body_section__content__time">
                 ${point.time}
               </p>
             </div>
-            <div class="col-3 col-md details__body_section__content__middle">
-              <div class="d-flex justify-content-center">
+            <div class="details__body_section__content__middle">
+              <div class="d-flex justify-content-center details__body__trip_icon">
                 <img src=${tripIcon} alt="" />
               </div>
               ${i < points.length - 1
@@ -104,14 +104,14 @@ export function render__details() {
                         : html`
                             <div
                               class="details__body__line_separator"
-                              style=${`background-color: ${TRIP_COLORS[i % TRIP_COLORS.length]}`}
+                              style=${`border: 1px solid ${TRIP_COLORS[i % TRIP_COLORS.length]}`}
                             ></div>
                           `}
                     </div>
                   `
                 : null}
             </div>
-            <div class="col-6 col-md-8">
+            <div class="details__body_section__content__text">
               <p class="details__body_section__content__place">${point.place}</p>
               <div class="details__body_section__content__description">
                 ${point.means_desc

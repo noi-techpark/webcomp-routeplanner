@@ -134,6 +134,8 @@
       }
 
       .details__body_section__content__element {
+        display: flex;
+        flex-direction: row;
         &:first-child {
           padding-top: 1rem;
         }
@@ -141,6 +143,7 @@
 
       .details__body_section__content__time {
         text-align: center;
+        width: 50px;
         padding-left: 16px;
         font-size: 14px;
         line-height: 24px;
@@ -153,7 +156,10 @@
       }
 
       .details__body_section__content__middle {
+        width: 32px;
+        margin: 0px 8px;
         flex-wrap: wrap;
+        overflow: hidden;
       }
 
       .details__body_section__content__vertical_dots {
