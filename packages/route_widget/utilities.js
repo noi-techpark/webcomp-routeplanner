@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { WALKING_TRIP_COLOR, TRIP_COLORS } from './constants';
+import { WALKING_TRIP_COLOR, TRIP_COLORS, WALKING } from './constants';
 import { html } from 'lit-element';
 
 export const getStyle = array => array[0][1];
@@ -124,7 +124,7 @@ export const EFATripToPolylines = trip =>
 
     .map((path, i) =>
       L.polyline(path, {
-        color: trip.legs[i].type === WALKING_TRIP_COLOR ? WALKING_TRIP_COLOR : TRIP_COLORS[i % TRIP_COLORS.length]
+        color: trip.legs[i].type === WALKING ? WALKING_TRIP_COLOR : TRIP_COLORS[i % TRIP_COLORS.length]
       })
     );
 

@@ -14,6 +14,7 @@ import paymentCardImage from '../../img/payment-card.svg';
 import printImage from '../../img/print.svg';
 import tripFirstImage from '../../img/trip-first.svg';
 import tripLastImage from '../../img/trip-last.svg';
+import draggableArrowUp from '../../img/draggable-arrow-up.svg';
 import tripStandardImage from '../../img/trip-standard.svg';
 import verticalDotsImage from '../../img/vertical-dots.svg';
 import walkingImage from '../../img/walking.svg';
@@ -53,7 +54,6 @@ export function render__details() {
       .reduce((a, b) => a + b, 0);
 
     tags.push({ icon: clockImage, label: formatDuration(this.details_data.duration.split(':')) });
-    // TODO: singular/plural version
     tags.push({ icon: changesImage, label: `${changes} ${changes > 1 ? this.t('changes') : this.t('change')}` });
     tags.push({ icon: walkingImage, label: formatMinutesDuration(walkingTime) });
 
@@ -141,7 +141,7 @@ export function render__details() {
     startTime = moment(this.details_data.leg[0].maneuver[0].time).format('HH:mm');
     endTime = moment(last(last(this.details_data.leg).maneuver).time).format('HH:mm');
 
-    tags.push({ icon: clockImage, label: formatSecondsDuration(this.details_data.summary.trafficTime) });
+    tags.push({ icon: clockImage, label: formatSecondsDuration(this.details_data.summary.baseTime) });
     tags.push({ icon: carImage, label: `${this.details_data.lengthInKilometers} km` });
 
     if (this.details_data.summary.flags.includes('tollroad')) {
@@ -196,17 +196,29 @@ export function render__details() {
   };
 
   return html`
-    <div class="details">
+    <div class="details ${this.details_open ? 'open' : ''}">
       <div class="details__background">
-        <div
-          class="row details__back_section"
-          @click=${() => {
-            this.removeTripFromMap();
-            this.details_data = undefined;
-          }}
-        >
+        ${this.isMobile()
+          ? html`
+              <div
+                @click=${() => {
+                  this.details_open = !this.details_open;
+                }}
+                class="draggable"
+              >
+                <img class="arrow" src=${draggableArrowUp} />
+              </div>
+            `
+          : html``}
+        <div class="row details__back_section">
           <div class="col-12 d-flex align-items-center">
-            <div class="details__back_section__content">
+            <div
+              @click=${() => {
+                this.removeTripFromMap();
+                this.details_data = undefined;
+              }}
+              class="details__back_section__content"
+            >
               <img src=${chevronRightImage} alt="" />
               <p>
                 ${this.t('all_results')}

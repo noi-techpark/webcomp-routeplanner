@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import L, { Point } from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import style__leaflet from 'leaflet/dist/leaflet.css';
@@ -18,7 +18,6 @@ import { render__mapControls } from './components/mapControls';
 import { handleFullScreenMap, mapControlsHandlers } from './components/route_widget/mapControlsHandlers';
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
-import { render_spinner } from './components/spinner';
 import { BUS, CABLE_CAR, coord, PUBLIC_TRANSPORT_TAB, TRAIN, WALKING, LANGUAGES, PLACE_STATES } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
@@ -105,6 +104,8 @@ class RoutePlanner extends LitElement {
     this.travel_options = {};
     this.temp_travel_options = {};
 
+    this.details_open = false;
+
     this.t = createTranslator(this.get_system_language());
   }
 
@@ -143,18 +144,40 @@ class RoutePlanner extends LitElement {
     this.switch_language(this.language);
   }
 
+  translatePositionByPixelsOnScreen(position, offset) {
+    const pointOnScreen = this.map.project(toLeaflet(position), this.map.getZoom());
+    const newPoint = L.point(pointOnScreen.x + offset.x, pointOnScreen.y + offset.y);
+    const newLatLong = this.map.unproject(newPoint, this.map.getZoom());
+
+    return newLatLong;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  isMobile() {
+    return document.body.offsetWidth < 992;
+  }
+
   /**
    * zooms the map to the point passed or to fit all the points on the map
    * @param {Coordinate|Array<Coordinate>} positions
    */
   zoomOn(positions) {
+    const containerSize = this.shadowRoot.querySelector('.search__search_container').offsetWidth;
+    const offset = L.point(this.isMobile() ? 0 : -containerSize / 2, 0);
+
     if (Array.isArray(positions)) {
       const markers = positions.map(p => L.marker(toLeaflet(p)));
       const group = L.featureGroup(markers);
+      const bounds = group.getBounds();
 
-      this.map.fitBounds(group.getBounds().pad(0.5));
+      const p1 = this.translatePositionByPixelsOnScreen(bounds.getNorthEast(), offset);
+      const p2 = this.translatePositionByPixelsOnScreen(bounds.getSouthWest(), offset);
+
+      this.map.fitBounds(L.latLngBounds(p1, p2).pad(0.5));
     } else {
-      this.map.setView(toLeaflet(positions), 15);
+      const translatedPosition = this.translatePositionByPixelsOnScreen(positions, offset);
+
+      this.map.setView(translatedPosition, 15);
     }
   }
 
@@ -174,6 +197,9 @@ class RoutePlanner extends LitElement {
 
       if (isValidPosition(this.from)) {
         this.zoomOn([this.destination_marker, this.from_marker]);
+        setTimeout(() => {
+          this.zoomOn([this.destination_marker, this.from_marker]);
+        }, 500);
       } else {
         this.zoomOn(this.destination_marker);
       }
@@ -194,6 +220,9 @@ class RoutePlanner extends LitElement {
 
       if (isValidPosition(this.destination_place)) {
         this.zoomOn([this.destination_place, this.from_marker]);
+        setTimeout(() => {
+          this.zoomOn([this.destination_place, this.from_marker]);
+        }, 500);
       } else {
         this.zoomOn(this.from_marker);
       }
@@ -382,6 +411,7 @@ class RoutePlanner extends LitElement {
 
   render() {
     return html`
+      ${this.mobile_open}
       <style>
         ${getStyle(style__leaflet)}
         ${getStyle(style)}
@@ -390,6 +420,7 @@ class RoutePlanner extends LitElement {
       <div
         class="routeplanner-widget 
           ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}
+          ${this.isMobile() ? `mobile` : ``}
           ${this.getAnimationState()}"
       >
         ${this.render__language_flags()} ${this.isFullScreen ? this.render_closeFullscreenButton() : null}

@@ -30,5 +30,6 @@ export const observed_properties = {
 
   is_travel_options_panel_open: { type: Boolean },
   travel_options: { type: Object },
-  language: { type: String }
+  language: { type: String },
+  details_open: { type: Boolean }
 };

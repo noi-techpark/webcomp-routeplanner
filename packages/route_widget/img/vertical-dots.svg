@@ -3,7 +3,7 @@
   <mask id="a" maskUnits="userSpaceOnUse" x="0" y="0" width="2" height="289">
     <path fill="#C4C4C4" d="M0 0H2V289H0z"/>
   </mask>
-  <g mask="url(#a)" fill="#C4C4C4">
+  <g mask="url(#a)" fill="#4285F4">
     <circle cx="1" cy="1" r="1"/>
     <circle cx="1" cy="7" r="1"/>
     <circle cx="1" cy="13" r="1"/>

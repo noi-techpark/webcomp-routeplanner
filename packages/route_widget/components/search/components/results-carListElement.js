@@ -15,6 +15,7 @@ export function render__carListElement(trip) {
       class="search__results__listElement d-flex align-items-center justify-content-between"
       @click=${() => {
         this.details_data = { type: CAR, ...trip };
+        this.details_open = false;
         this.addTripToMap(HERETripToPolylines(trip));
         this.removeTripToMapHover();
       }}
@@ -27,7 +28,6 @@ export function render__carListElement(trip) {
         </div>
         <div class="search__results__listElement__times">
           <p class="search__results__listElement__range">
-            ${moment(trip.startTime).format(dateFormat)} - ${moment(trip.endTime).format(dateFormat)}
             ${trip.lengthInKilometers} km
           </p>
           <p class="search__results__listElement__range">${formatSecondsDuration(trip.summary.baseTime)}</p>

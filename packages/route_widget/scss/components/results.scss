@@ -18,7 +18,7 @@
 .results__list {
   border: 1px solid $black-200;
   max-height: 400px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .results__list__item {

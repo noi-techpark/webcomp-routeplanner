@@ -188,7 +188,7 @@ export function render__fromTo() {
       textLabel = this.t('current_position');
     }
     if (place.state === PLACE_STATES.is_geolocating) {
-      textLabel = 'IS GEOLOCATING';
+      textLabel = this.t('is_geolocating');
     }
 
     if (place.state === PLACE_STATES.geolocation_error) {
