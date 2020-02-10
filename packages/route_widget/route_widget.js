@@ -5,8 +5,7 @@ import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
 import clone from 'lodash/clone';
 import flatten from 'lodash/flatten';
-import padStart from 'lodash/padStart';
-import moment from 'moment';
+
 import { request_get_poi, request_trip } from './api/efa_sta';
 import { request_trip_by_car } from './api/here';
 import { render__alert } from './components/alert/index';
@@ -23,7 +22,15 @@ import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import createTranslator from './translations';
-import { getSearchContainerHeight, getStyle, isValidPosition, last, toLeaflet } from './utilities';
+import {
+  getSearchContainerHeight,
+  getStyle,
+  isValidPosition,
+  last,
+  toLeaflet,
+  getCurrentDay,
+  getCurrentHourMinutes
+} from './utilities';
 
 class RoutePlanner extends LitElement {
   constructor() {
@@ -56,8 +63,8 @@ class RoutePlanner extends LitElement {
     this.departure_time = 1;
     this.departure_time_select_visible = false;
     this.departure_time_select_timings_visible = false;
-    this.departure_time_hour = moment().format(`HH`) + padStart(`${Math.floor(moment().minute() / 15) * 15}`, 2, '0');
-    this.departure_time_day = moment().format('YYYY-MM-DD');
+    this.departure_time_hour = getCurrentHourMinutes();
+    this.departure_time_day = getCurrentDay();
     this.details_data = undefined;
     this.search_results_height = 0;
     this.current_location = null;
@@ -247,13 +254,13 @@ class RoutePlanner extends LitElement {
   }
 
   /** starts the search if destination and origin are */
-  attemptSearch() {
+  attemptSearch(noCar = false) {
     if (this.destination_place.type.length > 0 && this.from.type.length > 0) {
-      this.search();
+      this.search(noCar);
     }
   }
 
-  search() {
+  search(noCar = false) {
     // maybe it's just efa that needs this format
     const timing_options = {
       type: ['', 'dep', 'dep', 'arr', ''][this.departure_time],
@@ -264,7 +271,7 @@ class RoutePlanner extends LitElement {
 
     this.search_started = true;
 
-    if (!this.car_disabled) {
+    if (!this.car_disabled && !noCar) {
       this.search_here(timing_options);
     }
     this.search_efa(timing_options);
@@ -287,7 +294,9 @@ class RoutePlanner extends LitElement {
   }
 
   async search_efa(timing_options) {
+
     this.is_fetching_efa = true;
+    this.requestUpdate();
     this.search_results = await request_trip(
       this.from,
       this.destination_place,

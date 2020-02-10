@@ -2,6 +2,7 @@ import { html } from 'lit-html';
 import clockImage from '../../../img/clock.svg';
 import { render__picker } from '../../generics/picker';
 import { PICKER_CLASSES } from '../../../constants';
+import { getCurrentHourMinutes, getCurrentDay } from '../../../utilities';
 
 const DEPARTURE_TIME = {
   1: 'depart_now',
@@ -32,13 +33,37 @@ export function render__departureTimePicker() {
   const setDepartureTime = async value => {
     this.departure_time = value;
     this.departure_time_select_visible = false;
+
+    if (this.departure_time === '1') {
+      this.departure_time_hour = getCurrentHourMinutes();
+      this.departure_time_day = getCurrentDay();
+      this.attemptSearch(true);
+    }
+
     await this.updateComplete;
     this.getSearchContainerHeight();
   };
 
   const setDepartureTimeHour = value => {
+    const needsToRefresh = this.departure_time_hour !== value;
     this.departure_time_hour = value;
     this.departure_time_select_timings_visible = false;
+
+    if (needsToRefresh) {
+      this.attemptSearch(true);
+    }
+  };
+
+  const setDepartureDay = e => {
+    const { value } = e.target;
+
+    const needsToRefresh = this.departure_time_hour !== value && value !== '';
+
+    this.departure_time_day = value;
+
+    if (needsToRefresh) {
+      this.attemptSearch(true);
+    }
   };
 
   this.render__picker = render__picker.bind(this);
@@ -67,7 +92,7 @@ export function render__departureTimePicker() {
         ${this.departure_time > 1
           ? html`
               <div class="departure_time_picker__input_date">
-                <input type="date" value=${this.departure_time_day} />
+                <input type="date" value=${this.departure_time_day} @input=${setDepartureDay} />
               </div>
             `
           : ``}

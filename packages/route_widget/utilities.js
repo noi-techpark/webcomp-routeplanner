@@ -1,6 +1,8 @@
 import L from 'leaflet';
 import { WALKING_TRIP_COLOR, TRIP_COLORS, WALKING } from './constants';
 import { html } from 'lit-element';
+import moment from 'moment';
+import padStart from 'lodash/padStart';
 
 export const getStyle = array => array[0][1];
 
@@ -138,3 +140,8 @@ export const repeatHtml = (htmlToRepeat, amount) =>
       `,
     html``
   );
+
+export const getCurrentDay = () => moment().format('YYYY-MM-DD');
+
+export const getCurrentHourMinutes = () =>
+  moment().format(`HH`) + padStart(`${Math.floor(moment().minute() / 15) * 15}`, 2, '0');
