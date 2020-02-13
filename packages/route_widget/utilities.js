@@ -145,3 +145,5 @@ export const getCurrentDay = () => moment().format('YYYY-MM-DD');
 
 export const getCurrentHourMinutes = () =>
   moment().format(`HH`) + padStart(`${Math.floor(moment().minute() / 15) * 15}`, 2, '0');
+
+export const isMobile = () => window.innerWidth < 992;
