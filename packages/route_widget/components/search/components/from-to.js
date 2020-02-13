@@ -227,6 +227,7 @@ export function render__fromTo() {
                     this.requestUpdate();
                   }, 200);
                 }}
+                placeholder=${this.t(input_name === FROM ? 'origin_placeholder' : 'destination_placeholder')}
               />
               <div class=${`fromTo__inputs__input_selection ${place.input_select_visible ? '' : 'hidden'}`}>
                 <div class="fromTo__inputs__input_selection__element use_my_position" @click=${setToCurrentLocation}>
