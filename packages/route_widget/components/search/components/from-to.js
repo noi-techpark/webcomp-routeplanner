@@ -9,7 +9,7 @@ import fromImage from '../../../img/from.svg';
 import toImage from '../../../img/to.svg';
 import geolocationBlue from '../../../img/geolocation-blue.svg';
 import geolocationHole from '../../../img/geolocation-hole.svg';
-import { toLeaflet, isValidPosition, repeatHtml } from '../../../utilities';
+import { toLeaflet, isValidPosition, repeatHtml, isMobile } from '../../../utilities';
 import { getCurrentPosition } from '../../route_widget/mapControlsHandlers';
 import { FROM, DESTINATION, stopID, coord, PLACE_STATES, GEOLOCATION_ERRORS } from '../../../constants';
 
@@ -154,7 +154,7 @@ export function render__fromTo() {
   this.setDestinationToResult = setDestinationToResult.bind(this);
 
   const handleFocusFor = input_name => {
-    if (window.innerWidth < 992 && !this.isFullScreen) {
+    if (isMobile() && !this.isFullScreen) {
       const map = this.shadowRoot.getElementById('map');
       map.classList.toggle('closed');
       try {

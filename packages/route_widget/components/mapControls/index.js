@@ -4,6 +4,7 @@ import findPositionImage from '../../img/find-position.svg';
 import minusImage from '../../img/minus.svg';
 import plusImage from '../../img/plus.svg';
 import expandImage from '../../img/expand.svg';
+import { isMobile } from '../../utilities';
 
 export function render__mapControls() {
   return html`
@@ -24,7 +25,7 @@ export function render__mapControls() {
         @click=${() => {
           this.handleFullScreenMap();
         }}
-        class="map_controls__button d-md-none"
+        class=${`map_controls__button ${isMobile() && !this.mobile_open ? '' : `d-none`}`}
       >
         <img src=${expandImage} alt="" />
       </div>
