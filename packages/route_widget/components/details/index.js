@@ -180,10 +180,14 @@ export function render__details() {
   }
 
   const generatePDF = () => {
+    const headerHtml = this.shadowRoot.querySelector('.details__header_section').innerHTML;
     const detailsHtml = this.shadowRoot.querySelector('.details__body_section').innerHTML;
     const fullHtml = `
       <div>
         <div class="details">
+          <div class="details__header_section">
+            ${headerHtml}
+          </div>
           <div class="details__body_section">
             <div class="details__body_section__content">
                ${detailsHtml}
@@ -267,7 +271,11 @@ export function render__details() {
               ${tags.map(
                 ({ icon, label }) => html`
                   <div class="details__header_section__tags__tag">
-                    <img src=${icon} alt="" />
+                    <img
+                      src=${icon}
+                      alt=""
+                      style=${icon === clockImage ? 'height:16px; position:relative; top:2px' : ''}
+                    />
                     <p>${label}</p>
                   </div>
                 `
