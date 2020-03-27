@@ -9,12 +9,19 @@ export function render__picker(trigger, values, currentValue, action, css_modifi
         class="picker__trigger_box"
         @click=${e => {
           this[trigger] = true;
+
+          // scroll to the active element
+          setTimeout(() => {
+            const activeElement = this.shadowRoot.querySelector(`[data-picker-trigger-key="${trigger}"] .active`);
+            const topOffset = activeElement.offsetTop;
+            this.shadowRoot.querySelector(`[data-picker-trigger-key="${trigger}"]`).scrollTop = topOffset;
+          }, 0);
         }}
       >
         <span>${translator(values[currentValue])} <img src=${chevronDownImage} alt=""/></span>
       </div>
 
-      <div class=${`picker_box ${this[trigger] ? '' : 'hidden'}`}>
+      <div class=${`picker_box ${this[trigger] ? '' : 'hidden'}`} data-picker-trigger-key=${trigger}>
         ${Object.keys(values)
           .sort()
           .map(key => {
