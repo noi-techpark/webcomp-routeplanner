@@ -7,15 +7,14 @@ export function render__picker(trigger, values, currentValue, action, css_modifi
     <div class=${`picker ${css_modifiers ? css_modifiers.map(o => `${o} `) : ``}`}>
       <div
         class="picker__trigger_box"
-        @click=${e => {
+        @click=${async e => {
           this[trigger] = true;
 
           // scroll to the active element
-          setTimeout(() => {
-            const activeElement = this.shadowRoot.querySelector(`[data-picker-trigger-key="${trigger}"] .active`);
-            const topOffset = activeElement.offsetTop;
-            this.shadowRoot.querySelector(`[data-picker-trigger-key="${trigger}"]`).scrollTop = topOffset;
-          }, 0);
+          await this.requestUpdate(); // needs to wait for the rerender to calculate the offset
+          const activeElement = this.shadowRoot.querySelector(`[data-picker-trigger-key="${trigger}"] .active`);
+          const topOffset = activeElement.offsetTop;
+          this.shadowRoot.querySelector(`[data-picker-trigger-key="${trigger}"]`).scrollTop = topOffset;
         }}
       >
         <span>${translator(values[currentValue])} <img src=${chevronDownImage} alt=""/></span>
