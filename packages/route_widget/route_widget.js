@@ -29,7 +29,8 @@ import {
   last,
   toLeaflet,
   getCurrentDay,
-  getCurrentHourMinutes
+  getCurrentHourMinutes,
+  getFolder
 } from './utilities';
 
 class RoutePlanner extends LitElement {
@@ -130,9 +131,20 @@ class RoutePlanner extends LitElement {
 
     this.map = L.map(this.shadowRoot.getElementById('map'), { zoomControl: false });
 
-    L.tileLayer('//maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
-      attribution: '<a href=“https://wikimediafoundation.org/wiki/Maps_Terms_of_Use“>Wikimedia</a>'
-    }).addTo(this.map);
+    // old wikimedia maps tiles, in case we want to switch back
+    // L.tileLayer('//maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
+    //   attribution: '<a href=“https://wikimediafoundation.org/wiki/Maps_Terms_of_Use“>Wikimedia</a>'
+    // }).addTo(this.map);
+
+    L.tileLayer(
+      'http://efas.sta.bz.it/maps/APB/tiles/{language}/zoomlevel{z}/columns{columns}/column{x}/rows{rows}/{y}_{x}_{z}.png',
+      {
+        // attribution: '',
+        columns: data => getFolder(data.x),
+        rows: data => getFolder(data.y),
+        language: data => (this.language === 'en' ? 'it' : this.language)
+      }
+    ).addTo(this.map);
 
     this.map.setView({ lat: 46.49761, lon: 11.349261 }, 13);
   }
@@ -294,7 +306,6 @@ class RoutePlanner extends LitElement {
   }
 
   async search_efa(timing_options) {
-
     this.is_fetching_efa = true;
     this.requestUpdate();
     this.search_results = await request_trip(
