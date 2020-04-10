@@ -5,6 +5,7 @@
   ],
   "scripts": {
     "start": "webpack-dev-server --config ./packages/route_widget/webpack.dev.js",
+    "build": "webpack --config ./packages/route_widget/webpack.prod.js",
     "bts": "lerna bootstrap",
     "clean": "lerna clean",
     "bc": "lerna run --parallel --stream build",
