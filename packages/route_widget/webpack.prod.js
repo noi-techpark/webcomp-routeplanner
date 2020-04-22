@@ -4,7 +4,7 @@ require('dotenv').config();
 
 module.exports = {
   mode: 'production',
-  entry: './route_widget.js',
+  entry: path.resolve(__dirname, './route_widget.js'),
   output: {
     path: path.resolve(__dirname, '../../dist'),
     filename: 'routeplanner_widget.min.js'
