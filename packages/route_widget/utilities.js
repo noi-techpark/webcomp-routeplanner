@@ -147,3 +147,11 @@ export const getCurrentHourMinutes = () =>
   moment().format(`HH`) + padStart(`${Math.floor(moment().minute() / 15) * 15}`, 2, '0');
 
 export const isMobile = () => window.innerWidth < 992;
+
+export const getFolder = n => {
+  if (n < 100) {
+    return '0-99';
+  }
+  const hundreds = Math.floor(n / 100);
+  return `${hundreds}00-${hundreds}99`;
+};
