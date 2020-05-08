@@ -60,6 +60,18 @@
         "type": "text",
         "label": "coordinates of the destination in the following format: `longitude:latitude`",
         "required": true
+      },
+      {
+        "key": "attribution",
+        "type": "text",
+        "label": "Attribution text for the tiles, can contain html",
+        "required": true
+      },
+      {
+        "key": "tiles-url",
+        "type": "text",
+        "label": "Url for the tiles, see https://leafletjs.com/reference-1.6.0.html#tilelayer",
+        "required": true
       }
     ]
   }
