@@ -31,5 +31,8 @@ export const observed_properties = {
   is_travel_options_panel_open: { type: Boolean },
   travel_options: { type: Object },
   language: { type: String },
-  details_open: { type: Boolean }
+  details_open: { type: Boolean },
+
+  tiles_url: { type: String, attribute: 'tiles-url' },
+  attribution: { type: String }
 };
