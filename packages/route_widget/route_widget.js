@@ -1,11 +1,10 @@
-import L, { Point } from 'leaflet';
+import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html, LitElement } from 'lit-element';
 import clone from 'lodash/clone';
 import flatten from 'lodash/flatten';
-
 import { request_get_poi, request_trip } from './api/efa_sta';
 import { request_trip_by_car } from './api/here';
 import { render__alert } from './components/alert/index';
@@ -17,20 +16,19 @@ import { render__mapControls } from './components/mapControls';
 import { handleFullScreenMap, mapControlsHandlers } from './components/route_widget/mapControlsHandlers';
 import { windowSizeListenerClose } from './components/route_widget/windowSizeListener';
 import { render__search } from './components/search';
-import { BUS, CABLE_CAR, coord, PUBLIC_TRANSPORT_TAB, TRAIN, WALKING, LANGUAGES, PLACE_STATES } from './constants';
+import { BUS, CABLE_CAR, coord, LANGUAGES, PUBLIC_TRANSPORT_TAB, TRAIN, WALKING } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
 import createTranslator from './translations';
 import {
+  getCurrentDay,
+  getCurrentHourMinutes,
   getSearchContainerHeight,
   getStyle,
   isValidPosition,
   last,
-  toLeaflet,
-  getCurrentDay,
-  getCurrentHourMinutes,
-  getFolder
+  toLeaflet
 } from './utilities';
 
 class RoutePlanner extends LitElement {
@@ -420,7 +418,11 @@ class RoutePlanner extends LitElement {
 
   render() {
     return html`
-      ${this.mobile_open}
+      ${this.tiles_url
+        ? ''
+        : html`
+            <p style="color:red">Required attribute \`tiles_url\` is missing</p>
+          `}
       <style>
         ${getStyle(style__leaflet)}
         ${getStyle(style)}
