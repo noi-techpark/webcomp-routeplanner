@@ -34,6 +34,7 @@ jobs:
           root: /tmp/idm-routeplanner
           paths:
             - dist
+            - demo
             - .build-info
 
       - notify_job_status_on_failure
