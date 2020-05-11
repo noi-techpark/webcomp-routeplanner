@@ -53,7 +53,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            scp dist/* $SSH_USER@$SSH_BASE_DEPLOY_PATH/idm/cdn/
+            scp dist/* $SSH_USER@$SSH_BASE_DEPLOY_PATH/idm/cdn/ && scp demo/* $SSH_USER@$SSH_BASE_DEPLOY_PATH/idm/routeplanner/demo/
 
       - notify_job_status_on_success
       - notify_job_status_on_failure
