@@ -1,17 +1,8 @@
 {
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "start": "webpack-dev-server --config ./packages/route_widget/webpack.dev.js",
-    "build": "webpack --config ./packages/route_widget/webpack.prod.js",
-    "bts": "lerna bootstrap",
-    "clean": "lerna clean",
-    "bc": "lerna run --parallel --stream build",
-    "wc": "lerna run --parallel --stream watch",
-    "build-components": "lerna run --parallel --stream build",
-    "watch-components": "lerna run --parallel --stream watch"
+    "start": "webpack-dev-server --config ./webpack.dev.js",
+    "build": "webpack --config ./webpack.prod.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -24,7 +15,24 @@
     "eslint-plugin-lit": "^1.2.0",
     "eslint-plugin-prettier": "^3.1.1",
     "lerna": "^3.13.1",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "css-loader": "^3.0.0",
+    "node-sass": "^4.11.0",
+    "raw-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "svg-url-loader": "^3.0.0",
+    "url-loader": "^2.0.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "html2pdf.js": "^0.9.1",
+    "leaflet": "^1.5.1",
+    "lit-element": "^2.2.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "print-js": "^1.0.61"
   },
   "name": "routeplanner",
   "version": "1.0.0"

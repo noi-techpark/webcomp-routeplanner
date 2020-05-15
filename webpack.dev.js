@@ -4,10 +4,10 @@ require('dotenv').config();
 
 module.exports = {
   mode: 'development',
-  entry: path.resolve(__dirname, './route_widget.js'),
+  entry: path.resolve(__dirname, './src/route_widget.js'),
   watch: true,
   output: {
-    path: path.resolve(__dirname, '../../work/scripts'),
+    path: path.resolve(__dirname, './work/scripts'),
     filename: 'route_widget.js'
   },
   plugins: [
@@ -17,7 +17,7 @@ module.exports = {
   ],
   // webpack-dev-server configuration
   devServer: {
-    contentBase: path.resolve(__dirname, '../../work'),
+    contentBase: path.resolve(__dirname, './work'),
     publicPath: '/scripts/',
     watchContentBase: true,
     compress: true,
