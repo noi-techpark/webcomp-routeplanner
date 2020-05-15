@@ -205,7 +205,6 @@ export function render__fromTo() {
       textLabel = '';
     }
 
-    console.log('place', place);
     return html`
       <div class="fromTo__inputs__input_wrapper">
         ${place.locked
@@ -254,9 +253,6 @@ export function render__fromTo() {
       </div>
     `;
   };
-
-  console.log('this.from', this.from);
-  console.log('this.destination_place', this.destination_place);
 
   const renderFromToIcon = (place, fallback) => {
     if (place.state === PLACE_STATES.is_geolocating) {

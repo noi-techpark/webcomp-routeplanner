@@ -27,7 +27,7 @@ jobs:
           key: yarn-packages-v1-{{ checksum "yarn.lock" }}
 
       # Actually build the webcomponents
-      - run: yarn build-components
+      - run: yarn build
 
       # Persist the build path (./dist) into the workspace for use in the deploy job.
       - persist_to_workspace:
