@@ -37,7 +37,7 @@
       {
         "key": "language",
         "type": "select",
-        "label": "two letter key for the language to be used, if omitted the widget will use the language of the browser (navigator.language[?s]) if supported. Fallback is `en`",
+        "label": "Two letter key for the language to be used, if omitted the widget will use the language of the browser (navigator.language[?s]) if supported. Fallback is `en`",
         "required": false,
         "options": {
           "values": ["en", "de", "it"]
@@ -46,19 +46,19 @@
       {
         "key": "destination",
         "type": "text",
-        "label": "coordinates of the destination in the following format: `longitude:latitude`",
+        "label": "Coordinates of the destination in the following format: `longitude:latitude`",
         "required": true
       },
       {
         "key": "destionation-name",
         "type": "text",
-        "label": "display name of the destination",
+        "label": "Display name of the destination",
         "required": true
       },
       {
         "key": "disable-car",
-        "type": "text",
-        "label": "coordinates of the destination in the following format: `longitude:latitude`",
+        "type": "boolean",
+        "label": "Disable car routing, if present only public means will be shown",
         "required": true
       },
       {
