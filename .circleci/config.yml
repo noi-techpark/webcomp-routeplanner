@@ -34,6 +34,7 @@ jobs:
           root: /tmp/idm-routeplanner
           paths:
             - dist
+            - demo
             - .build-info
 
       - notify_job_status_on_failure
@@ -53,7 +54,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            scp dist/* $SSH_USER@$SSH_BASE_DEPLOY_PATH/idm/cdn/
+            scp dist/* $SSH_USER@$SSH_BASE_DEPLOY_PATH/idm/cdn/ && scp -r demo/* $SSH_USER@$SSH_BASE_DEPLOY_PATH/idm/routeplanner/demo/
 
       - notify_job_status_on_success
       - notify_job_status_on_failure
