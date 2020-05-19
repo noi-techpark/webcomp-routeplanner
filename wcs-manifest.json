@@ -40,7 +40,8 @@
         "label": "Two letter key for the language to be used, if omitted the widget will use the language of the browser (navigator.language[?s]) if supported. Fallback is `en`",
         "required": false,
         "options": {
-          "values": ["en", "de", "it"]
+          "values": ["en", "de", "it"],
+          "default": "en"
         }
       },
       {
@@ -63,17 +64,20 @@
       },
       {
         "key": "disable-car",
-        "type": "boolean",
+        "type": "bool",
         "label": "Disable car routing, if present only public means will be shown",
-        "required": true
+        "required": true,
+        "options": {
+          "default": false
+        }
       },
       {
         "key": "attribution",
         "type": "text",
-        "label": "Attribution text for the tiles, can contain html",
+        "label": "Attribution text for the tiles, can contain html (without double-quotes)",
         "required": true,
         "options": {
-          "default": "Map Tiles &copy; <a href=\"http://developer.here.com\">HERE</a>"
+          "default": "Map Tiles &copy; <a href='http://developer.here.com'>HERE</a>"
         }
       },
       {
