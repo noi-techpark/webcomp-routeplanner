@@ -1,0 +1,78 @@
+{
+  "title": "Routeplanner",
+  "description": "Routeplanner widget",
+  "descriptionAbstract": "Routeplanner widget",
+  "license": "AGPL-3.0-or-later",
+  "copyrightHolders": [
+    {
+      "name": "NOI",
+      "email": "info@noi.bz.it",
+      "organization": "NOI S.p.A",
+      "organizationUrl": "https://noi.bz.it"
+    },
+    {
+      "name": "STA",
+      "email": "info@sta.bz.it",
+      "organization": "STA - Südtiroler Transportstrukturen AG / Strutture Trasporto Alto Adige SpA",
+      "organizationUrl": "https://www.sta.bz.it"
+    }
+  ],
+  "authors": [
+    {
+      "name": "Belka",
+      "email": "hello@belkadigital.com",
+      "organization": "Belka",
+      "organizationUrl": "https://belkadigital.com/"
+    }
+  ],
+  "image": "wcs-logo.png",
+  "searchTags": ["map", "mobility", "routeplanner"],
+  "dist": {
+    "basePath": "dist",
+    "files": ["routeplanner_widget.min.js"]
+  },
+  "configuration": {
+    "tagName": "routeplanner-widget",
+    "options": [
+      {
+        "key": "language",
+        "type": "select",
+        "label": "Two letter key for the language to be used, if omitted the widget will use the language of the browser (navigator.language[?s]) if supported. Fallback is `en`",
+        "required": false,
+        "options": {
+          "values": ["en", "de", "it"]
+        }
+      },
+      {
+        "key": "destination",
+        "type": "text",
+        "label": "Coordinates of the destination in the following format: `longitude:latitude`",
+        "required": true
+      },
+      {
+        "key": "destionation-name",
+        "type": "text",
+        "label": "Display name of the destination",
+        "required": true
+      },
+      {
+        "key": "disable-car",
+        "type": "boolean",
+        "label": "Disable car routing, if present only public means will be shown",
+        "required": true
+      },
+      {
+        "key": "attribution",
+        "type": "text",
+        "label": "Attribution text for the tiles, can contain html",
+        "required": true
+      },
+      {
+        "key": "tiles-url",
+        "type": "text",
+        "label": "Url for the tiles, see https://leafletjs.com/reference-1.6.0.html#tilelayer",
+        "required": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,134 @@
+@import '../../../scss/colors';
+
+@keyframes on_off {
+  from {
+    opacity: 0%;
+  }
+
+  to {
+    opacity: 1000%;
+  }
+}
+
+.fromTo {
+  .fromTo__graphics {
+    width: 26px;
+    padding: 12px 8px 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-wrap: wrap;
+
+    .fromToIconContainer {
+      position: relative;
+      top: -4px;
+      height: 18px;
+    }
+
+    .on_off {
+      animation-duration: 1s;
+      animation-name: on_off;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      position: absolute;
+      left: 0px;
+      top: 4px;
+    }
+
+    img {
+      width: 18px;
+      &.fromTo__dots_icon {
+        width: 2px;
+        margin: 4px 0;
+      }
+    }
+  }
+  .fromTo__inputs {
+    flex: 1;
+    .fromTo__inputs__input_wrapper {
+      height: 40px;
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      input {
+        &.geolocation_success,
+        &.is_geolocating {
+          &:not(.select_open) {
+            color: $blue;
+          }
+        }
+        &.geolocation_error {
+          &:not(.select_open) {
+            color: $orange;
+          }
+        }
+      }
+      p {
+        color: $black-300;
+        font-size: 12px;
+        line-height: 24px;
+        @media (min-width: 992px) {
+          font-size: 14px;
+        }
+      }
+      input {
+        width: 100%;
+        height: 40px;
+        padding: 0 8px;
+        font-size: 16px;
+        line-height: 24px;
+        border: 1px solid $black-300;
+        &:focus {
+          outline: none;
+        }
+      }
+      .fromTo__inputs__input_selection {
+        position: absolute;
+        left: 0;
+        top: 40px;
+        max-height: 300px;
+        width: 100%;
+        background-color: $white;
+        overflow-y: auto;
+        z-index: 401;
+        border: 1px solid $black-300;
+        box-shadow: 0px 3px 6px rgba(51, 51, 51, 0.1), 0px 10px 20px rgba(51, 51, 51, 0.15);
+        &.hidden {
+          display: none;
+        }
+        .fromTo__inputs__input_selection__element {
+          cursor: pointer;
+          padding: 12px;
+          &:hover {
+            background-color: $black-50;
+          }
+
+          &.use_my_position {
+            color: $blue;
+          }
+
+          &.loading-skeleton {
+            padding: 0px;
+            margin: 12px;
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
+  .fromTo__button {
+    width: 46px;
+    // border: 1px solid $black-300;
+    border: 0;
+    border-left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fromTo__button > img {
+    cursor: pointer;
+  }
+}

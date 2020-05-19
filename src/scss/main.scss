@@ -1,0 +1,144 @@
+@import 'colors';
+@import 'mixins';
+@import 'breakpoints';
+@import './typography.scss';
+@import './bts-utilities.scss';
+// Components
+@import '../components/search/search.scss';
+@import '../components/details/details.scss';
+@import '../components/options_panel/options_panel.scss';
+@import '../components/mapControls/map-controls.scss';
+@import '../components/alert/alert.scss';
+@import '../components/language_flags/language_flags.scss';
+// Generics
+@import '../components/generics/buttons/buttons.scss';
+@import '../components/generics/picker/picker.scss';
+@import '../components/generics/badge/badge.scss';
+@import '../components/generics/tooltip/tooltip.scss';
+
+@mixin full-width-height {
+  width: 100%;
+  height: 100%;
+}
+
+.routeplanner-widget {
+  position: relative;
+  font-family: 'Suedtirol Next TT', 'KievitWebPro', sans-serif;
+  color: $black;
+  width: 100%;
+  overflow: hidden;
+
+  @media (max-width: $mobile-breakpoint) {
+    &.MODE__mobile__open {
+      @include full-width-height();
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      .MODE__mobile__expand_button_container {
+        position: fixed;
+        right: 15px;
+        bottom: 15px;
+      }
+    }
+    &.MODE__mobile__closed {
+      width: calc(100vw - 30px);
+      margin: 0 auto;
+      .MODE__mobile__closed__container {
+        height: 70vh;
+        overflow: hidden;
+        border: 1px solid $black-200;
+      }
+      .MODE__mobile__expand_button_container {
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+      }
+    }
+  }
+}
+
+.loading {
+  @include full-width-height();
+  position: absolute;
+  background-color: rgba(45, 45, 45, 0.7);
+  z-index: 404;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#map {
+  @media (min-width: 320px) {
+    width: 100%;
+    height: 100vh;
+    &.closed {
+      height: 260px;
+    }
+  }
+  @media (min-width: 992px) {
+    height: 700px;
+    &.closed {
+      height: 700px;
+    }
+  }
+}
+
+.utils--cursor-pointer {
+  cursor: pointer;
+}
+
+.close_fullscreen_button {
+  position: absolute;
+  right: 16px;
+  top: 8px;
+  z-index: 403;
+  background: $white;
+  box-shadow: 0px 3px 6px rgba(51, 51, 51, 0.1), 0px 10px 20px rgba(51, 51, 51, 0.15);
+  border-radius: 100px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  @media (min-width: 992px) {
+    display: none;
+  }
+}
+
+.loading-skeleton {
+  position: relative;
+  height: 15px;
+  background-color: #f3f3f3;
+  overflow: hidden;
+  border-radius: 4px;
+
+  // dark magic to make safari apply overflow hidden correctly with boarder-radius
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+
+  & > div {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(239, 239, 239, 0) -0.05%, #cccccc 49.43%, rgba(239, 239, 239, 0) 99.95%);
+    animation-duration: 3s;
+    animation-name: loading-skeleton-slide;
+    animation-iteration-count: infinite;
+  }
+}
+@keyframes loading-skeleton-slide {
+  from {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transfrom: translateX(0%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
