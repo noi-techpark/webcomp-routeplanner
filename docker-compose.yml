@@ -5,15 +5,6 @@ services:
     volumes:
       - ./:/code
     working_dir: /code
-    command: sh -c "test -d node_modules || yarn; yarn run start"
+    command: sh -c "test -d node_modules || yarn; yarn start"
     ports:
-      - "8000:8080"
-  serve:
-    image: python:3.6-alpine
-    volumes:
-      - ./:/code
-    working_dir: /code/work
-    command: python -m http.server
-    ports:
-      - "8999:8000"
-    tty: true
+      - "8999:8080"
