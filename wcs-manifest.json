@@ -50,7 +50,7 @@
         "required": true
       },
       {
-        "key": "destionation-name",
+        "key": "destination-name",
         "type": "text",
         "label": "Display name of the destination",
         "required": true
