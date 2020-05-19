@@ -47,13 +47,19 @@
         "key": "destination",
         "type": "text",
         "label": "Coordinates of the destination in the following format: `longitude:latitude`",
-        "required": true
+        "required": true,
+        "options": {
+          "default": "11.1604034:46.6684672"
+        }
       },
       {
         "key": "destination-name",
         "type": "text",
         "label": "Display name of the destination",
-        "required": true
+        "required": true,
+        "options": {
+          "default": "Terme di Merano, Merano"
+        }
       },
       {
         "key": "disable-car",
@@ -65,13 +71,19 @@
         "key": "attribution",
         "type": "text",
         "label": "Attribution text for the tiles, can contain html",
-        "required": true
+        "required": true,
+        "options": {
+          "default": "Map Tiles &copy; <a href=\"http://developer.here.com\">HERE</a>"
+        }
       },
       {
         "key": "tiles-url",
         "type": "text",
         "label": "Url for the tiles, see https://leafletjs.com/reference-1.6.0.html#tilelayer",
-        "required": true
+        "required": true,
+        "options": {
+          "default": "https://1.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8?apiKey=y5RrMr902fINWuq7KpVyKJngOMoEUY6RRiX755yTJgU"
+        }
       }
     ]
   }
