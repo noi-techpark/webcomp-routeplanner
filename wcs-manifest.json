@@ -66,10 +66,7 @@
         "key": "disable-car",
         "type": "bool",
         "label": "Disable car routing, if present only public means will be shown",
-        "required": true,
-        "options": {
-          "default": false
-        }
+        "required": true
       },
       {
         "key": "attribution",
