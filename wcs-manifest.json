@@ -5,16 +5,10 @@
   "license": "AGPL-3.0-or-later",
   "copyrightHolders": [
     {
-      "name": "NOI",
-      "email": "info@noi.bz.it",
-      "organization": "NOI S.p.A",
-      "organizationUrl": "https://noi.bz.it"
-    },
-    {
-      "name": "STA",
-      "email": "info@sta.bz.it",
-      "organization": "STA - Südtiroler Transportstrukturen AG / Strutture Trasporto Alto Adige SpA",
-      "organizationUrl": "https://www.sta.bz.it"
+      "name": "IDM",
+      "email": "webmaster@suedtirol.info",
+      "organization": "IDM Südtirol - Alto Adige",
+      "organizationUrl": "https://www.idm-suedtirol.com"
     }
   ],
   "authors": [
