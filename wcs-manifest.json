@@ -1,7 +1,7 @@
 {
   "title": "Routeplanner",
   "description": "Routeplanner widget",
-  "descriptionAbstract": "Routeplanner widget",
+  "descriptionAbstract": "A widget that helps planning the arrival by public transport or car to a specific location in South Tyrol.",
   "license": "AGPL-3.0-or-later",
   "copyrightHolders": [
     {
