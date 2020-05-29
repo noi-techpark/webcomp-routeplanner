@@ -58,7 +58,7 @@
       },
       {
         "key": "disable-car",
-        "type": "bool",
+        "type": "null",
         "label": "Disable car routing, if present only public means will be shown",
         "required": true,
         "options": {
