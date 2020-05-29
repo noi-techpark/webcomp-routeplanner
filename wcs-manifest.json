@@ -62,7 +62,7 @@
         "label": "Disable car routing, if present only public means will be shown",
         "required": true,
         "options": {
-          "default": "false"
+          "default": false
         }
       },
       {
