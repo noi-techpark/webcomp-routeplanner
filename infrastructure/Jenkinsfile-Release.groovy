@@ -16,6 +16,7 @@ pipeline {
 
     environment {
         GIT_REPOSITORY = "git@github.com:noi-techpark/webcomp-publictransport.git"
+        HERE_API_KEY = credentials("here-api-key")
     }
 
     stages {
@@ -24,6 +25,14 @@ pipeline {
                 sh '''
                   rm -rf dist node_modules
                   yarn cache clean
+                '''
+            }
+        }
+        stage('Configure') {
+            steps {
+                sh '''
+                    rm -rf .env
+                    echo "HERE_API_KEY=${HERE_API_KEY}" >> .env
                 '''
             }
         }

@@ -4,6 +4,7 @@ services:
     image: node:12
     volumes:
       - ./:/code
+    env_file: .env
     working_dir: /code
     command: sh -c "test -d node_modules || yarn; yarn start"
     ports:
