@@ -424,9 +424,9 @@ class RoutePlanner extends LitElement {
             <p style="color:red">Required attribute \`tiles_url\` is missing</p>
           `}
       <style>
-        ${getStyle(style__leaflet)}
-        ${getStyle(style)}
-        ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
+        ${getStyle(style__leaflet)} ${getStyle(style)} * {
+          font-family: ${this.font_family ? ` ${this.font_family} ,` : ''} sans-serif;
+        }
       </style>
       <div
         class="routeplanner-widget 
