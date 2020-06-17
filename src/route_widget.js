@@ -113,6 +113,9 @@ class RoutePlanner extends LitElement {
     this.details_open = false;
 
     this.t = createTranslator(this.get_system_language());
+
+    this.height = '500px';
+    this.width = '100%';
   }
 
   static get properties() {
@@ -426,6 +429,8 @@ class RoutePlanner extends LitElement {
       <style>
         ${getStyle(style__leaflet)} ${getStyle(style)} * {
           font-family: ${this.font_family ? ` ${this.font_family} ,` : ''} sans-serif;
+          --width: ${this.width};
+          --height: ${this.height};
         }
       </style>
       <div

@@ -1,5 +1,8 @@
 export const observed_properties = {
   font_family: { type: String, attribute: 'font-family' },
+  height: { type: String },
+  width: { width: String },
+
   mobile_open: { type: Boolean },
   current_location: { type: Object },
   // Select places
