@@ -2,7 +2,7 @@ import html2pdf from 'html2pdf.js';
 import { html } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import flatMap from 'lodash/flatMap';
-import moment from 'moment';
+import { format } from 'fecha';
 import printJS from 'print-js';
 import { CAR, MEANS_ICONS, PUBLIC_TRANSPORT, WALKING, TRIP_COLORS } from '../../constants';
 import carImage from '../../img/car.svg';
@@ -141,8 +141,8 @@ export function render__details() {
       })}
     `;
   } else if (this.details_data.type === CAR) {
-    startTime = moment(this.details_data.leg[0].maneuver[0].time).format('HH:mm');
-    endTime = moment(last(last(this.details_data.leg).maneuver).time).format('HH:mm');
+    startTime = format(this.details_data.leg[0].maneuver[0].time, 'HH:mm');
+    endTime = format(last(last(this.details_data.leg).maneuver).time, 'HH:mm');
 
     tags.push({ icon: clockImage, label: formatSecondsDuration(this.details_data.summary.baseTime) });
     tags.push({ icon: carImage, label: `${this.details_data.lengthInKilometers} km` });
