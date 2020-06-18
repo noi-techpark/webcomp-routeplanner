@@ -1,5 +1,4 @@
 export const observed_properties = {
-  font_family: { type: String, attribute: 'font-family' },
   height: { type: String },
   width: { width: String },
 

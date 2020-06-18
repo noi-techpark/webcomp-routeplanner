@@ -47,12 +47,6 @@
         "required": false
       },
       {
-        "key": "font-family",
-        "type": "string",
-        "label": "Custom fonta-family css property",
-        "required": false
-      },
-      {
         "key": "language",
         "type": "select",
         "label": "Two letter key for the language to be used, if omitted the widget will use the language of the browser (navigator.language[?s]) if supported. Fallback is `en`",

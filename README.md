@@ -61,6 +61,20 @@ The EFA/STA api doesn't require API keys.
 | `tiles-url`        | Url for the tiles, see https://leafletjs.com/reference-1.6.0.html#tilelayer  |                                              |                                                                                                                                                         |
 |                    |                                                                              |                                              |                                                                                                                                                         |
 
+## Custom font
+
+Using the `--webcomp-routeplanner-font-family` css variable you can set a custom `font-family`.
+[link to MDN doc](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+
+```html
+<style>
+  routeplanner-widget {
+    --webcomp-routeplanner-font-family: Metal Mania;
+  }
+</style>
+<routeplanner-widget ...attributes></routeplanner-widget>
+```
+
 ## Authors
 
 - **Luca Fedrizzi** - _Initial work_ - [fedriz](https://github.com/fedriz)

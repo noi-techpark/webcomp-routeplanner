@@ -22,6 +22,7 @@
 }
 
 .routeplanner-widget {
+  font-family: var(--webcomp-routeplanner-font-family, Suedtirol, KievitWebPro, sans-serif);
   position: relative;
   color: $black;
   width: var(--width);

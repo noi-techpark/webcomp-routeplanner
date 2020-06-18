@@ -428,7 +428,6 @@ class RoutePlanner extends LitElement {
           `}
       <style>
         ${getStyle(style__leaflet)} ${getStyle(style)} * {
-          font-family: ${this.font_family ? ` ${this.font_family} ,` : ''} sans-serif;
           --width: ${this.width};
           --height: ${this.height};
         }
