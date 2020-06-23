@@ -1,20 +1,14 @@
 {
   "title": "Routeplanner",
   "description": "Routeplanner widget",
-  "descriptionAbstract": "Routeplanner widget",
+  "descriptionAbstract": "A widget that helps planning the arrival by public transport or car to a specific location in South Tyrol.",
   "license": "AGPL-3.0-or-later",
   "copyrightHolders": [
     {
-      "name": "NOI",
-      "email": "info@noi.bz.it",
-      "organization": "NOI S.p.A",
-      "organizationUrl": "https://noi.bz.it"
-    },
-    {
-      "name": "STA",
-      "email": "info@sta.bz.it",
-      "organization": "STA - Südtiroler Transportstrukturen AG / Strutture Trasporto Alto Adige SpA",
-      "organizationUrl": "https://www.sta.bz.it"
+      "name": "IDM",
+      "email": "webmaster@suedtirol.info",
+      "organization": "IDM Südtirol - Alto Adige",
+      "organizationUrl": "https://www.idm-suedtirol.com"
     }
   ],
   "authors": [
@@ -35,43 +29,71 @@
     "tagName": "routeplanner-widget",
     "options": [
       {
+        "key": "width",
+        "type": "string",
+        "label": "Width of the component as css property (es: '500px' or '100%'), default is 100%",
+        "required": false
+      },
+      {
+        "key": "height",
+        "type": "string",
+        "label": "Height of the component as css property (es: '500px' or '100%'), deafult is 500px",
+        "required": false
+      },
+      {
         "key": "language",
         "type": "select",
         "label": "Two letter key for the language to be used, if omitted the widget will use the language of the browser (navigator.language[?s]) if supported. Fallback is `en`",
         "required": false,
         "options": {
-          "values": ["en", "de", "it"]
+          "values": ["en", "de", "it"],
+          "default": "en"
         }
       },
       {
         "key": "destination",
         "type": "text",
         "label": "Coordinates of the destination in the following format: `longitude:latitude`",
-        "required": true
+        "required": true,
+        "options": {
+          "default": "11.1604034:46.6684672"
+        }
       },
       {
-        "key": "destionation-name",
+        "key": "destination-name",
         "type": "text",
         "label": "Display name of the destination",
-        "required": true
+        "required": true,
+        "options": {
+          "default": "Terme di Merano, Merano"
+        }
       },
       {
         "key": "disable-car",
-        "type": "boolean",
+        "type": "null",
         "label": "Disable car routing, if present only public means will be shown",
-        "required": true
+        "required": true,
+        "options": {
+          "default": false
+        }
       },
       {
         "key": "attribution",
         "type": "text",
-        "label": "Attribution text for the tiles, can contain html",
-        "required": true
+        "label": "Attribution text for the tiles, can contain html (without double-quotes)",
+        "required": true,
+        "options": {
+          "default": "Map Tiles &copy; <a href='http://developer.here.com'>HERE</a>"
+        }
       },
       {
         "key": "tiles-url",
         "type": "text",
         "label": "Url for the tiles, see https://leafletjs.com/reference-1.6.0.html#tilelayer",
-        "required": true
+        "required": true,
+        "options": {
+          "default": "https://1.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8?apiKey=y5RrMr902fINWuq7KpVyKJngOMoEUY6RRiX755yTJgU"
+        }
       }
     ]
   }

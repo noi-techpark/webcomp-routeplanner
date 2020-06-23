@@ -114,6 +114,9 @@ class RoutePlanner extends LitElement {
 
     this.t = createTranslator(this.get_system_language());
 
+    this.height = '500px';
+    this.width = '100%';
+
     this.should_render_language_flags = true;
   }
 
@@ -427,9 +430,10 @@ class RoutePlanner extends LitElement {
             <p style="color:red">Required attribute \`tiles_url\` is missing</p>
           `}
       <style>
-        ${getStyle(style__leaflet)}
-        ${getStyle(style)}
-        ${this.font_family ? `.routeplanner { font-family: ${this.font_family} }` : ''}
+        ${getStyle(style__leaflet)} ${getStyle(style)} * {
+          --width: ${this.width};
+          --height: ${this.height};
+        }
       </style>
       <div
         class="routeplanner-widget 
