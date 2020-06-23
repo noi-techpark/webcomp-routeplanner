@@ -29,6 +29,18 @@
     "tagName": "routeplanner-widget",
     "options": [
       {
+        "key": "width",
+        "type": "string",
+        "label": "Width of the component as css property (es: '500px' or '100%'), default is 100%",
+        "required": false
+      },
+      {
+        "key": "height",
+        "type": "string",
+        "label": "Height of the component as css property (es: '500px' or '100%'), deafult is 500px",
+        "required": false
+      },
+      {
         "key": "language",
         "type": "select",
         "label": "Two letter key for the language to be used, if omitted the widget will use the language of the browser (navigator.language[?s]) if supported. Fallback is `en`",

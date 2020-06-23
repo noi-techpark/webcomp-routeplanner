@@ -22,10 +22,11 @@
 }
 
 .routeplanner-widget {
+  font-family: var(--webcomp-routeplanner-font-family, Suedtirol, KievitWebPro, sans-serif);
   position: relative;
-  font-family: 'Suedtirol Next TT', 'KievitWebPro', sans-serif;
   color: $black;
-  width: 100%;
+  width: var(--width);
+  height: var(--height);
   overflow: hidden;
 
   @media (max-width: $mobile-breakpoint) {
@@ -73,13 +74,13 @@
     width: 100%;
     height: 100vh;
     &.closed {
-      height: 260px;
+      height: var(--height);
     }
   }
   @media (min-width: 992px) {
-    height: 700px;
+    height: var(--height);
     &.closed {
-      height: 700px;
+      height: var(--height);
     }
   }
 }

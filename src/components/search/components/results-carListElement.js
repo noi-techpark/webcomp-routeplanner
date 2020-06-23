@@ -1,13 +1,10 @@
 import { html } from 'lit-html';
-import moment from 'moment';
 import chevronRightImage from '../../../img/chevron-right.svg';
-import { formatSecondsDuration, last, HERETripToPolylines } from '../../../utilities';
+import { formatSecondsDuration, HERETripToPolylines } from '../../../utilities';
 import { render__badge } from '../../generics/badge';
 import { MEANS_ICONS, CAR } from '../../../constants';
 
 export function render__carListElement(trip) {
-  const dateFormat = 'HH:mm';
-
   const label = trip.label.join(' - ');
 
   return html`

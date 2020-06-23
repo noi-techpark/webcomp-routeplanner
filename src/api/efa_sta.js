@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { format } from 'fecha';
 import { fetch_no_parallel, toQueryParams } from '../utilities';
 import { LANGUAGES } from '../constants';
 
@@ -45,7 +45,7 @@ export async function request_trip(origin, destination, timing_options, options,
     itdTripDateTimeDepArr: type,
     itdTimeHour: hour,
     itdTimeMinute: minute,
-    itdDateDayMonthYear: moment(day).format('DD.MM.YYYY'),
+    itdDateDayMonthYear: format(day, 'DD.MM.YYYY'),
     excludedMeans: 1
   };
   if (options.train) {
