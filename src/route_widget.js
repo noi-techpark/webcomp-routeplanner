@@ -116,6 +116,8 @@ class RoutePlanner extends LitElement {
 
     this.height = '500px';
     this.width = '100%';
+
+    this.should_render_language_flags = true;
   }
 
   static get properties() {
@@ -148,6 +150,7 @@ class RoutePlanner extends LitElement {
     await this.handleDestination();
 
     if (!this.language) {
+      this.should_render_language_flags = false;
       this.language = this.get_system_language();
     }
     this.switch_language(this.language);
@@ -438,8 +441,9 @@ class RoutePlanner extends LitElement {
           ${this.isMobile() ? `mobile` : ``}
           ${this.getAnimationState()}"
       >
-        ${this.render__language_flags()} ${this.isFullScreen ? this.render_closeFullscreenButton() : null}
-        ${this.render_backgroundMap()} ${this.render__mapControls()}
+        ${this.should_render_language_flags ? `` : this.render__language_flags()}
+        ${this.isFullScreen ? this.render_closeFullscreenButton() : null} ${this.render_backgroundMap()}
+        ${this.render__mapControls()}
         ${!this.details_data
           ? html`
               ${this.render_search()}
