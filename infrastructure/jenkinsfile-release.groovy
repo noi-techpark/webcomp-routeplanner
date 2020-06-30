@@ -1,7 +1,7 @@
 pipeline {
     agent {
         dockerfile {
-            filename 'infrastructure/docker/Dockerfile'
+            filename 'infrastructure/docker/dockerfile'
             additionalBuildArgs '--build-arg JENKINS_USER_ID=`id -u jenkins` --build-arg JENKINS_GROUP_ID=`id -g jenkins`'
         }
     }
@@ -15,7 +15,7 @@ pipeline {
     }
 
     environment {
-        GIT_REPOSITORY = "git@github.com:noi-techpark/webcomp-publictransport.git"
+        GIT_REPOSITORY = "git@github.com:noi-techpark/webcomp-routeplanner.git"
         HERE_API_KEY = credentials("here-api-key")
     }
 
@@ -50,17 +50,17 @@ pipeline {
             steps {
                 sshagent (credentials: ['jenkins_github_ssh_key']) {
                     sh """
-                      git config --global user.email "info@opendatahub.bz.it"
-                      git config --global user.name "Jenkins"
-                      git remote set-url origin ${GIT_REPOSITORY}
-                      git add -A
-                      git commit --allow-empty -m "Version ${VERSION}"
-                      git tag --delete v${VERSION} || true
-                      git tag -a v${VERSION} -m "Version ${VERSION}"
-                      mkdir -p ~/.ssh
-                      ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-                      git push origin HEAD:master
-                      git push origin --tags
+                        git config --global user.email "info@opendatahub.bz.it"
+                        git config --global user.name "Jenkins"
+                        git remote set-url origin ${GIT_REPOSITORY}
+                        git add -A
+                        git commit --allow-empty -m "Version ${VERSION}"
+                        git tag --delete v${VERSION} || true
+                        git tag -a v${VERSION} -m "Version ${VERSION}"
+                        mkdir -p ~/.ssh
+                        ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+                        git push origin HEAD:master
+                        git push origin --tags
                     """
                 }
             }
