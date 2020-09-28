@@ -1,7 +1,7 @@
 import { here_options, LANGUAGES } from '../constants';
 import { last, toQueryParams } from '../utilities';
 
-const BASE_PATH = 'https://route.ls.hereapi.com/routing/7.2/';
+const BASE_PATH = 'https://route.ls.hereapi.com/routing/7.2';
 const API_KEY = process.env.HERE_API_KEY;
 
 export async function request_trip_by_car(
