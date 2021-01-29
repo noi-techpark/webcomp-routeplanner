@@ -10,6 +10,7 @@ import { render__resultsListElement } from './components/results-listElement';
 import { render__resultsTab } from './components/results-tab';
 import settingsIcon from '../../img/settings.svg';
 import chevronDown from '../../img/chevron-down-green.svg';
+
 export function render__search() {
   this.render__fromTo = render__fromTo.bind(this);
   this.render__departureTimePicker = render__departureTimePicker.bind(this);

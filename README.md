@@ -79,5 +79,5 @@ Using the `--webcomp-routeplanner-font-family` css variable you can set a custom
 
 ## Authors
 
-- **Luca Fedrizzi** - _Initial work_ - [fedriz](https://github.com/fedriz)
+- **Luca Fedrizzi** - _Initial work_ - [lcfd](https://github.com/lcfd)
 - **Nicolò Pretto** - _more development_ - [npretto](https://github.com/npretto)

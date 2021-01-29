@@ -21,11 +21,20 @@
           <label><input type="checkbox" oninput="disableLocation(event)" />Remove fixed destination</label>
         </div>
         <div class="col-12" id="target">
-          <routeplanner-widget
+          <!-- <routeplanner-widget
             destination-name="Terme di Merano, Merano"
             destination="11.1604034:46.6684672"
             attribution='Map Tiles &copy; <a href="http://developer.here.com">HERE</a>'
             tiles-url="https://1.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8?apiKey=y5RrMr902fINWuq7KpVyKJngOMoEUY6RRiX755yTJgU"
+            id="widget"
+          ></routeplanner-widget> -->
+          <routeplanner-widget
+            height="725px"
+            destination-name="Terme Merano"
+            destination="11.160532:46.669281"
+            attribution=""
+            language="it"
+            tiles-url="https://w0.oastatic.com/map/v1/png/osm/{z}/{x}/{y}/t.png?project=api-suedtirol"
             id="widget"
           ></routeplanner-widget>
         </div>
