@@ -2,7 +2,8 @@ import { format, parse } from 'fecha';
 import { fetch_no_parallel, toQueryParams } from '../utilities';
 import { LANGUAGES } from '../constants';
 
-const BASE_PATH = window.location.protocol === 'https:' ? 'https://efas.sta.bz.it/apb' : 'http://efa.sta.bz.it/apb';
+// const BASE_PATH = window.location.protocol === 'https:' ? 'https://efas.sta.bz.it/apb' : 'http://efa.sta.bz.it/apb';
+const BASE_PATH = 'https://efa.sta.bz.it/idm';
 
 const fetch_poi = fetch_no_parallel();
 export async function request_get_poi(query, language = LANGUAGES.EN) {
