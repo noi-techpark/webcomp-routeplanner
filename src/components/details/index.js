@@ -141,9 +141,8 @@ export function render__details() {
       })}
     `;
   } else if (this.details_data.type === CAR) {
-    // TODO: problems of null check when api are called, to manage!
-    startTime = format(this.details_data.leg[0].maneuver[0].time, 'HH:mm');
-    endTime = format(last(last(this.details_data.leg).maneuver).time, 'HH:mm');
+    startTime = format(new Date(this.details_data.leg[0].maneuver[0].time), 'HH:mm');
+    endTime = format(new Date(last(last(this.details_data.leg).maneuver).time), 'HH:mm');
 
     tags.push({ icon: clockImage, label: formatSecondsDuration(this.details_data.summary.baseTime) });
     tags.push({ icon: carImage, label: `${this.details_data.lengthInKilometers} km` });
