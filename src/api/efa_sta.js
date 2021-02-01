@@ -28,9 +28,12 @@ export async function request_get_poi(query, language = LANGUAGES.EN) {
   if (list && list.point) {
     return [list.point];
   }
+  if (list) {
+    return list.filter(result => result.ref.coords);
+  }
+  return [];
 
   // temporarily (?) filter out results without coords as we don't handle them yet
-  return list.filter(result => result.ref.coords) || [];
 }
 
 export async function request_trip(origin, destination, timing_options, options, language = LANGUAGES.EN) {
