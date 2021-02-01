@@ -13,10 +13,13 @@ export function render__carListElement(trip) {
       @click=${() => {
         this.details_data = { type: CAR, ...trip };
         this.details_open = false;
-        this.addTripToMap(HERETripToPolylines(trip));
         this.removeTripToMapHover();
+        this.addTripToMap(HERETripToPolylines(trip));
       }}
-      @mouseenter=${() => this.addTripToMapHover(HERETripToPolylines(trip))}
+      @mouseenter=${() => {
+        this.removeTripToMapHover();
+        this.addTripToMapHover(HERETripToPolylines(trip));
+      }}
       @mouseleave=${() => this.removeTripToMapHover()}
     >
       <div class="search__results__listElement__details">
