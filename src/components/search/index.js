@@ -84,6 +84,15 @@ export function render__search() {
           </div>
         </div>
       </div>
+
+      ${this.car_results || this.search_results
+        ? html`
+            <div class="search__data_provider_url">
+              ${this.t('data_provided_by')}${' '}
+              <a href="https://www.suedtirolmobil.info/" target="_blank">https://www.suedtirolmobil.info/</a>
+            </div>
+          `
+        : ''}
     </div>
   `;
 }
