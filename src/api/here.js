@@ -53,3 +53,36 @@ export async function request_trip_by_car(
 
   return { ...data.response, shortestTime };
 }
+
+export async function requestGetCoordinatesFromSearch(query) {
+  const r = 900 * 1000;
+  try {
+    if (query) {
+      const response = await fetch(
+        `https://places.ls.hereapi.com/places/v1/browse?apiKey=${API_KEY}&in=46.31,11.26;r=${r}&q=${query}`,
+        {
+          method: 'GET',
+          headers: new Headers({
+            Accept: 'application/json'
+          })
+        }
+      );
+      const data = await response.json();
+      if (data.results.items) {
+        const { items } = data.results;
+        return items.map(item => {
+          return {
+            ...item,
+            name: item.title,
+            ref: {
+              coords: `${item.position[1]},${item.position[0]}`
+            }
+          };
+        });
+      }
+      return [];
+    }
+  } catch (error) {
+    return [];
+  }
+}

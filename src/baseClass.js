@@ -1,5 +1,6 @@
 import { LitElement } from 'lit-element';
 import { request_get_poi } from './api/efa_sta';
+import { requestGetCoordinatesFromSearch } from './api/here';
 import { render__alert } from './components/alert';
 import { render_backgroundMap } from './components/backgroundMap';
 import { render_closeFullscreenButton } from './components/closeFullscreenButton';
@@ -33,6 +34,7 @@ export class BaseClass extends LitElement {
      * Api
      */
     this.request_get_poi = request_get_poi.bind(this);
+    this.requestGetCoordinatesFromSearch = requestGetCoordinatesFromSearch.bind(this);
 
     /** Observed values */
 
