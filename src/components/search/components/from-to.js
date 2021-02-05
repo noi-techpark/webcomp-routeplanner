@@ -170,7 +170,9 @@ export function render__fromTo() {
         } catch (webkitError) {
           try {
             document.body.mozRequestFullScreen();
-          } catch (mozError) {}
+          } catch (mozError) {
+            console.error(mozError);
+          }
         }
       }
       this.map.invalidateSize(true);
