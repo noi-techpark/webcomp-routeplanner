@@ -40,7 +40,8 @@ const translations = {
     geolocation_no_permissions: 'Non ho i permessi per la geolocalizzazione.',
     geolocation_timeout: 'Non sono riuscito a trovare la tua posizione.',
     is_geolocating: 'Sto cercando…',
-    data_provided_by: 'Dati forniti da:'
+    data_provided_by: 'Dati forniti da:',
+    no_result: 'Nessun risultato'
   },
   en: {
     public_means: 'Public transport',
@@ -83,7 +84,8 @@ const translations = {
     geolocation_no_permissions: 'No geolocation permission granted',
     geolocation_timeout: "Your position couldn't be found.",
     is_geolocating: 'Locating your current position...',
-    data_provided_by: 'Data provided by'
+    data_provided_by: 'Data provided by',
+    no_result: 'No results'
   },
   de: {
     public_means: 'Öffentliche Verkehrsmittel',
@@ -126,7 +128,8 @@ const translations = {
     geolocation_no_permissions: 'Erlaubnis zur Standortermittlung nicht erteilt.',
     geolocation_timeout: 'Standort konnte nicht ermittelt werden.',
     is_geolocating: 'Standortermittlung im Gange...',
-    data_provided_by: 'Daten bereitgestellt von'
+    data_provided_by: 'Daten bereitgestellt von',
+    no_result: 'Kein Ergebnis'
   }
 };
 

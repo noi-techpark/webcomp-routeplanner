@@ -11,6 +11,16 @@ export function render__resultsTab() {
     <div class="loading-skeleton"><div></div></div>
   `;
 
+  const renderTab = (fetching, results, duration) => {
+    if (fetching) {
+      return loadingIndicator;
+    }
+    if (results) {
+      return duration();
+    }
+    return this.t('no_result');
+  };
+
   return html`
     <div class="search__results__tabs d-flex justify-content-between">
       <div
@@ -21,13 +31,11 @@ export function render__resultsTab() {
       >
         <p>
           ${this.t('public_means')}
-          <span
-            >${this.is_fetching_efa
-              ? loadingIndicator
-              : this.search_results
-              ? formatDuration(this.search_results.find(trip => trip.is_fastest).duration.split(':'))
-              : 'Nessun risultato'}</span
-          >
+          <span>
+            ${renderTab(this.is_fetching_efa, this.search_results, () =>
+              formatDuration(this.search_results.find(trip => trip.is_fastest).duration.split(':'))
+            )}
+          </span>
         </p>
       </div>
       <div
@@ -38,13 +46,11 @@ export function render__resultsTab() {
       >
         <p>
           ${this.t('car')}
-          <span
-            >${this.is_fetching_here
-              ? loadingIndicator
-              : this.car_results
-              ? formatSecondsDuration(this.car_results.shortestTime)
-              : 'Nessun risultato'}</span
-          >
+          <span>
+            ${renderTab(this.is_fetching_here, this.car_results, () =>
+              formatSecondsDuration(this.car_results.shortestTime)
+            )}
+          </span>
         </p>
       </div>
     </div>

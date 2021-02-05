@@ -80,7 +80,7 @@ export function render__search() {
         </div>
       </div>
 
-      ${this.car_results || this.search_results
+      ${(this.car_results || this.search_results) && this.active_tab === PUBLIC_TRANSPORT_TAB
         ? html`
             <div class="search__data_provider_url">
               ${this.t('data_provided_by')}${' '}
