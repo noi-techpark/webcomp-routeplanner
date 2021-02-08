@@ -16,9 +16,10 @@
   <body>
     <div class="container">
       <div class="row">
-        <div>
-          <label><input type="checkbox" oninput="disableCarOnValue(event)" />Disable car</label>
-          <label><input type="checkbox" oninput="disableLocation(event)" />Remove fixed destination</label>
+        <div class="col-12 p-3 border my-3">
+          <label class="d-block"><input class="mr-2" type="checkbox" oninput="disableCarOnValue(event)" />Disable car</label>
+          <label class="d-block"><input class="mr-2" type="checkbox" oninput="disableLocation(event)" />Remove fixed destination</label>
+          <label class="d-block"><input class="mr-2" type="checkbox" oninput="changeLanguageDE(event)" />DE</label>
         </div>
         <div class="col-12" id="target">
           <!-- <routeplanner-widget
@@ -63,6 +64,18 @@
         } else {
           widget.setAttribute('destination-name', 'Terme di Merano, Merano');
           widget.setAttribute('destination', '11.1604034:46.6684672');
+        }
+
+        const copy = widget.outerHTML;
+        document.getElementById('target').innerHTML = copy;
+      }
+
+      function changeLanguageDE(e) {
+        const widget = document.getElementById('widget');
+        if (e.target.checked) {
+          widget.setAttribute('language', 'de');
+        } else {
+          widget.setAttribute('language', 'it');
         }
 
         const copy = widget.outerHTML;
