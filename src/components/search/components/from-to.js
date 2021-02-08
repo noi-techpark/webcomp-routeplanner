@@ -26,6 +26,7 @@ async function fromInputHandler(input_name, input_string) {
     let heremaps_results = [];
     if (!results.length) {
       heremaps_results = await this.requestGetCoordinatesFromSearch(input_string);
+      console.log(heremaps_results);
     }
 
     if (input_name === FROM) {
