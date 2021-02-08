@@ -58,26 +58,28 @@ export async function requestGetCoordinatesFromSearch(query) {
   const r = 900 * 1000;
   try {
     if (query) {
-      const response = await fetch(
-        `https://places.ls.hereapi.com/places/v1/browse?apiKey=${API_KEY}&in=46.31,11.26;r=${r}&q=${query}`,
-        {
-          method: 'GET',
-          headers: new Headers({
-            Accept: 'application/json'
-          })
-        }
-      );
+      const response = await fetch(` https://geocode.search.hereapi.com/v1/geocode?apiKey=${API_KEY}&q=${query}`, {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json'
+        })
+      });
       const data = await response.json();
-      if (data.results.items) {
-        const { items } = data.results;
+      console.log(data);
+      if (data.items) {
+        const { items } = data;
         return items.map(item => {
-          return {
-            ...item,
-            name: item.title,
-            ref: {
-              coords: `${item.position[1]},${item.position[0]}`
-            }
-          };
+          console.log(item);
+          if (item.position) {
+            return {
+              ...item,
+              name: item.title,
+              ref: {
+                coords: `${item.position.lng},${item.position.lat}`
+              }
+            };
+          }
+          return {};
         });
       }
       return [];
@@ -85,4 +87,5 @@ export async function requestGetCoordinatesFromSearch(query) {
   } catch (error) {
     return [];
   }
+  return [];
 }
