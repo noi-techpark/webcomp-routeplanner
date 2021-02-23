@@ -20,10 +20,16 @@
     }
   ],
   "image": "wcs-logo.png",
-  "searchTags": ["map", "mobility", "routeplanner"],
+  "searchTags": [
+    "map",
+    "mobility",
+    "routeplanner"
+  ],
   "dist": {
     "basePath": "dist",
-    "files": ["routeplanner_widget.min.js"]
+    "files": [
+      "routeplanner_widget.min.js"
+    ]
   },
   "configuration": {
     "tagName": "routeplanner-widget",
@@ -34,7 +40,7 @@
         "label": "Width of the component as css property (es: '500px' or '100%')",
         "required": false,
         "options": {
-            "default": "100%"
+          "default": "100%"
         }
       },
       {
@@ -43,7 +49,7 @@
         "label": "Height of the component as css property (es: '500px' or '100%')",
         "required": false,
         "options": {
-            "default": "500px"
+          "default": "500px"
         }
       },
       {
@@ -52,7 +58,11 @@
         "label": "Two letter key for the language to be used, if omitted the widget will use the language of the browser (navigator.language[?s]) if supported. Fallback is `en`",
         "required": false,
         "options": {
-          "values": ["en", "de", "it"],
+          "values": [
+            "en",
+            "de",
+            "it"
+          ],
           "default": "en"
         }
       },
