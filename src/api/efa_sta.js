@@ -2,7 +2,7 @@ import { format, parse } from 'fecha';
 import { fetch_no_parallel, toQueryParams } from '../utilities';
 import { LANGUAGES } from '../constants';
 
-const BASE_PATH = window.location.protocol === 'https:' ? 'https://efas.sta.bz.it/apb' : 'http://efa.sta.bz.it/apb';
+const BASE_PATH = window.location.protocol === 'https:' ? 'https://efa.sta.bz.it/idm' : 'http://efa.sta.bz.it/idm';
 
 const fetch_poi = fetch_no_parallel();
 export async function request_get_poi(query, language = LANGUAGES.EN) {
@@ -27,9 +27,12 @@ export async function request_get_poi(query, language = LANGUAGES.EN) {
   if (list && list.point) {
     return [list.point];
   }
+  if (list) {
+    return list.filter(result => result.ref.coords);
+  }
+  return [];
 
   // temporarily (?) filter out results without coords as we don't handle them yet
-  return list.filter(result => result.ref.coords) || [];
 }
 
 export async function request_trip(origin, destination, timing_options, options, language = LANGUAGES.EN) {

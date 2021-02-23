@@ -53,3 +53,39 @@ export async function request_trip_by_car(
 
   return { ...data.response, shortestTime };
 }
+
+export async function requestGetCoordinatesFromSearch(query) {
+  const r = 900 * 1000;
+  try {
+    if (query) {
+      const response = await fetch(` https://geocode.search.hereapi.com/v1/geocode?apiKey=${API_KEY}&q=${query}`, {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json'
+        })
+      });
+      const data = await response.json();
+      console.log(data);
+      if (data.items) {
+        const { items } = data;
+        return items.map(item => {
+          console.log(item);
+          if (item.position) {
+            return {
+              ...item,
+              name: item.title,
+              ref: {
+                coords: `${item.position.lng},${item.position.lat}`
+              }
+            };
+          }
+          return {};
+        });
+      }
+      return [];
+    }
+  } catch (error) {
+    return [];
+  }
+  return [];
+}
