@@ -1,7 +1,9 @@
 version: "3"
 services:
   app:
-    image: node:12
+    build:
+      context: .
+      dockerfile: infrastructure/docker/node.dockerfile
     volumes:
       - ./:/code
     env_file: .env
@@ -9,3 +11,4 @@ services:
     command: sh -c "test -d node_modules || yarn; yarn start"
     ports:
       - "8999:8080"
+    tty: true
