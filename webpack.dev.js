@@ -23,7 +23,7 @@ module.exports = {
     compress: true,
     port: 8080,
     open: true,
-    openPage: 'routeplanner.html',
+    openPage: '',
     overlay: true
   },
   devtool: 'inline-source-map',

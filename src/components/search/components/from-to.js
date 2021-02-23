@@ -23,11 +23,17 @@ async function fromInputHandler(input_name, input_string) {
     this.requestUpdate();
 
     const results = await this.request_get_poi(input_string, this.language);
+    let heremaps_results = [];
+    if (!results.length) {
+      heremaps_results = await this.requestGetCoordinatesFromSearch(input_string);
+      console.log(heremaps_results);
+    }
+
     if (input_name === FROM) {
-      this.from.poi_search_results = results;
+      this.from.poi_search_results = [...results, ...heremaps_results];
       this.from.poi_search_is_fetching = false;
     } else if (input_name === DESTINATION) {
-      this.destination_place.poi_search_results = results;
+      this.destination_place.poi_search_results = [...results, ...heremaps_results];
       this.destination_place.poi_search_is_fetching = false;
     }
 
@@ -165,7 +171,9 @@ export function render__fromTo() {
         } catch (webkitError) {
           try {
             document.body.mozRequestFullScreen();
-          } catch (mozError) {}
+          } catch (mozError) {
+            console.error(mozError);
+          }
         }
       }
       this.map.invalidateSize(true);

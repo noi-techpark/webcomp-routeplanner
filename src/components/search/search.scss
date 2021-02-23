@@ -86,6 +86,13 @@
       }
     }
   }
+
+  .search__data_provider_url {
+    background-color: $white;
+    font-size: 12px;
+    padding: 4px 8px;
+    margin-top: 4px;
+  }
 }
 
 .search__results {
@@ -137,7 +144,11 @@
   .search__results__list_container {
     overflow-y: auto;
     overflow-x: hidden;
-    flex: 1;
+
+    height: calc(100vh - 292px);
+    @media (min-width: 768px) {
+      height: calc(var(--height) - 292px);
+    }
 
     .loading-skeleton {
       margin: 5px;
@@ -195,8 +206,16 @@
         font-size: 13px;
         line-height: 24px;
         margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
         @media (min-width: 992px) {
           font-size: 18px;
+        }
+        &.red {
+          color: $red;
+        }
+        img {
+          margin-right: 4px;
         }
       }
 
@@ -256,9 +275,9 @@
           }
         }
       }
-      .search__results__listElement__chevron_container {
-        // padding: 0 0.5rem;
-      }
+      // .search__results__listElement__chevron_container {
+      // padding: 0 0.5rem;
+      // }
     }
   }
 }
