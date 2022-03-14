@@ -15,16 +15,16 @@ Follow the instruction here below for the development instructions.
 What things you need to install the software and how to install them:
 
 - Node (global)
-- Yarn (global)
+- NPM (global)
 
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running
 
-Install yarn project's dependencies
+Install npm project's dependencies
 
 ```
-yarn
+npm install
 ```
 
 ### Development
@@ -32,7 +32,7 @@ yarn
 Start the dev server with
 
 ```
-yarn start
+npm run  start
 ```
 
 ### Production
@@ -40,7 +40,7 @@ yarn start
 Build the widget with the `production` config of Webpack:
 
 ```
-yarn build
+npm run build
 ```
 
 The destination for the resulting code will be the `dist` folder, located at the root of the project.
