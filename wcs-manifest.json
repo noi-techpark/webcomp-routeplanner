@@ -3,6 +3,7 @@
   "description": "Routeplanner widget",
   "descriptionAbstract": "A widget that helps planning the arrival by public transport or car to a specific location in South Tyrol.",
   "license": "AGPL-3.0-or-later",
+  "repositoryUrl": "https://github.com/noi-techpark/webcomp-routeplanner.git",
   "copyrightHolders": [
     {
       "name": "IDM",
