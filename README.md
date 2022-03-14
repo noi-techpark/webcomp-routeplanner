@@ -4,7 +4,7 @@ CSS styles are transpiled using [Sass](https://sass-lang.com/).
 
 We are using [Webpack](https://webpack.js.org/) for the bundled creation.
 
-[![CI](https://github.com/noi-techpark/webcomp-routeplanner/actions/workflows/ci.yml/badge.svg)](https://github.com/noi-techpark/webcomp-routeplanner/actions/workflows/ci.yml)
+[![CI/CD](https://github.com/noi-techpark/webcomp-routeplanner/actions/workflows/main.yml/badge.svg)](https://github.com/noi-techpark/webcomp-routeplanner/actions/workflows/main.yml)
 
 ## Getting Started
 
