@@ -4,6 +4,8 @@ import { LANGUAGES } from '../constants';
 
 const BASE_PATH = window.location.protocol === 'https:' ? 'https://efa.sta.bz.it/idm' : 'http://efa.sta.bz.it/idm';
 
+// https://efa.sta.bz.it/apb/XSLT_STOPFINDER_REQUEST?language=de&outputFormat=JSON&itdLPxx_usage=origin&useLocalityMainStop=true&doNotSearchForStops_sf=1&SpEncId=0&odvSugMacro=true&name_sf=brixenb
+
 const fetch_poi = fetch_no_parallel();
 export async function request_get_poi(query, language = LANGUAGES.EN) {
   const params = {
@@ -24,6 +26,13 @@ export async function request_get_poi(query, language = LANGUAGES.EN) {
   const list = data.stopFinder.points;
   // if there's just one point the result is in the form of
   // points: { point: {} } instead of points: [...]
+
+  // sort for quality, to have important stations on top
+  list.sort(function(a, b){
+    return b.quality - a.quality;
+  });
+
+
   if (list && list.point) {
     return [list.point];
   }
