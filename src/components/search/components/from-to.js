@@ -123,6 +123,12 @@ function setFromToResult(result) {
 
   this.from.display_name = result.name;
   this.from.type = 'any';
+
+  // type must be cords for odh poi`s
+  if (result.type) {
+    this.from.type = 'coord';
+  }
+
   this.from.name = result.stateless;
   this.from.longitude = longitude;
   this.from.latitude = latitude;
@@ -222,12 +228,12 @@ export function render__fromTo() {
     return html`
       <div class="fromTo__inputs__input_wrapper">
         ${place.locked
-          ? html`
+        ? html`
               <div class="fromTo__inputs__input_wrapper">
                 <p>${place.display_name}</p>
               </div>
             `
-          : html`
+        : html`
               <input
                 type="text"
                 class=${`${place.state} ${place.input_select_visible ? 'select_open' : ''}`}
@@ -235,11 +241,11 @@ export function render__fromTo() {
                 @input=${event => this.throttledFromInputHandler(input_name, event.target.value)}
                 @focus=${() => handleFocusFor(input_name)}
                 @blur=${() => {
-                  setTimeout(() => {
-                    place.input_select_visible = false;
-                    this.requestUpdate();
-                  }, 200);
-                }}
+            setTimeout(() => {
+              place.input_select_visible = false;
+              this.requestUpdate();
+            }, 200);
+          }}
                 placeholder=${this.t(input_name === FROM ? 'origin_placeholder' : 'destination_placeholder')}
               />
               <div class=${`fromTo__inputs__input_selection ${place.input_select_visible ? '' : 'hidden'}`}>
@@ -247,21 +253,21 @@ export function render__fromTo() {
                   <img src=${crosshairImage} alt="" /> ${this.t('use_my_position')}
                 </div>
                 ${place.poi_search_is_fetching
-                  ? repeatHtml(
-                      html`
+            ? repeatHtml(
+              html`
                         <div class="loading-skeleton fromTo__inputs__input_selection__element"><div></div></div>
                       `,
-                      3
-                    )
-                  : place.poi_search_results &&
-                    place.poi_search_results.map(
-                      result =>
-                        html`
+              3
+            )
+            : place.poi_search_results &&
+            place.poi_search_results.map(
+              result =>
+                html`
                           <div class="fromTo__inputs__input_selection__element" @click=${() => setToResult(result)}>
                             ${result.name}
                           </div>
                         `
-                    )}
+            )}
               </div>
             `}
       </div>
@@ -290,18 +296,18 @@ export function render__fromTo() {
     <div class="fromTo d-flex">
       <div class="fromTo__graphics">
         ${renderFromToIcon(
-          this.from,
-          html`
+    this.from,
+    html`
             <img src=${fromImage} alt="" />
           `
-        )}
+  )}
         <img class="fromTo__dots_icon" src=${fromToDotsImage} alt="" />
         ${renderFromToIcon(
-          this.destination_place,
-          html`
+    this.destination_place,
+    html`
             <img src=${toImage} alt="" />
           `
-        )}
+  )}
       </div>
       <div class="fromTo__inputs">
         ${renderPlaceInput(FROM, () => this.setPlaceToCurrentPosition(FROM), this.setFromToResult)}

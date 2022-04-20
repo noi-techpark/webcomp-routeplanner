@@ -26,7 +26,8 @@ export async function request_get_odh_poi(search, language = LANGUAGES.EN) {
 
       return {
         ...item,
-        id: item["Detail." + language + ".Title"],
+        type: "odh_poi",
+        stateless: item.GpsPoints.position.Longitude + ":" + item.GpsPoints.position.Latitude + ":WGS84[DD.DDDDD]",
         ref: {
           coords: item.GpsPoints.position.Longitude + "," + item.GpsPoints.position.Latitude,
         },
