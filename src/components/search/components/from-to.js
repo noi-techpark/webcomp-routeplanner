@@ -22,6 +22,8 @@ async function fromInputHandler(input_name, input_string) {
     }
     this.requestUpdate();
 
+    const odhPoiResults = await this.request_get_odh_poi(input_string, this.language);
+
     const results = await this.request_get_poi(input_string, this.language);
     let heremaps_results = [];
     if (!results.length) {
@@ -29,8 +31,12 @@ async function fromInputHandler(input_name, input_string) {
       console.log(heremaps_results);
     }
 
+    // console.log(results);
+    // console.log(odhPoiResults);
+
+
     if (input_name === FROM) {
-      this.from.poi_search_results = [...results, ...heremaps_results];
+      this.from.poi_search_results = [...results, ...heremaps_results, ...odhPoiResults];
       this.from.poi_search_is_fetching = false;
     } else if (input_name === DESTINATION) {
       this.destination_place.poi_search_results = [...results, ...heremaps_results];
