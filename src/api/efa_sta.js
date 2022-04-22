@@ -28,9 +28,12 @@ export async function request_get_poi(query, language = LANGUAGES.EN) {
   // points: { point: {} } instead of points: [...]
 
   // sort for quality, to have important stations on top
-  list.sort(function(a, b){
-    return b.quality - a.quality;
-  });
+  if (list) {
+    list.sort(function (a, b) {
+      return b.quality - a.quality;
+    });
+  }
+
 
 
   if (list && list.point) {
