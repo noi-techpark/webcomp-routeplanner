@@ -32,8 +32,6 @@ export async function request_get_poi(query, language = LANGUAGES.EN) {
     });
   }
 
-
-
   if (list && list.point) {
     return [list.point];
   }
