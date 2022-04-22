@@ -13,6 +13,9 @@ export const observed_properties = {
   destination: { type: String },
   destination_place: { type: Object },
 
+  is_fetching_efa: { type: Boolean },
+  is_fetching_here : { type: Boolean },
+
   // Departure time
   departure_time: { type: Number },
   departure_time_hour: { type: Number },
