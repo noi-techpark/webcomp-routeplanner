@@ -32,7 +32,7 @@ jobs:
       - name: Create .env file
         uses: noi-techpark/github-actions/env-file@v2
         env:
-          X_HEREMAPS_API_KEY: "${{ secrets.HEREMAPS_API_KEY }}"
+          X_HERE_API_KEY: "${{ secrets.HEREMAPS_API_KEY }}"
 
       - uses: noi-techpark/github-actions/npm-build@v2
         with:
@@ -55,7 +55,7 @@ jobs:
       - name: Create .env file
         uses: noi-techpark/github-actions/env-file@v2
         env:
-          X_HEREMAPS_API_KEY: "${{ secrets.HEREMAPS_API_KEY }}"
+          X_HERE_API_KEY: "${{ secrets.HEREMAPS_API_KEY }}"
 
 
       - uses: noi-techpark/github-actions/npm-build@v2
