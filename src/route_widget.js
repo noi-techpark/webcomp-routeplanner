@@ -5,7 +5,7 @@ import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html } from 'lit-element';
 import clone from 'lodash/clone';
 import flatten from 'lodash/flatten';
-import { request_trip, request_get_poi } from './api/efa_sta';
+import { request_trip } from './api/efa_sta';
 import { request_get_odh_poi } from './api/odh_tourism';
 import { request_trip_by_car } from './api/here';
 import { BaseClass } from './baseClass';
@@ -148,6 +148,7 @@ class RoutePlanner extends BaseClass {
       let stopId;
       const [longitude, latitude] = this.destination.split(':');
 
+<<<<<<< HEAD
       // to use stop id as destination type
 
       // request_get_poi(this.destination_name).then((poi) => {
@@ -178,10 +179,26 @@ class RoutePlanner extends BaseClass {
       this.setDestinationMarker(this.destination_place);
       this.zoomOn(this.destination_place);
 
+=======
+      request_get_poi(this.destination_name).then((poi) => {
+        // use best result as stop id
+        stopId = poi[0].stateless;
+        this.destination_place = {
+          display_name: this.destination_name,
+          type: stop,
+          name: stopId,
+          latitude,
+          longitude,
+          locked: true
+        };
+        this.setDestinationMarker(this.destination_place);
+        this.zoomOn(this.destination_place);
+      });
+>>>>>>> use stop id as destination for trip_request
 
     }
 
-      
+
   }
 
   /** starts the search if destination and origin are */
@@ -371,10 +388,10 @@ class RoutePlanner extends BaseClass {
         ${this.isFullScreen ? this.render_closeFullscreenButton() : null} ${this.render_backgroundMap()}
         ${this.render__mapControls()}
         ${!this.details_data
-          ? html`
+        ? html`
               ${this.render_search()}
             `
-          : html`
+        : html`
               ${this.render_details()}
             `}
         ${this.render__alert()}
