@@ -5,10 +5,10 @@ import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html } from 'lit-element';
 import clone from 'lodash/clone';
 import flatten from 'lodash/flatten';
-import { request_trip } from './api/efa_sta';
+import { request_trip, request_get_poi } from './api/efa_sta';
 import { request_trip_by_car } from './api/here';
 import { BaseClass } from './baseClass';
-import { BUS, CABLE_CAR, coord, LANGUAGES, TRAIN, WALKING } from './constants';
+import { BUS, CABLE_CAR, coord, stop, LANGUAGES, TRAIN, WALKING } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
@@ -139,18 +139,24 @@ class RoutePlanner extends BaseClass {
 
   async handleDestination() {
     if (this.destination) {
+      let stopId;
       const [longitude, latitude] = this.destination.split(':');
 
-      this.destination_place = {
-        display_name: this.destination_name,
-        type: coord,
-        name: `${this.destination}:WGS84[DD.DDDDD]`,
-        latitude,
-        longitude,
-        locked: true
-      };
-      this.setDestinationMarker(this.destination_place);
-      this.zoomOn(this.destination_place);
+      request_get_poi(this.destination_name).then((poi) => {
+        // use best result as stop id
+        stopId = poi[0].stateless;
+        this.destination_place = {
+          display_name: this.destination_name,
+          type: stop,
+          name: stopId,
+          latitude,
+          longitude,
+          locked: true
+        };
+        this.setDestinationMarker(this.destination_place);
+        this.zoomOn(this.destination_place);
+      });
+
     }
   }
 
