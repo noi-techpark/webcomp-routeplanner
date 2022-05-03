@@ -41,8 +41,9 @@ export class BaseClass extends LitElement {
     /** Observed values */
 
     this.is_fetching_efa = false;
-    this.is_fetching_odh = false;
     this.is_fetching_here = false;
+
+    this.odhPois = [];
 
     this.isFullScreen = false;
     this.mobile_open = false;
