@@ -119,47 +119,36 @@ function setFromToResult(result) {
     request_get_odh_poi_details(result.Id, this.language).then(poi => {
       result.ref.coords = poi.GpsPoints.position.Longitude + ',' + poi.GpsPoints.position.Latitude;
       result.stateless = poi.GpsPoints.position.Longitude + ":" + poi.GpsPoints.position.Latitude + ":WGS84[DD.DDDDD]";
-
-      const [longitude, latitude] = result.ref.coords.split(',');
-      this.setFromMarker({ longitude, latitude });
-
-      this.from.display_name = result.name;
-      // type must be cords for odh poi`s
-      this.from.type = 'coord';
-      this.from.name = result.stateless;
-      this.from.longitude = longitude;
-      this.from.latitude = latitude;
-      this.from.state = PLACE_STATES.result_selected;
-
-      if (isValidPosition(this.destination_place)) {
-        this.zoomOn([this.from_marker, this.destination_place]);
-      } else {
-        this.zoomOn(this.from_marker);
-      }
-
-      this.attemptSearch();
+      this.assignFrom(result);
     });
   }
   else {
-    const [longitude, latitude] = result.ref.coords.split(',');
-    this.setFromMarker({ longitude, latitude });
-
-    this.from.display_name = result.name;
-    this.from.type = 'any';
-
-    this.from.name = result.stateless;
-    this.from.longitude = longitude;
-    this.from.latitude = latitude;
-    this.from.state = PLACE_STATES.result_selected;
-
-    if (isValidPosition(this.destination_place)) {
-      this.zoomOn([this.from_marker, this.destination_place]);
-    } else {
-      this.zoomOn(this.from_marker);
-    }
-
-    this.attemptSearch();
+    this.assignFrom(result);
   }
+}
+
+function assignFrom(result) {
+  const [longitude, latitude] = result.ref.coords.split(',');
+  this.setFromMarker({ longitude, latitude });
+
+  this.from.display_name = result.name;
+  if (result.type === 'odh_poi') {
+    this.from.type = 'coord';
+  } else {
+    this.from.type = 'any';
+  }
+  this.from.name = result.stateless;
+  this.from.longitude = longitude;
+  this.from.latitude = latitude;
+  this.from.state = PLACE_STATES.result_selected;
+
+  if (isValidPosition(this.destination_place)) {
+    this.zoomOn([this.from_marker, this.destination_place]);
+  } else {
+    this.zoomOn(this.from_marker);
+  }
+
+  this.attemptSearch();
 }
 
 function setDestinationToResult(result) {
@@ -167,45 +156,37 @@ function setDestinationToResult(result) {
     request_get_odh_poi_details(result.Id, this.language).then(poi => {
       result.ref.coords = poi.GpsPoints.position.Longitude + ',' + poi.GpsPoints.position.Latitude;
       result.stateless = poi.GpsPoints.position.Longitude + ":" + poi.GpsPoints.position.Latitude + ":WGS84[DD.DDDDD]";
-
-      const [longitude, latitude] = result.ref.coords.split(',');
-      this.setDestinationMarker({ longitude, latitude });
-  
-      this.destination_place.display_name = result.name;
-      this.destination_place.type = "coord";
-      this.destination_place.name = result.stateless;
-      this.destination_place.longitude = longitude;
-      this.destination_place.latitude = latitude;
-      this.destination_place.state = PLACE_STATES.result_selected;
-
-      if (isValidPosition(this.destination_place)) {
-        this.zoomOn([this.from_marker, this.destination_place]);
-      } else {
-        this.zoomOn(this.from_marker);
-      }
-  
-      this.attemptSearch();
+      this.assignDestination(result)
     });
   }
   else {
-    const [longitude, latitude] = result.ref.coords.split(',');
-    this.setDestinationMarker({ longitude, latitude });
+    this.assignDestination(result);
+  }
+}
 
-    this.destination_place.display_name = result.name;
+function assignDestination(result) {
+  const [longitude, latitude] = result.ref.coords.split(',');
+  this.setDestinationMarker({ longitude, latitude });
+
+  this.destination_place.display_name = result.name;
+  if (result.type === "odh_poi") {
+    this.destination_place.type = "coord";
+    this.destination_place.name = result.stateless;
+  } else {
     this.destination_place.type = stopID;
     this.destination_place.name = result.ref.id;
-    this.destination_place.longitude = longitude;
-    this.destination_place.latitude = latitude;
-    this.destination_place.state = PLACE_STATES.result_selected;
-
-    if (isValidPosition(this.destination_place)) {
-      this.zoomOn([this.from_marker, this.destination_place]);
-    } else {
-      this.zoomOn(this.from_marker);
-    }
-
-    this.attemptSearch();
   }
+  this.destination_place.longitude = longitude;
+  this.destination_place.latitude = latitude;
+  this.destination_place.state = PLACE_STATES.result_selected;
+
+  if (isValidPosition(this.destination_place)) {
+    this.zoomOn([this.from_marker, this.destination_place]);
+  } else {
+    this.zoomOn(this.from_marker);
+  }
+
+  this.attemptSearch();
 }
 
 const throttledFromInputHandler = throttle(fromInputHandler, 500, { leading: true });
@@ -214,6 +195,8 @@ export function render__fromTo() {
   this.throttledFromInputHandler = throttledFromInputHandler.bind(this);
   this.setPlaceToCurrentPosition = setPlaceToCurrentPosition.bind(this);
   this.setFromToResult = setFromToResult.bind(this);
+  this.assignFrom = assignFrom.bind(this);
+  this.assignDestination = assignDestination.bind(this);
   this.setDestinationToResult = setDestinationToResult.bind(this);
 
   const handleFocusFor = input_name => {
