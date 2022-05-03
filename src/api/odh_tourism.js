@@ -7,7 +7,6 @@ const fetch_poi = fetch_no_parallel();
 export async function request_get_odh_poi(language = LANGUAGES.EN) {
   const params = {
     language: language,
-    referer: "RoutePlannerWebcomp",
     fields: "Id,Detail." + language + ".Title,GpsPoints",
     removenullvalues: true,
     pagesize: 20000,
@@ -33,7 +32,6 @@ export async function request_get_odh_poi(language = LANGUAGES.EN) {
 export async function request_get_odh_poi_details(poiId, language = LANGUAGES.EN) {
   const params = {
     language: language,
-    referer: "RoutePlannerWebcomp",
     origin: config.ORIGIN,
     removenullvalues: true,
     fields: 'GpsPoints'
