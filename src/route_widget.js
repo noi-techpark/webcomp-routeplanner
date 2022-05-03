@@ -148,8 +148,7 @@ class RoutePlanner extends BaseClass {
       let stopId;
       const [longitude, latitude] = this.destination.split(':');
 
-<<<<<<< HEAD
-      // to use stop id as destination type
+      // to use stop as destination type
 
       // request_get_poi(this.destination_name).then((poi) => {
       //   // use best result as stop id
@@ -179,7 +178,6 @@ class RoutePlanner extends BaseClass {
       this.setDestinationMarker(this.destination_place);
       this.zoomOn(this.destination_place);
 
-=======
       request_get_poi(this.destination_name).then((poi) => {
         // use best result as stop id
         stopId = poi[0].stateless;
@@ -194,11 +192,16 @@ class RoutePlanner extends BaseClass {
         this.setDestinationMarker(this.destination_place);
         this.zoomOn(this.destination_place);
       });
->>>>>>> use stop id as destination for trip_request
 
     }
 
 
+=======
+
+    }
+
+      
+>>>>>>> use location coord as destination again
   }
 
   /** starts the search if destination and origin are */
