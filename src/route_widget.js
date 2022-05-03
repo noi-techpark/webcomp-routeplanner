@@ -5,10 +5,11 @@ import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html } from 'lit-element';
 import clone from 'lodash/clone';
 import flatten from 'lodash/flatten';
-import { request_trip } from './api/efa_sta';
+import { request_trip, request_get_poi } from './api/efa_sta';
+import { request_get_odh_poi } from './api/odh_tourism';
 import { request_trip_by_car } from './api/here';
 import { BaseClass } from './baseClass';
-import { BUS, CABLE_CAR, coord, LANGUAGES, TRAIN, WALKING } from './constants';
+import { BUS, CABLE_CAR, coord, stop, LANGUAGES, TRAIN, WALKING } from './constants';
 import fromImage from './img/from.svg';
 import { observed_properties } from './observed-properties';
 import style from './scss/main.scss';
@@ -50,6 +51,10 @@ class RoutePlanner extends BaseClass {
       this.language = this.get_system_language();
     }
     this.switch_language(this.language);
+
+    // load odh pois only on startup
+    this.odhPois = await request_get_odh_poi(this.language)
+
   }
 
   translatePositionByPixelsOnScreen(position, offset) {
@@ -70,6 +75,7 @@ class RoutePlanner extends BaseClass {
    * @param {Coordinate|Array<Coordinate>} positions
    */
   zoomOn(positions) {
+    // console.log(positions);
     const containerSize = this.shadowRoot.querySelector('.search__search_container').offsetWidth;
     const offset = L.point(this.isMobile() ? 0 : -containerSize / 2, 0);
 
@@ -139,7 +145,27 @@ class RoutePlanner extends BaseClass {
 
   async handleDestination() {
     if (this.destination) {
+      let stopId;
       const [longitude, latitude] = this.destination.split(':');
+
+      // to use stop id as destination type
+
+      // request_get_poi(this.destination_name).then((poi) => {
+      //   // use best result as stop id
+      //   stopId = poi[0].stateless;
+      //   console.log(poi);
+      //   this.destination_place = {
+      //     display_name: this.destination_name,
+      //     type: stop,
+      //     name: stopId,
+      //     latitude,
+      //     longitude,
+      //     locked: true
+      //   };
+      //   this.setDestinationMarker(this.destination_place);
+      //   this.zoomOn(this.destination_place);
+      // });
+
 
       this.destination_place = {
         display_name: this.destination_name,
@@ -151,7 +177,11 @@ class RoutePlanner extends BaseClass {
       };
       this.setDestinationMarker(this.destination_place);
       this.zoomOn(this.destination_place);
+
+
     }
+
+      
   }
 
   /** starts the search if destination and origin are */

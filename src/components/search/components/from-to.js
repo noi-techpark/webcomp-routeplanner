@@ -12,6 +12,7 @@ import geolocationHole from '../../../img/geolocation-hole.svg';
 import { toLeaflet, isValidPosition, repeatHtml, isMobile } from '../../../utilities';
 import { getCurrentPosition } from '../../route_widget/mapControlsHandlers';
 import { FROM, DESTINATION, stopID, coord, PLACE_STATES, GEOLOCATION_ERRORS } from '../../../constants';
+import { request_get_odh_poi_details } from '../../../api/odh_tourism';
 
 async function fromInputHandler(input_name, input_string) {
   try {
@@ -22,8 +23,6 @@ async function fromInputHandler(input_name, input_string) {
     }
     this.requestUpdate();
 
-    const odhPoiResults = await this.request_get_odh_poi(input_string, this.language);
-
     const results = await this.request_get_poi(input_string, this.language);
     let heremaps_results = [];
     if (!results.length) {
@@ -31,15 +30,13 @@ async function fromInputHandler(input_name, input_string) {
       console.log(heremaps_results);
     }
 
-    // console.log(results);
-    // console.log(odhPoiResults);
-
+    let filteredOdhPois = this.odhPois.filter(poi => poi["Detail." + this.language + ".Title"].includes(input_string));
 
     if (input_name === FROM) {
-      this.from.poi_search_results = [...results, ...heremaps_results, ...odhPoiResults];
+      this.from.poi_search_results = [...results, ...heremaps_results, ...filteredOdhPois];
       this.from.poi_search_is_fetching = false;
     } else if (input_name === DESTINATION) {
-      this.destination_place.poi_search_results = [...results, ...heremaps_results];
+      this.destination_place.poi_search_results = [...results, ...heremaps_results, ...filteredOdhPois];
       this.destination_place.poi_search_is_fetching = false;
     }
 
@@ -118,49 +115,97 @@ async function setPlaceToCurrentPosition(input_name) {
   }
 }
 function setFromToResult(result) {
-  const [longitude, latitude] = result.ref.coords.split(',');
-  this.setFromMarker({ longitude, latitude });
+  if (result.type === "odh_poi") {
+    request_get_odh_poi_details(result.Id, this.language).then(poi => {
+      result.ref.coords = poi.GpsPoints.position.Longitude + ',' + poi.GpsPoints.position.Latitude;
+      result.stateless = poi.GpsPoints.position.Longitude + ":" + poi.GpsPoints.position.Latitude + ":WGS84[DD.DDDDD]";
 
-  this.from.display_name = result.name;
-  this.from.type = 'any';
+      const [longitude, latitude] = result.ref.coords.split(',');
+      this.setFromMarker({ longitude, latitude });
 
-  // type must be cords for odh poi`s
-  if (result.type) {
-    this.from.type = 'coord';
+      this.from.display_name = result.name;
+      // type must be cords for odh poi`s
+      this.from.type = 'coord';
+      this.from.name = result.stateless;
+      this.from.longitude = longitude;
+      this.from.latitude = latitude;
+      this.from.state = PLACE_STATES.result_selected;
+
+      if (isValidPosition(this.destination_place)) {
+        this.zoomOn([this.from_marker, this.destination_place]);
+      } else {
+        this.zoomOn(this.from_marker);
+      }
+
+      this.attemptSearch();
+    });
   }
+  else {
+    const [longitude, latitude] = result.ref.coords.split(',');
+    this.setFromMarker({ longitude, latitude });
 
-  this.from.name = result.stateless;
-  this.from.longitude = longitude;
-  this.from.latitude = latitude;
-  this.from.state = PLACE_STATES.result_selected;
+    this.from.display_name = result.name;
+    this.from.type = 'any';
 
-  if (isValidPosition(this.destination_place)) {
-    this.zoomOn([this.from_marker, this.destination_place]);
-  } else {
-    this.zoomOn(this.from_marker);
+    this.from.name = result.stateless;
+    this.from.longitude = longitude;
+    this.from.latitude = latitude;
+    this.from.state = PLACE_STATES.result_selected;
+
+    if (isValidPosition(this.destination_place)) {
+      this.zoomOn([this.from_marker, this.destination_place]);
+    } else {
+      this.zoomOn(this.from_marker);
+    }
+
+    this.attemptSearch();
   }
-
-  this.attemptSearch();
 }
 
 function setDestinationToResult(result) {
-  const [longitude, latitude] = result.ref.coords.split(',');
-  this.setDestinationMarker({ longitude, latitude });
+  if (result.type === "odh_poi") {
+    request_get_odh_poi_details(result.Id, this.language).then(poi => {
+      result.ref.coords = poi.GpsPoints.position.Longitude + ',' + poi.GpsPoints.position.Latitude;
+      result.stateless = poi.GpsPoints.position.Longitude + ":" + poi.GpsPoints.position.Latitude + ":WGS84[DD.DDDDD]";
 
-  this.destination_place.display_name = result.name;
-  this.destination_place.type = stopID;
-  this.destination_place.name = result.ref.id;
-  this.destination_place.longitude = longitude;
-  this.destination_place.latitude = latitude;
-  this.destination_place.state = PLACE_STATES.result_selected;
+      const [longitude, latitude] = result.ref.coords.split(',');
+      this.setDestinationMarker({ longitude, latitude });
+  
+      this.destination_place.display_name = result.name;
+      this.destination_place.type = "coord";
+      this.destination_place.name = result.stateless;
+      this.destination_place.longitude = longitude;
+      this.destination_place.latitude = latitude;
+      this.destination_place.state = PLACE_STATES.result_selected;
 
-  if (isValidPosition(this.destination_place)) {
-    this.zoomOn([this.from_marker, this.destination_place]);
-  } else {
-    this.zoomOn(this.from_marker);
+      if (isValidPosition(this.destination_place)) {
+        this.zoomOn([this.from_marker, this.destination_place]);
+      } else {
+        this.zoomOn(this.from_marker);
+      }
+  
+      this.attemptSearch();
+    });
   }
+  else {
+    const [longitude, latitude] = result.ref.coords.split(',');
+    this.setDestinationMarker({ longitude, latitude });
 
-  this.attemptSearch();
+    this.destination_place.display_name = result.name;
+    this.destination_place.type = stopID;
+    this.destination_place.name = result.ref.id;
+    this.destination_place.longitude = longitude;
+    this.destination_place.latitude = latitude;
+    this.destination_place.state = PLACE_STATES.result_selected;
+
+    if (isValidPosition(this.destination_place)) {
+      this.zoomOn([this.from_marker, this.destination_place]);
+    } else {
+      this.zoomOn(this.from_marker);
+    }
+
+    this.attemptSearch();
+  }
 }
 
 const throttledFromInputHandler = throttle(fromInputHandler, 500, { leading: true });
