@@ -25,7 +25,7 @@ export async function request_get_odh_poi(language = LANGUAGES.EN) {
       ref: {
         coords: ""
       },
-      name: item["Detail." + language + ".Title"],
+      name: "POI- " + item["Detail." + language + ".Title"],
     };
   });
 }

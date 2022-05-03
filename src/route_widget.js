@@ -5,7 +5,7 @@ import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html } from 'lit-element';
 import clone from 'lodash/clone';
 import flatten from 'lodash/flatten';
-import { request_trip } from './api/efa_sta';
+import { request_trip, request_get_poi} from './api/efa_sta';
 import { request_get_odh_poi } from './api/odh_tourism';
 import { request_trip_by_car } from './api/here';
 import { BaseClass } from './baseClass';
@@ -194,14 +194,6 @@ class RoutePlanner extends BaseClass {
       });
 
     }
-
-
-=======
-
-    }
-
-      
->>>>>>> use location coord as destination again
   }
 
   /** starts the search if destination and origin are */
