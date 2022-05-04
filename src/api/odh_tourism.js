@@ -17,11 +17,8 @@ export async function request_get_odh_poi(language = LANGUAGES.EN) {
   const data = await response.json();
 
   return data.Items.map(item => {
-    // if(!item.hasKey("ContactInfos")){
-      // console.log(item);
-    // }
+    let name = !item[ContactInfos.it.City] != null ? item["ContactInfos." + language + ".City"] + ", " + item["Detail." + language + ".Title"] : item["Detail." + language + ".Title"];
 
-    let name = item["ContactInfos." + language + ".City"] + ", " + item["Detail." + language + ".Title"];
     return {
       ...item,
       type: "odh_poi",
