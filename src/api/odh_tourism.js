@@ -17,6 +17,11 @@ export async function request_get_odh_poi(language = LANGUAGES.EN) {
   const data = await response.json();
 
   return data.Items.map(item => {
+    // if(!item.hasKey("ContactInfos")){
+      // console.log(item);
+    // }
+
+    let name = item["ContactInfos." + language + ".City"] + ", " + item["Detail." + language + ".Title"];
     return {
       ...item,
       type: "odh_poi",
@@ -24,7 +29,7 @@ export async function request_get_odh_poi(language = LANGUAGES.EN) {
       ref: {
         coords: ""
       },
-      name: "POI- " + item["Detail." + language + ".Title"],
+      name: name,
     };
   });
 }
