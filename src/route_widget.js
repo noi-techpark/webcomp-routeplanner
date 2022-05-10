@@ -147,13 +147,11 @@ class RoutePlanner extends BaseClass {
     if (this.destination) {
       let stopId;
       const [longitude, latitude] = this.destination.split(':');
-      console.log(this.destination_type);
       // to use stop as destination type
       if (this.destination_type === undefined || this.destination_type === "stop") {
         request_get_poi(this.destination_name).then((poi) => {
           // use best result as stop id
           stopId = poi[0].stateless;
-          console.log(poi);
           this.destination_place = {
             display_name: this.destination_name,
             type: stop,
@@ -358,7 +356,7 @@ class RoutePlanner extends BaseClass {
         }
       </style>
       <div
-        class="routeplanner-widget 
+        class="routeplanner-widget
           ${this.mobile_open ? `MODE__mobile__open` : `MODE__mobile__closed`}
           ${this.isMobile() ? `mobile` : ``}
           ${this.getAnimationState()}"

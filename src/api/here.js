@@ -65,11 +65,9 @@ export async function requestGetCoordinatesFromSearch(query) {
         })
       });
       const data = await response.json();
-      console.log(data);
       if (data.items) {
         const { items } = data;
         return items.map(item => {
-          console.log(item);
           if (item.position) {
             return {
               ...item,

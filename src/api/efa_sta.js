@@ -44,7 +44,6 @@ export async function request_get_poi(query, language = LANGUAGES.EN) {
 }
 
 export async function request_trip(origin, destination, timing_options, options, language = LANGUAGES.EN) {
-  console.log(origin);
   const { type, hour, minute, day } = timing_options;
   const params = {
     language,
