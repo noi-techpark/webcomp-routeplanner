@@ -10,6 +10,7 @@ export const observed_properties = {
   search_results: { type: Array },
   car_results: { type: Array },
   destination_name: { type: String, attribute: 'destination-name' },
+  destination_type: { type: String, attribute: 'destination-type' },
   destination: { type: String },
   destination_place: { type: Object },
 

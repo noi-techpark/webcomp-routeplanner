@@ -86,6 +86,19 @@
         }
       },
       {
+        "key": "destination-type",
+        "type": "select",
+        "label": "Defines the destination-type (of STA endpoint) used to make the trip-plan request. Fallback is `stop`",
+        "required": false,
+        "options": {
+          "values": [
+            "stop",
+            "location"
+          ],
+          "default": "stop"
+        }
+      },
+      {
         "key": "disable-car",
         "type": "null",
         "label": "Disable car routing, if present only public means will be shown",

@@ -5,7 +5,7 @@ import style__leaflet from 'leaflet/dist/leaflet.css';
 import { html } from 'lit-element';
 import clone from 'lodash/clone';
 import flatten from 'lodash/flatten';
-import { request_trip, request_get_poi} from './api/efa_sta';
+import { request_trip, request_get_poi } from './api/efa_sta';
 import { request_get_odh_poi } from './api/odh_tourism';
 import { request_trip_by_car } from './api/here';
 import { BaseClass } from './baseClass';
@@ -147,52 +147,36 @@ class RoutePlanner extends BaseClass {
     if (this.destination) {
       let stopId;
       const [longitude, latitude] = this.destination.split(':');
-
+      console.log(this.destination_type);
       // to use stop as destination type
-
-      // request_get_poi(this.destination_name).then((poi) => {
-      //   // use best result as stop id
-      //   stopId = poi[0].stateless;
-      //   console.log(poi);
-      //   this.destination_place = {
-      //     display_name: this.destination_name,
-      //     type: stop,
-      //     name: stopId,
-      //     latitude,
-      //     longitude,
-      //     locked: true
-      //   };
-      //   this.setDestinationMarker(this.destination_place);
-      //   this.zoomOn(this.destination_place);
-      // });
-
-
-      this.destination_place = {
-        display_name: this.destination_name,
-        type: coord,
-        name: `${this.destination}:WGS84[DD.DDDDD]`,
-        latitude,
-        longitude,
-        locked: true
-      };
-      this.setDestinationMarker(this.destination_place);
-      this.zoomOn(this.destination_place);
-
-      request_get_poi(this.destination_name).then((poi) => {
-        // use best result as stop id
-        stopId = poi[0].stateless;
+      if (this.destination_type === undefined || this.destination_type === "stop") {
+        request_get_poi(this.destination_name).then((poi) => {
+          // use best result as stop id
+          stopId = poi[0].stateless;
+          console.log(poi);
+          this.destination_place = {
+            display_name: this.destination_name,
+            type: stop,
+            name: stopId,
+            latitude,
+            longitude,
+            locked: true
+          };
+          this.setDestinationMarker(this.destination_place);
+          this.zoomOn(this.destination_place);
+        });
+      } else {
         this.destination_place = {
           display_name: this.destination_name,
-          type: stop,
-          name: stopId,
+          type: coord,
+          name: `${this.destination}:WGS84[DD.DDDDD]`,
           latitude,
           longitude,
           locked: true
         };
         this.setDestinationMarker(this.destination_place);
         this.zoomOn(this.destination_place);
-      });
-
+      }
     }
   }
 
