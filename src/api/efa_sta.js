@@ -26,7 +26,7 @@ export async function request_get_poi(query, language = LANGUAGES.EN) {
   // points: { point: {} } instead of points: [...]
 
   // sort for quality, to have important stations on top
-  if (list && Array.isArray(list)) {
+  if (list && list instanceof Array) {
     list.sort(function (a, b) {
       return b.quality - a.quality;
     });
