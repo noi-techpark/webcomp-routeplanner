@@ -152,7 +152,6 @@ class RoutePlanner extends BaseClass {
         request_get_poi(this.destination_name).then((poi) => {
           // use best result as stop id
           stopId = poi[0].ref.id;
-          console.log(stopId);
           this.destination_place = {
             display_name: this.destination_name,
             type: stop,
