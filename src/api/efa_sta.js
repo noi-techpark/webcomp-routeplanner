@@ -21,7 +21,7 @@ export async function request_get_poi(query, language = LANGUAGES.EN) {
   const response = await fetch_poi(`${BASE_PATH}/XSLT_STOPFINDER_REQUEST?${toQueryParams(params)}`, { method: 'GET' });
   const data = await response.json();
 
-  const list = data.stopFinder.points;
+  let list = data.stopFinder.points;
   // if there's just one point the result is in the form of
   // points: { point: {} } instead of points: [...]
 
@@ -30,6 +30,8 @@ export async function request_get_poi(query, language = LANGUAGES.EN) {
     list.sort(function (a, b) {
       return b.quality - a.quality;
     });
+    // only use anyType stop
+    list = list.filter(result => result.anyType === 'stop');
   }
 
   if (list && list.point) {

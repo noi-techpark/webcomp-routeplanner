@@ -151,7 +151,8 @@ class RoutePlanner extends BaseClass {
       if (this.destination_type === undefined || this.destination_type === "stop") {
         request_get_poi(this.destination_name).then((poi) => {
           // use best result as stop id
-          stopId = poi[0].stateless;
+          stopId = poi[0].ref.id;
+          console.log(stopId);
           this.destination_place = {
             display_name: this.destination_name,
             type: stop,
