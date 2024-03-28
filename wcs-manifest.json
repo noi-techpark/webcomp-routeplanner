@@ -23,8 +23,7 @@
   "image": "wcs-logo.png",
   "searchTags": [
     "map",
-    "mobility",
-    "routeplanner"
+    "mobility"
   ],
   "dist": {
     "basePath": "dist",
