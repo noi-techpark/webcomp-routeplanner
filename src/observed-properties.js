@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 NOI Techpark <digital@noi.bz.it>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 export const observed_properties = {
   height: { type: String },
   width: { width: String },

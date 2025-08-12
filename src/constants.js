@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 NOI Techpark <digital@noi.bz.it>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import carImage from './img/car.svg';
 import busImage from './img/bus.svg';
 import trainImage from './img/train.svg';

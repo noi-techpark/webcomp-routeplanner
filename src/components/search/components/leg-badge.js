@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 NOI Techpark <digital@noi.bz.it>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import { html } from 'lit-html';
 import { MEANS_ICONS, WALKING, TRAIN, BUS } from '../../../constants';
 import chevronRight from '../../../img/chevron-right-gray.svg';

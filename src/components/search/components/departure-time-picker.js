@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 NOI Techpark <digital@noi.bz.it>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import { html } from 'lit-html';
 import clockImage from '../../../img/clock.svg';
 import { render__picker } from '../../generics/picker';
