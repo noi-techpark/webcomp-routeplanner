@@ -1,3 +1,5 @@
+[![REUSE Compliance](https://github.com/noi-techpark/webcomp-routeplanner/actions/workflows/reuse-lint.yml/badge.svg)](https://github.com/noi-techpark/opendatahub-docs/wiki/REUSE#badges)
+
 # ROUTEPLANNER
 
 CSS styles are transpiled using [Sass](https://sass-lang.com/).
