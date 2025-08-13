@@ -1,11 +1,10 @@
-[![REUSE Compliance](https://github.com/noi-techpark/webcomp-routeplanner/actions/workflows/reuse-lint.yml/badge.svg)](https://github.com/noi-techpark/opendatahub-docs/wiki/REUSE#badges)
-
 # ROUTEPLANNER
 
 CSS styles are transpiled using [Sass](https://sass-lang.com/).
 
 We are using [Webpack](https://webpack.js.org/) for the bundled creation.
 
+[![REUSE Compliance](https://github.com/noi-techpark/webcomp-routeplanner/actions/workflows/reuse-lint.yml/badge.svg)](https://github.com/noi-techpark/opendatahub-docs/wiki/REUSE#badges)
 [![CI/CD](https://github.com/noi-techpark/webcomp-routeplanner/actions/workflows/main.yml/badge.svg)](https://github.com/noi-techpark/webcomp-routeplanner/actions/workflows/main.yml)
 
 ## Getting Started
