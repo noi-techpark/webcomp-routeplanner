@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 NOI Techpark <digital@noi.bz.it>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import config from "./config";
 import { fetch_no_parallel, toQueryParams } from '../utilities';
 import { LANGUAGES } from '../constants';
